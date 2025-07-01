@@ -1,0 +1,17 @@
+# Python
+__pycache__/
+*.py[cod]
+.Python
+.env/
+
+# Virtual environments
+venv/
+.venv/
+env/
+*.egg-info/
+.conda/
+conda_env/ # <--- IMPORTANT: Add this line if your Conda env is named 'conda_env' or similar within the project
+whatsappbot_env/ # <--- Add this if your PyCharm created the conda env folder directly inside your project
+
+# Ignore environment variables
+.env # <--- This is the crucial line for your secrets
