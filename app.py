@@ -20,7 +20,7 @@ app = Flask(__name__)
 logging.basicConfig(level=logging.INFO,
                     format='%(asctime)s - %(levelname)s - %(message)s',
                     handlers=[
-                        logging.StreamHandler() # Logs to PyCharm console
+                        logging.StreamHandler()  # Logs to PyCharm console
                     ])
 
 # --- Load WhatsApp API credentials from .env (from Week 1) ---
@@ -52,15 +52,15 @@ try:
         client_options={"api_endpoint": "generativelanguage.googleapis.com"}
     )
     app.logger.info("Gemini API configured successfully.")
-    gemini_model = genai.GenerativeModel('gemini-1.5-flash') # Initialize the model
+    gemini_model = genai.GenerativeModel('gemini-1.5-flash')  # Initialize the model
     app.logger.info("Gemini-1.5-Flash model initialized globally.")
 except Exception as e:
     app.logger.error(f"Failed to configure Gemini API or initialize model: {e}")
-    gemini_model = None # Set to None if initialization fails, to prevent errors later
-
+    gemini_model = None  # Set to None if initialization fails, to prevent errors later
 
 # --- NEW: SQLite Database Configuration and Helper Functions (for Week 2 - Day 3) ---
-DB_FILE = 'conversations.db' # Define the database file name
+DB_FILE = 'conversations.db'  # Define the database file name
+
 
 def init_db():
     """Initializes the SQLite database and creates the conversations table."""
@@ -85,6 +85,7 @@ def init_db():
         if conn:
             conn.close()
 
+
 def save_message(user_id, message, is_bot):
     """Saves a message to the database."""
     conn = None
@@ -105,7 +106,9 @@ def save_message(user_id, message, is_bot):
         if conn:
             conn.close()
 
-def get_conversation_history(user_id, limit=20):
+
+# Modified to fetch a larger set of history for token management
+def get_conversation_history(user_id, limit=50):  # Increased limit to allow more history for token management
     """
     Fetches the most recent conversation history for a user,
     formatted for Gemini's ChatSession.
@@ -135,8 +138,14 @@ def get_conversation_history(user_id, limit=20):
             conn.close()
     return history
 
+
+# --- NEW for Day 4: Define a reasonable max token limit for history ---
+# Gemini 1.5 Flash has a 1 million token context window, but using a smaller
+# practical limit helps manage costs, latency, and focus for specific bot types.
+# This value includes the system instruction tokens.
+MAX_HISTORY_TOKENS = 4000  # Example: Aim for roughly 4000 tokens for history + system instruction
+
 # Define the system instruction/persona for your AI globally
-# This will be used when starting a new chat session or building history.
 SYSTEM_INSTRUCTION = (
     "You are a helpful and friendly WhatsApp assistant. Your goal is to provide concise and accurate "
     "information, and engage in polite conversation. Keep your responses brief, typically under 100 words, "
@@ -152,6 +161,7 @@ def hello_world():
     """
     app.logger.info("Hello World route accessed.")
     return 'Hello, World! This is your WhatsApp Bot MVP.'
+
 
 # --- Helper function to send WhatsApp messages (from Week 1) ---
 def send_whatsapp_message(to_number, message_text):
@@ -173,7 +183,7 @@ def send_whatsapp_message(to_number, message_text):
     app.logger.info(f"Attempting to send message to {to_number}: '{message_text}'")
     try:
         response = requests.post(url, headers=headers, json=payload)
-        response.raise_for_status() # Raises HTTPError for bad responses (4xx or 5xx)
+        response.raise_for_status()  # Raises HTTPError for bad responses (4xx or 5xx)
         app.logger.info(f"Message sent successfully to {to_number}. Response: {response.json()}")
         return True
     except requests.exceptions.RequestException as e:
@@ -182,34 +192,79 @@ def send_whatsapp_message(to_number, message_text):
             app.logger.error(f"WhatsApp API Error Response: {e.response.text}")
         return False
 
-# --- Modified generate_ai_reply to use SQLite for history (for Week 2 - Day 3) ---
+
+# --- Modified generate_ai_reply to use SQLite for history AND manage tokens (for Week 2 - Day 4) ---
 def generate_ai_reply(user_id, user_input):
     """
     Generates an AI response using the Gemini model, incorporating conversation history
-    retrieved from SQLite for the given user_id.
+    retrieved from SQLite for the given user_id, and managing token limits.
     """
     if not gemini_model:
         app.logger.error("Gemini model not initialized. Cannot generate AI reply.")
         return "Sorry, my AI brain is currently offline. Please try again later!"
 
-    # 1. Retrieve full conversation history for the user from the database
-    #    The SYSTEM_INSTRUCTION is prepended to ensure AI always has its persona.
-    #    Gemini's 'history' expects a list of {"role": "user/model", "parts": [{"text": ...}]}
-    retrieved_history = get_conversation_history(user_id)
+    # 1. Prepare the system instruction as the initial user turn
+    system_instruction_turn = {"role": "user", "parts": [{"text": SYSTEM_INSTRUCTION}]}
 
-    # Initialize a new ChatSession with the entire history from the DB + system instruction
-    # The system instruction is provided as the first user turn in the history to set context.
-    # This design means the system instruction is resent with every request, ensuring persistent persona.
-    chat_session = gemini_model.start_chat(history=[
-        {"role": "user", "parts": [{"text": SYSTEM_INSTRUCTION}]}
-    ] + retrieved_history) # Prepend system instruction to the retrieved history
+    # 2. Calculate initial tokens for the system instruction and the current user input
+    # This ensures we always have space for these essential parts.
+    current_conversation_tokens = 0
+    try:
+        current_conversation_tokens += gemini_model.count_tokens(contents=[system_instruction_turn]).total_tokens
+        # Account for the current user input's tokens (it will be sent via chat_session.send_message)
+        user_input_temp_turn = {"role": "user", "parts": [{"text": user_input}]}
+        current_conversation_tokens += gemini_model.count_tokens(contents=[user_input_temp_turn]).total_tokens
+    except Exception as e:
+        app.logger.error(f"Error counting tokens for system instruction or current input: {e}")
+        # Fallback: if token counting fails, assume full budget is used for safety
+        # and don't add history, or let it potentially go over (less ideal).
+        # For robustness, we'll log and proceed with minimal history if counting fails.
+        pass  # Allow the process to continue, history might not be truncated strictly
 
+    # 3. Retrieve full conversation history (up to the limit set in get_conversation_history, e.g., 50 messages)
+    all_retrieved_history = get_conversation_history(user_id)
+
+    # 4. Build the actual history to send, respecting the token limit
+    # We iterate backwards from the most recent message to prioritize fresh context.
+    trimmed_history_for_gemini = []
+
+    # Calculate the remaining budget for historical messages
+    remaining_tokens_budget = MAX_HISTORY_TOKENS - current_conversation_tokens
+    if remaining_tokens_budget < 0:
+        app.logger.warning(
+            f"Initial prompt (system instruction + user input) exceeds MAX_HISTORY_TOKENS ({MAX_HISTORY_TOKENS}). History will be empty.")
+        remaining_tokens_budget = 0  # No budget left for history
+
+    for i in range(len(all_retrieved_history) - 1, -1, -1):  # Iterate from newest to oldest messages
+        hist_item = all_retrieved_history[i]
+        try:
+            item_tokens = gemini_model.count_tokens(contents=[hist_item]).total_tokens
+
+            if remaining_tokens_budget - item_tokens >= 0:  # Check if adding this message fits
+                trimmed_history_for_gemini.insert(0, hist_item)  # Insert at beginning to keep chronological order
+                remaining_tokens_budget -= item_tokens
+            else:
+                app.logger.info(
+                    f"Truncating conversation history for {user_id} due to token limit ({MAX_HISTORY_TOKENS} tokens). Dropping older message: '{hist_item.get('parts', [{}])[0].get('text', '')[:30]}...'")
+                break  # Stop adding older messages, budget exhausted
+        except Exception as e:
+            app.logger.warning(f"Could not count tokens for history item ({hist_item}), skipping it: {e}")
+            # If token counting fails for an item, it's safer to skip it.
+
+    # The final history for `start_chat` includes the system instruction
+    # followed by the trimmed historical turns.
+    final_chat_session_history = [system_instruction_turn] + trimmed_history_for_gemini
+
+    app.logger.info(
+        f"Sending {len(trimmed_history_for_gemini)} history items (plus system instruction) for {user_id}. Estimated tokens for history and system instruction: {MAX_HISTORY_TOKENS - remaining_tokens_budget}. Remaining budget: {remaining_tokens_budget} tokens.")
+
+    # Initialize a new ChatSession with the token-managed history
+    chat_session = gemini_model.start_chat(history=final_chat_session_history)
 
     try:
         app.logger.info(f"Sending user input to Gemini for {user_id}: {user_input[:100]}...")
 
-        # 2. Send the user's message to the chat session.
-        #    The chat session automatically appends this to history and sends the full context.
+        # Send the user's message to the chat session.
         response = chat_session.send_message(user_input)
 
         ai_reply = ""
@@ -217,7 +272,7 @@ def generate_ai_reply(user_id, user_input):
         if response.text:
             ai_reply = response.text.strip()
             app.logger.info(f"Received AI response for {user_id}: {ai_reply[:100]}...")
-            # 3. Save both user input and AI reply to the database
+            # Save both user input and AI reply to the database
             save_message(user_id, user_input, is_bot=False)
             save_message(user_id, ai_reply, is_bot=True)
             return ai_reply
@@ -228,34 +283,30 @@ def generate_ai_reply(user_id, user_input):
                 app.logger.warning(f"Gemini response blocked for {user_id} due to: {block_reason}")
                 for rating in response.prompt_feedback.safety_ratings:
                     app.logger.warning(f"  {rating.category.name}: {rating.probability.name}")
-                # Save user message even if bot reply is blocked/empty
                 save_message(user_id, user_input, is_bot=False)
                 return "Sorry, I cannot respond to that. Your query might violate safety guidelines."
             else:
                 app.logger.warning(f"Gemini returned an empty response for {user_id} with no block reason.")
-                # Save user message even if bot reply is blocked/empty
                 save_message(user_id, user_input, is_bot=False)
                 return "Sorry, I couldn't generate a response for that. Can you try rephrasing?"
 
     except BlockedPromptException as e:
         app.logger.error(f"Prompt blocked by Gemini safety filters for {user_id}: {e}")
-        # Save user message even if prompt itself is blocked
         save_message(user_id, user_input, is_bot=False)
         return "I'm sorry, but I cannot process that request due to safety concerns. Please try a different query."
     except requests.exceptions.HTTPError as e:
         app.logger.error(f"Gemini API HTTP error ({e.response.status_code}) for {user_id}: {e}")
         app.logger.error(f"Gemini API Error Response: {e.response.text}")
-        # Save user message even if API call fails
-        save_message(user_id, user_input, is_bot=False) # Still log user message to DB for audit
+        save_message(user_id, user_input, is_bot=False)
         if e.response.status_code == 429:
             return "My apologies! I'm receiving too many requests right now. Please try again in a moment."
         else:
             return "An unexpected error occurred with my AI brain. Please try again later."
     except Exception as e:
         app.logger.error(f"General error generating AI response for {user_id}: {e}")
-        # Save user message even if general error occurs
-        save_message(user_id, user_input, is_bot=False) # Still log user message to DB for audit
+        save_message(user_id, user_input, is_bot=False)
         return "Oops! My AI brain is currently unavailable due to an unexpected issue. Please try again in a few moments."
+
 
 # --- Your existing Flask routes will go here ---
 @app.route('/webhook', methods=['GET', 'POST'])
@@ -295,14 +346,14 @@ def webhook():
                                         msg_body = message.get('text', {}).get('body')
                                         app.logger.info(f"Received text message from {from_number}: {msg_body}")
 
-                                        # --- NEW: Generate AI reply and send it back ---
                                         ai_response = generate_ai_reply(user_id=from_number, user_input=msg_body)
                                         if ai_response:
                                             send_whatsapp_message(to_number=from_number, message_text=ai_response)
                                         else:
-                                            app.logger.error(f"Failed to generate AI response for {from_number}: '{msg_body}'")
-                                            send_whatsapp_message(to_number=from_number, message_text="Sorry, I couldn't process your request right now.")
-                                        # --- END NEW ---
+                                            app.logger.error(
+                                                f"Failed to generate AI response for {from_number}: '{msg_body}'")
+                                            send_whatsapp_message(to_number=from_number,
+                                                                  message_text="Sorry, I couldn't process your request right now.")
 
                                     elif message.get('type') == 'button':
                                         button_text = message.get('button', {}).get('text')
@@ -311,14 +362,17 @@ def webhook():
                                         send_whatsapp_message(to_number=from_number, message_text=static_reply)
 
                                     else:
-                                        app.logger.info(f"Received non-text/button message type '{message.get('type')}' from {from_number}. Ignoring for now.")
+                                        app.logger.info(
+                                            f"Received non-text/button message type '{message.get('type')}' from {from_number}. Ignoring for now.")
                             elif 'statuses' in value and value.get('messaging_product') == 'whatsapp':
                                 for status in value.get('statuses', []):
-                                    app.logger.info(f"Message Status Update: ID {status.get('id')}, From: {status.get('recipient_id')}, Status: {status.get('status')}")
+                                    app.logger.info(
+                                        f"Message Status Update: ID {status.get('id')}, From: {status.get('recipient_id')}, Status: {status.get('status')}")
                             else:
                                 app.logger.info("Received unhandled WhatsApp event (not messages or statuses).")
                         else:
-                            app.logger.info(f"Received webhook field '{change.get('field', 'UNKNOWN')}'. Ignoring for now.")
+                            app.logger.info(
+                                f"Received webhook field '{change.get('field', 'UNKNOWN')}'. Ignoring for now.")
             else:
                 app.logger.info(f"Received webhook for object '{data.get('object', 'UNKNOWN')}'. Ignoring for now.")
 
@@ -327,6 +381,7 @@ def webhook():
             app.logger.error(f"Full payload causing error: {data}")
 
         return '', 200
+
 
 # This block ensures the Flask app runs only when the script is executed directly
 if __name__ == '__main__':
