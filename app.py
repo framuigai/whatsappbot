@@ -8,7 +8,7 @@ import requests
 import google.generativeai as genai
 from google.generativeai.types import BlockedPromptException
 import sqlite3
-import time
+import time  # Import time for rate limiting and backoff
 
 # Load environment variables from .env file
 load_dotenv()
@@ -58,7 +58,7 @@ except Exception as e:
     app.logger.error(f"Failed to configure Gemini API or initialize model: {e}")
     gemini_model = None  # Set to None if initialization fails, to prevent errors later
 
-# --- NEW: SQLite Database Configuration and Helper Functions (for Week 2 - Day 3) ---
+# --- SQLite Database Configuration and Helper Functions ---
 DB_FILE = 'conversations.db'  # Define the database file name
 
 
@@ -107,7 +107,6 @@ def save_message(user_id, message, is_bot):
             conn.close()
 
 
-# Modified to fetch a larger set of history for token management
 def get_conversation_history(user_id, limit=50):  # Increased limit to allow more history for token management
     """
     Fetches the most recent conversation history for a user,
@@ -139,11 +138,8 @@ def get_conversation_history(user_id, limit=50):  # Increased limit to allow mor
     return history
 
 
-# --- NEW for Day 4: Define a reasonable max token limit for history ---
-# Gemini 1.5 Flash has a 1 million token context window, but using a smaller
-# practical limit helps manage costs, latency, and focus for specific bot types.
-# This value includes the system instruction tokens.
-MAX_HISTORY_TOKENS = 4000  # Example: Aim for roughly 4000 tokens for history + system instruction
+# --- Define a reasonable max token limit for history (from Day 4) ---
+MAX_HISTORY_TOKENS = 4000  # You can adjust this back to a larger value like 10000 or 20000 after testing
 
 # Define the system instruction/persona for your AI globally
 SYSTEM_INSTRUCTION = (
@@ -152,6 +148,10 @@ SYSTEM_INSTRUCTION = (
     "unless more detail is specifically requested. Do not make up information. If you cannot answer, "
     "politely state so."
 )
+
+# --- NEW for Day 6: Basic Rate Limiting ---
+LAST_MESSAGE_TIMESTAMPS = {}  # Stores the timestamp of the last message from each user
+RATE_LIMIT_SECONDS = 2  # Users cannot send messages more frequently than this
 
 
 @app.route('/')
@@ -163,7 +163,7 @@ def hello_world():
     return 'Hello, World! This is your WhatsApp Bot MVP.'
 
 
-# --- Helper function to send WhatsApp messages (from Week 1) ---
+# --- Helper function to send WhatsApp messages ---
 def send_whatsapp_message(to_number, message_text):
     """
     Sends a text message to a given WhatsApp number using the WhatsApp Cloud API.
@@ -193,122 +193,139 @@ def send_whatsapp_message(to_number, message_text):
         return False
 
 
-# --- Modified generate_ai_reply to use SQLite for history AND manage tokens (for Week 2 - Day 4) ---
+# --- Modified generate_ai_reply for Day 6 (Exponential Backoff) ---
 def generate_ai_reply(user_id, user_input):
     """
     Generates an AI response using the Gemini model, incorporating conversation history
-    retrieved from SQLite for the given user_id, and managing token limits.
+    retrieved from SQLite for the given user_id, managing token limits,
+    and implementing retry logic for API failures.
     """
     if not gemini_model:
         app.logger.error("Gemini model not initialized. Cannot generate AI reply.")
         return "Sorry, my AI brain is currently offline. Please try again later!"
 
-    # 1. Prepare the system instruction as the initial user turn
-    system_instruction_turn = {"role": "user", "parts": [{"text": SYSTEM_INSTRUCTION}]}
+    # Define retry parameters for API calls (for HTTP 429 and general errors)
+    MAX_RETRIES = 3
+    INITIAL_RETRY_DELAY_SECONDS = 2  # Initial delay for exponential backoff
 
-    # 2. Calculate initial tokens for the system instruction and the current user input
-    # This ensures we always have space for these essential parts.
-    current_conversation_tokens = 0
-    try:
-        current_conversation_tokens += gemini_model.count_tokens(contents=[system_instruction_turn]).total_tokens
-        # Account for the current user input's tokens (it will be sent via chat_session.send_message)
-        user_input_temp_turn = {"role": "user", "parts": [{"text": user_input}]}
-        current_conversation_tokens += gemini_model.count_tokens(contents=[user_input_temp_turn]).total_tokens
-    except Exception as e:
-        app.logger.error(f"Error counting tokens for system instruction or current input: {e}")
-        # Fallback: if token counting fails, assume full budget is used for safety
-        # and don't add history, or let it potentially go over (less ideal).
-        # For robustness, we'll log and proceed with minimal history if counting fails.
-        pass  # Allow the process to continue, history might not be truncated strictly
-
-    # 3. Retrieve full conversation history (up to the limit set in get_conversation_history, e.g., 50 messages)
-    all_retrieved_history = get_conversation_history(user_id)
-
-    # 4. Build the actual history to send, respecting the token limit
-    # We iterate backwards from the most recent message to prioritize fresh context.
-    trimmed_history_for_gemini = []
-
-    # Calculate the remaining budget for historical messages
-    remaining_tokens_budget = MAX_HISTORY_TOKENS - current_conversation_tokens
-    if remaining_tokens_budget < 0:
-        app.logger.warning(
-            f"Initial prompt (system instruction + user input) exceeds MAX_HISTORY_TOKENS ({MAX_HISTORY_TOKENS}). History will be empty.")
-        remaining_tokens_budget = 0  # No budget left for history
-
-    for i in range(len(all_retrieved_history) - 1, -1, -1):  # Iterate from newest to oldest messages
-        hist_item = all_retrieved_history[i]
+    for attempt in range(MAX_RETRIES):
         try:
-            item_tokens = gemini_model.count_tokens(contents=[hist_item]).total_tokens
+            # 1. Prepare the system instruction as the initial user turn
+            system_instruction_turn = {"role": "user", "parts": [{"text": SYSTEM_INSTRUCTION}]}
 
-            if remaining_tokens_budget - item_tokens >= 0:  # Check if adding this message fits
-                trimmed_history_for_gemini.insert(0, hist_item)  # Insert at beginning to keep chronological order
-                remaining_tokens_budget -= item_tokens
+            # 2. Calculate initial tokens for the system instruction and the current user input
+            current_conversation_tokens = 0
+            try:
+                current_conversation_tokens += gemini_model.count_tokens(
+                    contents=[system_instruction_turn]).total_tokens
+                user_input_temp_turn = {"role": "user", "parts": [{"text": user_input}]}
+                current_conversation_tokens += gemini_model.count_tokens(contents=[user_input_temp_turn]).total_tokens
+            except Exception as e:
+                app.logger.error(
+                    f"Attempt {attempt + 1}: Error counting tokens for system instruction or current input for {user_id}: {e}")
+                # If token counting fails, proceed with empty history to prevent further issues.
+                current_conversation_tokens = MAX_HISTORY_TOKENS + 1  # Force history to be empty
+                pass
+
+            # 3. Retrieve full conversation history (up to the limit set in get_conversation_history, e.g., 50 messages)
+            all_retrieved_history = get_conversation_history(user_id)
+
+            # 4. Build the actual history to send, respecting the token limit
+            trimmed_history_for_gemini = []
+
+            remaining_tokens_budget = MAX_HISTORY_TOKENS - current_conversation_tokens
+            if remaining_tokens_budget < 0:
+                app.logger.warning(
+                    f"Initial prompt (system instruction + user input) exceeds MAX_HISTORY_TOKENS ({MAX_HISTORY_TOKENS}) for {user_id}. History will be empty.")
+                remaining_tokens_budget = 0
+
+            for i in range(len(all_retrieved_history) - 1, -1, -1):  # Iterate from newest to oldest messages
+                hist_item = all_retrieved_history[i]
+                try:
+                    item_tokens = gemini_model.count_tokens(contents=[hist_item]).total_tokens
+
+                    if remaining_tokens_budget - item_tokens >= 0:
+                        trimmed_history_for_gemini.insert(0, hist_item)
+                        remaining_tokens_budget -= item_tokens
+                    else:
+                        app.logger.info(
+                            f"Truncating conversation history for {user_id} due to token limit ({MAX_HISTORY_TOKENS} tokens). Dropping older message: '{hist_item.get('parts', [{}])[0].get('text', '')[:30]}...'")
+                        break
+                except Exception as e:
+                    app.logger.warning(
+                        f"Attempt {attempt + 1}: Could not count tokens for history item ({hist_item}), skipping it for {user_id}: {e}")
+
+            final_chat_session_history = [system_instruction_turn] + trimmed_history_for_gemini
+
+            app.logger.info(
+                f"Attempt {attempt + 1}: Sending {len(trimmed_history_for_gemini)} history items (plus system instruction) for {user_id}. Estimated tokens for history and system instruction: {MAX_HISTORY_TOKENS - remaining_tokens_budget}. Remaining budget: {remaining_tokens_budget} tokens.")
+
+            chat_session = gemini_model.start_chat(history=final_chat_session_history)
+
+            app.logger.info(f"Sending user input to Gemini for {user_id}: {user_input[:100]}...")
+            response = chat_session.send_message(user_input)
+
+            ai_reply = ""
+            if response.text:
+                ai_reply = response.text.strip()
+                app.logger.info(f"Received AI response for {user_id}: {ai_reply[:100]}...")
+                save_message(user_id, user_input, is_bot=False)
+                save_message(user_id, ai_reply, is_bot=True)
+                return ai_reply
             else:
-                app.logger.info(
-                    f"Truncating conversation history for {user_id} due to token limit ({MAX_HISTORY_TOKENS} tokens). Dropping older message: '{hist_item.get('parts', [{}])[0].get('text', '')[:30]}...'")
-                break  # Stop adding older messages, budget exhausted
-        except Exception as e:
-            app.logger.warning(f"Could not count tokens for history item ({hist_item}), skipping it: {e}")
-            # If token counting fails for an item, it's safer to skip it.
+                # Handle cases where Gemini might not return text (e.g., safety block)
+                if response.prompt_feedback and response.prompt_feedback.block_reason:
+                    block_reason = response.prompt_feedback.block_reason.name
+                    app.logger.warning(
+                        f"Attempt {attempt + 1}: Gemini response blocked for {user_id} due to: {block_reason}")
+                    for rating in response.prompt_feedback.safety_ratings:
+                        app.logger.warning(f"  {rating.category.name}: {rating.probability.name}")
+                    save_message(user_id, user_input, is_bot=False)
+                    return "I'm sorry, but I cannot process that request due to safety concerns. Please try a different query."
+                else:
+                    app.logger.warning(
+                        f"Attempt {attempt + 1}: Gemini returned an empty response for {user_id} with no block reason.")
+                    save_message(user_id, user_input, is_bot=False)
+                    return "Sorry, I couldn't generate a response for that. Can you try rephrasing?"
 
-    # The final history for `start_chat` includes the system instruction
-    # followed by the trimmed historical turns.
-    final_chat_session_history = [system_instruction_turn] + trimmed_history_for_gemini
-
-    app.logger.info(
-        f"Sending {len(trimmed_history_for_gemini)} history items (plus system instruction) for {user_id}. Estimated tokens for history and system instruction: {MAX_HISTORY_TOKENS - remaining_tokens_budget}. Remaining budget: {remaining_tokens_budget} tokens.")
-
-    # Initialize a new ChatSession with the token-managed history
-    chat_session = gemini_model.start_chat(history=final_chat_session_history)
-
-    try:
-        app.logger.info(f"Sending user input to Gemini for {user_id}: {user_input[:100]}...")
-
-        # Send the user's message to the chat session.
-        response = chat_session.send_message(user_input)
-
-        ai_reply = ""
-        # Check if Gemini returned any text
-        if response.text:
-            ai_reply = response.text.strip()
-            app.logger.info(f"Received AI response for {user_id}: {ai_reply[:100]}...")
-            # Save both user input and AI reply to the database
+        except BlockedPromptException as e:
+            app.logger.error(f"Attempt {attempt + 1}: Prompt blocked by Gemini safety filters for {user_id}: {e}")
             save_message(user_id, user_input, is_bot=False)
-            save_message(user_id, ai_reply, is_bot=True)
-            return ai_reply
-        else:
-            # Handle cases where Gemini might not return text (e.g., safety block)
-            if response.prompt_feedback and response.prompt_feedback.block_reason:
-                block_reason = response.prompt_feedback.block_reason.name
-                app.logger.warning(f"Gemini response blocked for {user_id} due to: {block_reason}")
-                for rating in response.prompt_feedback.safety_ratings:
-                    app.logger.warning(f"  {rating.category.name}: {rating.probability.name}")
+            return "I'm sorry, but I cannot process that request due to safety concerns. Please try a different query."
+        except requests.exceptions.HTTPError as e:
+            if e.response.status_code == 429:  # Rate limit error from Gemini API
+                if attempt < MAX_RETRIES - 1:
+                    wait_time = INITIAL_RETRY_DELAY_SECONDS * (2 ** attempt)  # Exponential backoff
+                    app.logger.warning(
+                        f"Attempt {attempt + 1}: Gemini API rate limit hit (HTTP 429) for {user_id}. Retrying in {wait_time:.2f} seconds...")
+                    time.sleep(wait_time)
+                else:
+                    app.logger.error(
+                        f"Attempt {attempt + 1}: Gemini API rate limit hit (HTTP 429) for {user_id}. Max retries exhausted.")
+                    save_message(user_id, user_input, is_bot=False)
+                    return "My apologies! I'm receiving too many requests right now. Please try again in a moment."
+            else:  # Other HTTP errors
+                app.logger.error(
+                    f"Attempt {attempt + 1}: Gemini API HTTP error ({e.response.status_code}) for {user_id}: {e}")
+                if hasattr(e, 'response') and e.response is not None:
+                    app.logger.error(f"Gemini API Error Response: {e.response.text}")
                 save_message(user_id, user_input, is_bot=False)
-                return "Sorry, I cannot respond to that. Your query might violate safety guidelines."
-            else:
-                app.logger.warning(f"Gemini returned an empty response for {user_id} with no block reason.")
+                return "An unexpected error occurred with my AI brain. Please try again later."
+        except Exception as e:
+            app.logger.error(f"Attempt {attempt + 1}: General error generating AI response for {user_id}: {e}")
+            # Do not save message if it's an internal error on a retry attempt,
+            # as it will be saved on the first attempt's failure or not saved if all retries fail.
+            # Only save the user message once per *initial* attempt if there's no response.
+            if attempt == 0:  # Only save user message once if it's the very first failure
                 save_message(user_id, user_input, is_bot=False)
-                return "Sorry, I couldn't generate a response for that. Can you try rephrasing?"
+            return "Oops! My AI brain is currently unavailable due to an unexpected issue. Please try again in a few moments."
 
-    except BlockedPromptException as e:
-        app.logger.error(f"Prompt blocked by Gemini safety filters for {user_id}: {e}")
-        save_message(user_id, user_input, is_bot=False)
-        return "I'm sorry, but I cannot process that request due to safety concerns. Please try a different query."
-    except requests.exceptions.HTTPError as e:
-        app.logger.error(f"Gemini API HTTP error ({e.response.status_code}) for {user_id}: {e}")
-        app.logger.error(f"Gemini API Error Response: {e.response.text}")
-        save_message(user_id, user_input, is_bot=False)
-        if e.response.status_code == 429:
-            return "My apologies! I'm receiving too many requests right now. Please try again in a moment."
-        else:
-            return "An unexpected error occurred with my AI brain. Please try again later."
-    except Exception as e:
-        app.logger.error(f"General error generating AI response for {user_id}: {e}")
-        save_message(user_id, user_input, is_bot=False)
-        return "Oops! My AI brain is currently unavailable due to an unexpected issue. Please try again in a few moments."
+    # If all retries fail without returning, provide a final fallback
+    app.logger.error(f"All {MAX_RETRIES} attempts failed for user {user_id} after retries.")
+    save_message(user_id, user_input, is_bot=False)  # Ensure user message is saved even if bot fails all retries
+    return "An unexpected error occurred after multiple retries. Please try again later."
 
 
-# --- Your existing Flask routes will go here ---
 @app.route('/webhook', methods=['GET', 'POST'])
 def webhook():
     if request.method == 'GET':
@@ -342,8 +359,29 @@ def webhook():
                                 for message in value.get('messages', []):
                                     from_number = message.get('from')
 
+                                    # --- Day 6: Handle Empty/Whitespace-only messages ---
                                     if message.get('type') == 'text':
                                         msg_body = message.get('text', {}).get('body')
+                                        if not msg_body or msg_body.strip() == "":
+                                            app.logger.info(
+                                                f"Received empty or whitespace message from {from_number}. Ignoring.")
+                                            return '', 200  # Acknowledge but ignore empty message
+
+                                        # --- Day 6: Basic Rate Limiting ---
+                                        current_time = time.time()
+                                        if from_number in LAST_MESSAGE_TIMESTAMPS:
+                                            time_since_last_message = current_time - LAST_MESSAGE_TIMESTAMPS[
+                                                from_number]
+                                            if time_since_last_message < RATE_LIMIT_SECONDS:
+                                                app.logger.warning(
+                                                    f"Rate limit hit for {from_number}. Message ignored. Time since last: {time_since_last_message:.2f}s")
+                                                # Optional: send a message to user about rate limit
+                                                send_whatsapp_message(from_number,
+                                                                      "Please wait a moment before sending another message.")
+                                                return '', 200  # Acknowledge but do not process
+                                        LAST_MESSAGE_TIMESTAMPS[
+                                            from_number] = current_time  # Update timestamp for this user
+
                                         app.logger.info(f"Received text message from {from_number}: {msg_body}")
 
                                         ai_response = generate_ai_reply(user_id=from_number, user_input=msg_body)
@@ -383,9 +421,7 @@ def webhook():
         return '', 200
 
 
-# This block ensures the Flask app runs only when the script is executed directly
 if __name__ == '__main__':
-    # --- NEW: Initialize the database when the Flask app starts ---
     init_db()
     app.logger.info("Flask application starting...")
     app.run(debug=True, port=5000)
