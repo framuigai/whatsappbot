@@ -1,10 +1,12 @@
 import sqlite3
 import logging
 import time # For last message time tracking
-import json # New: Required for serializing/deserializing embeddings
-import os   # New: Required to load DATABASE_NAME from .env
-from dotenv import load_dotenv # New: To ensure .env is loaded if this file is run standalone
-from ai_utils import generate_embedding # New: Import the embedding function
+import json # Required for serializing/deserializing embeddings
+import os   # Required to load DATABASE_NAME from .env
+from dotenv import load_dotenv # To ensure .env is loaded if this file is run standalone
+# Removed: from ai_utils import generate_embedding - this import is not needed here
+# db_utils should not directly depend on ai_utils for core DB operations to avoid circular imports.
+# The embedding generation should be handled by the caller (add_faq in app.py or a service layer).
 
 # Load environment variables (good practice if this file might be run standalone)
 load_dotenv()
@@ -59,7 +61,7 @@ def create_faqs_table():
             id INTEGER PRIMARY KEY AUTOINCREMENT,
             question TEXT NOT NULL,
             answer TEXT NOT NULL,
-            embedding TEXT  -- Now correctly defined for storing JSON string of the embedding
+            embedding TEXT  -- Stores JSON string of the embedding
         )
     ''')
     conn.commit()
@@ -141,17 +143,17 @@ def get_last_message_time(wa_id):
     conn.close()
     return result[0] if result else 0
 
-# --- FAQ Functions updated for Day 2 ---
-def add_faq(question, answer): # Removed 'embedding' as a direct argument
-    """Adds a new FAQ to the database, generating its embedding automatically."""
+# --- FAQ Functions ---
+# Note: generate_embedding is now called in app.py when adding FAQs to avoid circular import with ai_utils
+def add_faq(question, answer, embedding): # embedding is now passed as an argument
+    """Adds a new FAQ to the database with its pre-generated embedding."""
     conn = get_db_connection()
     cursor = conn.cursor()
 
-    embedding = generate_embedding(question) # Generate embedding for the question
     if embedding is None:
-        logging.error(f"Failed to generate embedding for FAQ question: '{question}'")
+        logging.error(f"Cannot add FAQ '{question}' - embedding is None.")
         conn.close()
-        return None # Indicate failure
+        return None
 
     try:
         # Store the embedding as a JSON string
@@ -176,9 +178,10 @@ def get_all_faqs():
         faq_item = {"id": row[0], "question": row[1], "answer": row[2]}
         if row[3]: # Check if embedding exists
             try:
-                faq_item["embedding"] = json.loads(row[3]) # Parse JSON string back to list
+                # CRITICAL FIX: Parse JSON string back to list for ai_utils.cosine_similarity
+                faq_item["embedding"] = json.loads(row[3])
             except json.JSONDecodeError:
-                logging.error(f"Error decoding embedding JSON for FAQ ID {row[0]}.")
+                logging.error(f"Error decoding embedding JSON for FAQ ID {row[0]}. Setting embedding to None.")
                 faq_item["embedding"] = None # Set to None if decoding fails
         else:
             faq_item["embedding"] = None
