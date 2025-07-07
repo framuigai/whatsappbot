@@ -1,11 +1,18 @@
 import sqlite3
 import logging
 import time # For last message time tracking
+import json # New: Required for serializing/deserializing embeddings
+import os   # New: Required to load DATABASE_NAME from .env
+from dotenv import load_dotenv # New: To ensure .env is loaded if this file is run standalone
+from ai_utils import generate_embedding # New: Import the embedding function
+
+# Load environment variables (good practice if this file might be run standalone)
+load_dotenv()
 
 # Configure logging for this module
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 
-DATABASE_NAME = 'conversations.db' # Define your database name here
+DATABASE_NAME = os.getenv('DATABASE_NAME', 'conversations.db') # Load from .env, default if not set
 
 def get_db_connection():
     """Establishes and returns a database connection."""
@@ -44,7 +51,7 @@ def create_last_message_time_table():
     logging.info("Last message times table checked/created successfully.")
 
 def create_faqs_table():
-    """Creates the faqs table if it doesn't exist."""
+    """Creates the faqs table if it doesn't exist, including the embedding column."""
     conn = get_db_connection()
     cursor = conn.cursor()
     cursor.execute('''
@@ -52,7 +59,7 @@ def create_faqs_table():
             id INTEGER PRIMARY KEY AUTOINCREMENT,
             question TEXT NOT NULL,
             answer TEXT NOT NULL,
-            embedding TEXT  -- Will store JSON string of the embedding
+            embedding TEXT  -- Now correctly defined for storing JSON string of the embedding
         )
     ''')
     conn.commit()
@@ -62,8 +69,8 @@ def create_faqs_table():
 def init_db():
     """Initializes all necessary database tables."""
     create_conversations_table()
-    create_last_message_time_table() # Ensure this is called
-    create_faqs_table() # New: Ensure FAQs table is created
+    create_last_message_time_table()
+    create_faqs_table()
     logging.info("Database initialized successfully.")
 
 def add_message(wa_id, message_text, sender, response_text=None):
@@ -97,19 +104,15 @@ def get_message_history(wa_id, limit=10):
     history = cursor.fetchall()
     conn.close()
 
-    # Format history for Gemini (user/model roles)
     formatted_history = []
     for row in reversed(history):
         user_message, bot_response, sender = row
         if sender == 'user':
             formatted_history.append({'role': 'user', 'parts': [user_message]})
-            if bot_response: # If the bot already responded to this message
+            if bot_response:
                 formatted_history.append({'role': 'model', 'parts': [bot_response]})
         elif sender == 'model':
-            # This case might happen if a bot message is explicitly logged or if
-            # the history retrieval includes partial turns. Adjust logic if needed.
-            # For our current flow, 'model' messages are logged as response_text to 'user' messages.
-            pass
+            pass # We log bot responses as part of the user's message entry for simplicity
     return formatted_history
 
 def update_last_message_time(wa_id):
@@ -138,29 +141,48 @@ def get_last_message_time(wa_id):
     conn.close()
     return result[0] if result else 0
 
-# --- New FAQ Functions for Day 1 ---
-def add_faq(question, answer, embedding=""): # Embedding will be populated in Day 2
-    """Adds a new FAQ to the database."""
+# --- FAQ Functions updated for Day 2 ---
+def add_faq(question, answer): # Removed 'embedding' as a direct argument
+    """Adds a new FAQ to the database, generating its embedding automatically."""
     conn = get_db_connection()
     cursor = conn.cursor()
+
+    embedding = generate_embedding(question) # Generate embedding for the question
+    if embedding is None:
+        logging.error(f"Failed to generate embedding for FAQ question: '{question}'")
+        conn.close()
+        return None # Indicate failure
+
     try:
+        # Store the embedding as a JSON string
         cursor.execute("INSERT INTO faqs (question, answer, embedding) VALUES (?, ?, ?)",
-                       (question, answer, embedding))
+                       (question, answer, json.dumps(embedding)))
         conn.commit()
-        logging.info(f"FAQ added: Q='{question[:50]}...'")
+        logging.info(f"FAQ added successfully with embedding: Q='{question[:50]}...'")
         return cursor.lastrowid
     except sqlite3.Error as e:
-        logging.error(f"Error adding FAQ: {e}")
+        logging.error(f"Error adding FAQ to DB: {e}")
         return None
     finally:
         conn.close()
 
 def get_all_faqs():
-    """Retrieves all FAQs from the database."""
+    """Retrieves all FAQs from the database, including embeddings (as JSON strings)."""
     conn = get_db_connection()
     cursor = conn.cursor()
     cursor.execute("SELECT id, question, answer, embedding FROM faqs")
-    faqs = [{"id": row[0], "question": row[1], "answer": row[2], "embedding": row[3]} for row in cursor.fetchall()]
+    faqs = []
+    for row in cursor.fetchall():
+        faq_item = {"id": row[0], "question": row[1], "answer": row[2]}
+        if row[3]: # Check if embedding exists
+            try:
+                faq_item["embedding"] = json.loads(row[3]) # Parse JSON string back to list
+            except json.JSONDecodeError:
+                logging.error(f"Error decoding embedding JSON for FAQ ID {row[0]}.")
+                faq_item["embedding"] = None # Set to None if decoding fails
+        else:
+            faq_item["embedding"] = None
+        faqs.append(faq_item)
     conn.close()
     return faqs
 

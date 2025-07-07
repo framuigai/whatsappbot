@@ -4,10 +4,12 @@ import logging
 import time
 from flask import Flask, request, jsonify
 from dotenv import load_dotenv
+import google.generativeai as genai # New: Import genai for configuration
 
 # Import functions from our new utility modules
 from whatsapp_api_utils import send_whatsapp_message
-import db_utils # Import as module, then call db_utils.function_name
+import db_utils
+from ai_utils import generate_ai_reply, generate_embedding # Updated: Import generate_embedding too
 
 # Load environment variables from .env file
 load_dotenv()
@@ -20,6 +22,8 @@ app = Flask(__name__)
 # Environment variables
 VERIFY_TOKEN = os.getenv("VERIFY_TOKEN")
 WHATSAPP_PHONE_NUMBER_ID = os.getenv("WHATSAPP_PHONE_NUMBER_ID")
+# NEW: Configure Gemini API globally when the app starts
+genai.configure(api_key=os.getenv('GOOGLE_API_KEY'))
 
 # Rate Limiting Configuration
 RATE_LIMIT_SECONDS = 5 # Users can only send a new message after this many seconds
@@ -27,17 +31,10 @@ RATE_LIMIT_SECONDS = 5 # Users can only send a new message after this many secon
 # Initialize the database when the app starts
 with app.app_context():
     db_utils.init_db()
-
-# --- Placeholder for Gemini AI Logic (to be moved to ai_utils.py on Day 2) ---
-# For Day 1, we'll simplify this to a placeholder to ensure refactoring works.
-# The actual Gemini model and generation will be implemented in ai_utils.py on Day 2.
-# You will remove this placeholder once ai_utils.py is set up.
-def get_ai_response_placeholder(user_message, wa_id):
-    # This function will be replaced by a call to ai_utils.generate_ai_reply on Day 2
-    logging.info(f"Received message from {wa_id}: {user_message}")
-    # Simulating a basic response without AI for Day 1
-    return "Thank you for your message! My AI brain is currently being upgraded for Week 3. Please check back soon!"
-# --- End Placeholder ---
+    # Temporary: Add an FAQ to test embedding generation
+    # Uncomment the line below, run the app once, then comment it out again
+    # db_utils.add_faq("What is the company's return policy?", "Our return policy allows returns within 30 days of purchase with a valid receipt.")
+    # db_utils.add_faq("How do I contact customer support?", "You can reach customer support by calling 1-800-555-0199 or emailing support@example.com.")
 
 
 @app.route("/webhook", methods=["GET"])
@@ -108,8 +105,8 @@ def webhook_post():
                         # Update last message time for the user
                         db_utils.update_last_message_time(wa_id)
 
-                        # Get AI response (using placeholder for Day 1)
-                        ai_response_text = get_ai_response_placeholder(user_message, wa_id)
+                        # Get AI response (now using ai_utils.generate_ai_reply)
+                        ai_response_text = generate_ai_reply(user_message, wa_id) # Call the function from ai_utils
 
                         # Send AI response via WhatsApp
                         if ai_response_text:
