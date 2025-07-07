@@ -9,14 +9,14 @@ import google.generativeai as genai
 # Import functions from our new utility modules
 from whatsapp_api_utils import send_whatsapp_message
 import db_utils
-# Corrected: Only import what's directly used in app.py's main logic
-from ai_utils import generate_ai_reply, generate_embedding
+from ai_utils import generate_ai_reply, generate_embedding # Only generate_embedding is needed here if adding FAQs
 
 # Load environment variables from .env file
 load_dotenv()
 
 # Configure logging for the main app
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
+logger = logging.getLogger(__name__) # Get a logger for the main app
 
 app = Flask(__name__)
 
@@ -36,54 +36,35 @@ with app.app_context():
     # This block now correctly generates embeddings before adding FAQs.
 
     """
+    # Helper function for adding FAQs with validation (Day 5 requirement)
+    def add_faq_with_validation(question, answer):
+        if not question or not question.strip():
+            logger.error(f"Validation failed: FAQ question cannot be empty. Q: '{question}'")
+            return False, "FAQ question cannot be empty."
+        if not answer or not answer.strip():
+            logger.error(f"Validation failed: FAQ answer cannot be empty. Q: '{question}', A: '{answer}'")
+            return False, "FAQ answer cannot be empty."
+
+        embedding = generate_embedding(question)
+        if embedding:
+            db_utils.add_faq(question, answer, embedding)
+            logger.info(f"Successfully added FAQ: Q='{question[:50]}...'")
+            return True, "FAQ added successfully."
+        else:
+            logger.error(f"Failed to generate embedding for FAQ: Q='{question[:50]}...'")
+            return False, "Failed to generate embedding."
 
     # FAQ 1
-    q1 = "What is the company's return policy?"
-    a1 = "Our return policy allows returns within 30 days of purchase with a valid receipt."
-    e1 = generate_embedding(q1)
-    if e1:
-        db_utils.add_faq(q1, a1, e1)
-    else:
-        logging.error(f"Failed to generate embedding for FAQ: {q1}")
+    add_faq_with_validation("What is the company's return policy?", "Our return policy allows returns within 30 days of purchase with a valid receipt.")
+    add_faq_with_validation("How do I contact customer support?", "You can reach customer support by calling 1-800-555-0199 or emailing support@example.com.")
+    add_faq_with_validation("Where are you located?", "Our main office is located in Nairobi, Kenya.")
+    add_faq_with_validation("Do you offer international shipping?", "Yes, we ship to most countries worldwide. Shipping fees apply.")
+    add_faq_with_validation("What is your refund procedure?", "To get a refund, please bring the item and receipt to any store location or mail it back to us.")
 
-    # FAQ 2
-    q2 = "How do I contact customer support?"
-    a2 = "You can reach customer support by calling 1-800-555-0199 or emailing support@example.com."
-    e2 = generate_embedding(q2)
-    if e2:
-        db_utils.add_faq(q2, a2, e2)
-    else:
-        logging.error(f"Failed to generate embedding for FAQ: {q2}")
-
-    # FAQ 3
-    q3 = "Where are you located?"
-    a3 = "Our main office is located in Nairobi, Kenya."
-    e3 = generate_embedding(q3)
-    if e3:
-        db_utils.add_faq(q3, a3, e3)
-    else:
-        logging.error(f"Failed to generate embedding for FAQ: {q3}")
-
-    # FAQ 4
-    q4 = "Do you offer international shipping?"
-    a4 = "Yes, we ship to most countries worldwide. Shipping fees apply."
-    e4 = generate_embedding(q4)
-    if e4:
-        db_utils.add_faq(q4, a4, e4)
-    else:
-        logging.error(f"Failed to generate embedding for FAQ: {q4}")
-
-    # FAQ 5
-    q5 = "What is your refund procedure?"
-    a5 = "To get a refund, please bring the item and receipt to any store location or mail it back to us."
-    e5 = generate_embedding(q5)
-    if e5:
-        db_utils.add_faq(q5, a5, e5)
-    else:
-        logging.error(f"Failed to generate embedding for FAQ: {q5}")
-        
-        
-        """
+    # Example of a failed validation attempt (uncomment to test)
+    # add_faq_with_validation("", "This answer should not be added.")
+    # add_faq_with_validation("Question with no answer?", "")
+    """
 
 
 @app.route("/webhook", methods=["GET"])
@@ -97,10 +78,10 @@ def verify_webhook():
 
     if mode and token:
         if mode == "subscribe" and token == VERIFY_TOKEN:
-            logging.info("WEBHOOK_VERIFIED")
+            logger.info("WEBHOOK_VERIFIED")
             return challenge, 200
         else:
-            logging.warning("Webhook verification failed: Token mismatch or wrong mode.")
+            logger.warning("Webhook verification failed: Token mismatch or wrong mode.")
             return "Verification failed", 403
     return "OK", 200 # Default return for GET requests not for verification
 
@@ -110,11 +91,11 @@ def webhook_post():
     Handles incoming messages from WhatsApp.
     """
     data = request.json
-    logging.info(f"Received webhook data: {json.dumps(data, indent=2)}")
+    logger.info(f"Received webhook data: {json.dumps(data, indent=2)}")
 
     # Basic payload validation
     if not data or 'entry' not in data or not data['entry']:
-        logging.warning("Invalid webhook payload: Missing 'entry'.")
+        logger.warning("Invalid webhook payload: Missing 'entry'.")
         return jsonify({"status": "error", "message": "Invalid payload"}), 400
 
     for entry in data['entry']:
@@ -128,11 +109,11 @@ def webhook_post():
 
                     if message_type == 'text':
                         user_message = message['text']['body']
-                        logging.info(f"Received text message from {from_number}: {user_message}")
+                        logger.info(f"Received text message from {from_number}: {user_message}")
 
                         # Handle empty or whitespace-only messages
                         if not user_message.strip():
-                            logging.info(f"Received empty or whitespace message from {from_number}. Ignoring.")
+                            logger.info(f"Received empty or whitespace message from {from_number}. Ignoring.")
                             db_utils.add_message(wa_id, user_message, 'user', 'Ignored (empty/whitespace)')
                             return jsonify({"status": "success"}), 200
 
@@ -144,7 +125,7 @@ def webhook_post():
                         if time_since_last_message < RATE_LIMIT_SECONDS:
                             wait_time_remaining = RATE_LIMIT_SECONDS - time_since_last_message
                             response_message = f"Please wait {int(wait_time_remaining)}s before sending another message."
-                            logging.warning(f"Rate limit hit for {from_number}. Remaining: {wait_time_remaining}s")
+                            logger.warning(f"Rate limit hit for {from_number}. Remaining: {wait_time_remaining}s")
                             send_whatsapp_message(from_number, response_message)
                             db_utils.add_message(wa_id, user_message, 'user', response_message)
                             return jsonify({"status": "rate_limited"}), 200
@@ -161,21 +142,21 @@ def webhook_post():
                             if success:
                                 db_utils.add_message(wa_id, user_message, 'user', ai_response_text)
                             else:
-                                logging.error(f"Failed to send response to {from_number}.")
+                                logger.error(f"Failed to send response to {from_number}.")
                                 db_utils.add_message(wa_id, user_message, 'user', 'Failed to send response')
                         else:
-                            logging.warning(f"AI response was empty for message from {from_number}.")
+                            logger.warning(f"AI response was empty for message from {from_number}.")
                             db_utils.add_message(wa_id, user_message, 'user', 'No AI response generated')
 
                     elif message_type == 'button':
                         button_payload = message['button']['payload']
-                        logging.info(f"Received button click from {from_number} with payload: {button_payload}")
+                        logger.info(f"Received button click from {from_number} with payload: {button_payload}")
                         response_message = f"You clicked: {button_payload}"
                         send_whatsapp_message(from_number, response_message)
                         db_utils.add_message(wa_id, f"Button Click: {button_payload}", 'user', response_message)
 
                     else:
-                        logging.info(f"Received message of type '{message_type}' from {from_number}. Not handling this type yet.")
+                        logger.info(f"Received message of type '{message_type}' from {from_number}. Not handling this type yet.")
                         db_utils.add_message(wa_id, f"Unhandled type: {message_type}", 'user', 'Unsupported message type')
 
     return jsonify({"status": "success"}), 200
