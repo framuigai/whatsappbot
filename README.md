@@ -8,6 +8,7 @@ A basic, yet robust, WhatsApp chatbot powered by Google's Gemini 1.5 Flash model
 * **Gemini AI Powered:** Uses Google's Gemini 1.5 Flash model for intelligent replies.
 * **Conversation Context:** Stores and retrieves message history in a SQLite database to maintain multi-turn conversations.
 * **Token Management:** Intelligently truncates conversation history to stay within Gemini's context window limits.
+* **RAG (Retrieval Augmented Generation):** Integrates an internal FAQ knowledge base to provide precise answers when relevant, leveraging semantic search with Gemini embeddings.
 * **Resilience & Edge Case Handling:**
     * Graceful handling of empty or whitespace-only messages.
     * Basic rate-limiting to prevent spam from a single user.
@@ -45,18 +46,34 @@ Before you begin, ensure you have the following installed:
 
 3.  **Install Dependencies:**
     ```bash
-    pip install Flask python-dotenv requests google-generativeai sqlite3
+    pip install Flask python-dotenv requests google-generativeai numpy # Added numpy for cosine similarity
     ```
 
 4.  **Environment Variables:**
     Create a `.env` file in the root of your project directory and add the following:
     ```dotenv
     VERIFY_TOKEN="YOUR_WHATSAPP_WEBHOOK_VERIFY_TOKEN"
-    WHATSAPP_ACCESS_TOKEN="YOUR_WHATSAPP_CLOUD_API_ACCESS_TOKEN"
     WHATSAPP_PHONE_NUMBER_ID="YOUR_WHATSAPP_PHONE_NUMBER_ID"
     GEMINI_API_KEY="YOUR_GOOGLE_GEMINI_API_KEY"
+    DATABASE_NAME="conversations.db" # Default name for your SQLite database
+    RATE_LIMIT_SECONDS=5 # Seconds a user must wait before sending another message
+    FAQ_SIMILARITY_THRESHOLD=0.75 # Threshold for FAQ relevance (0.0 to 1.0)
+    LOGGING_LEVEL=INFO # Set to DEBUG for more verbose logs, INFO for production
+    FLASK_DEBUG=True # Set to True for development, False for production
+    GEMINI_MODEL_NAME=gemini-1.5-flash # The Gemini model used for text generation
+    GEMINI_EMBEDDING_MODEL=embedding-001 # The Gemini model used for embedding generation
     ```
-    * Replace the placeholder values with your actual tokens and IDs from WhatsApp and Google Cloud.
+    * Replace placeholder values with your actual tokens and IDs.
+
+5.  **Initialize Database and Load FAQs (Manual Method):**
+    * Run the `app.py` file **once** with the "Initial FAQ Loading" block (in `app.py`) uncommented. This will create your database tables and populate the FAQs.
+    * After the FAQs are loaded successfully (check your logs), **re-comment** the "Initial FAQ Loading" block in `app.py` to prevent re-adding FAQs on subsequent runs.
+    ```bash
+    # Ensure your virtual environment is activated
+    python app.py
+    # Wait for logs to confirm FAQ loading, then CTRL+C to stop
+    # Now, re-comment the FAQ loading block in app.py
+    ```
 
 ## Running the Bot
 
@@ -90,15 +107,18 @@ Once the Flask server and ngrok are running, and your WhatsApp webhook is config
 ## Troubleshooting
 
 * **"WEBHOOK_VERIFIED failed"**: Double-check your `VERIFY_TOKEN` in `.env` and in the WhatsApp webhook configuration.
-* **No replies from bot**: Check your Flask console for any `ERROR` messages. Ensure `ngrok` is running and its URL is correct in the WhatsApp webhook. Check your WhatsApp Cloud API dashboard for any error messages related to outgoing messages.
-* **Bot not remembering context**: Check your database (`conversations.db`) to ensure messages are being saved. Verify the `MAX_HISTORY_TOKENS` logic in `generate_ai_reply`.
-* **"Sorry, I couldn't process your request right now."**: This is a general fallback. Check your Flask logs for more specific errors (e.g., Gemini API errors, token counting issues).
+* **No replies from bot**: Check your Flask console and `whatsapp_bot.log` for any `ERROR` messages. Ensure `ngrok` is running and its URL is correct in the WhatsApp webhook. Check your WhatsApp Cloud API dashboard for any error messages related to outgoing messages.
+* **Bot not remembering context**: Check your database (`conversations.db`) to ensure messages are being saved.
+* **"Sorry, I couldn't process your request right now."**: This is a general fallback. Check your Flask logs for more specific errors (e.g., Gemini API errors, embedding generation failures).
+* **"Please wait X seconds..." (Rate Limit)**: This indicates you're sending messages too quickly. Adjust `RATE_LIMIT_SECONDS` in `.env` if needed for testing.
 
 ## Future Enhancements (Optional)
 
-* **Persistent Rate Limiting:** Implement rate limiting that persists across server restarts (e.g., using Redis or SQLite for timestamp storage).
+* **Batch FAQ Loading Script:** Create a separate `import_faqs.py` script to easily load FAQs from JSON/CSV files, replacing the manual loading process.
+* **Persistent Rate Limiting:** Implement rate limiting that persists across server restarts (e.g., using Redis or SQLite for timestamp storage). (Already implemented using SQLite).
 * **Advanced Error Reporting:** Integrate with an error tracking service (e.g., Sentry, Bugsnag).
 * **Unit Tests:** Write automated tests for individual functions.
 * **Deployment:** Deploy to a cloud platform like Heroku, Google Cloud Run, AWS Elastic Beanstalk, etc., for production use.
 * **Rich Media Support:** Extend the bot to handle images, audio, or other media types from WhatsApp.
 * **Command Handling:** Add specific commands (e.g., `/reset` to clear conversation history).
+* **FAISS Integration:** For very large knowledge bases (thousands+ FAQs), integrate FAISS for faster and more efficient similarity search.
