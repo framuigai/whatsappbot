@@ -5,31 +5,22 @@ import json
 import os
 from dotenv import load_dotenv
 
-# Load environment variables (important if this file is run standalone for testing)
 load_dotenv()
 
-# --- Logging Configuration ---
 logger = logging.getLogger(__name__)
 
 DATABASE_NAME = os.getenv('DATABASE_NAME', 'conversations.db')
 
-
 def get_db_connection():
-    """Establishes and returns a database connection."""
     try:
         conn = sqlite3.connect(DATABASE_NAME)
-        conn.row_factory = sqlite3.Row  # Allows accessing columns by name
+        conn.row_factory = sqlite3.Row
         return conn
     except sqlite3.Error as e:
         logger.critical(f"Error connecting to database {DATABASE_NAME}: {e}")
-        raise  # Re-raise to halt execution if DB connection fails
-
+        raise
 
 def create_conversations_table():
-    """
-    Creates the conversations table if it doesn't exist.
-    Adds 'tenant_id' column if it's missing.
-    """
     conn = get_db_connection()
     cursor = conn.cursor()
     try:
@@ -39,21 +30,17 @@ def create_conversations_table():
                 wa_id TEXT NOT NULL,
                 timestamp INTEGER NOT NULL,
                 message_text TEXT NOT NULL,
-                sender TEXT NOT NULL, -- 'user' or 'model'
-                response_text TEXT -- The bot's reply to this specific user message
+                sender TEXT NOT NULL,
+                response_text TEXT,
+                tenant_id TEXT -- Ensure this column exists
             )
         ''')
-
-        # --- NEW ADDITION FOR TENANT_ID ---
-        # Check if tenant_id column exists, if not, add it
+        # Add tenant_id column if it doesn't exist (for existing databases)
         cursor.execute("PRAGMA table_info(conversations)")
         columns = [col[1] for col in cursor.fetchall()]
         if 'tenant_id' not in columns:
             cursor.execute('ALTER TABLE conversations ADD COLUMN tenant_id TEXT')
             logger.info("Added 'tenant_id' column to 'conversations' table.")
-            # Optional: If you have existing data and want to assign a default tenant_id
-            # cursor.execute("UPDATE conversations SET tenant_id = 'default_unassigned_tenant'")
-        # ----------------------------------
 
         conn.commit()
         logger.info("Conversations table checked/created/migrated successfully.")
@@ -62,9 +49,7 @@ def create_conversations_table():
     finally:
         conn.close()
 
-
 def create_last_message_time_table():
-    """Creates a table to store the last message timestamp for rate limiting."""
     conn = get_db_connection()
     cursor = conn.cursor()
     try:
@@ -81,9 +66,7 @@ def create_last_message_time_table():
     finally:
         conn.close()
 
-
 def create_faqs_table():
-    """Creates the faqs table if it doesn't exist, including the embedding column."""
     conn = get_db_connection()
     cursor = conn.cursor()
     try:
@@ -92,7 +75,7 @@ def create_faqs_table():
                 id INTEGER PRIMARY KEY AUTOINCREMENT,
                 question TEXT NOT NULL,
                 answer TEXT NOT NULL,
-                embedding TEXT  -- Stores JSON string of the embedding
+                embedding TEXT
             )
         ''')
         conn.commit()
@@ -102,6 +85,61 @@ def create_faqs_table():
     finally:
         conn.close()
 
+# --- NEW: Tenant Configuration Table ---
+def create_tenants_config_table():
+    """Creates a table to store WhatsApp Business Phone Number ID to tenant_id mapping."""
+    conn = get_db_connection()
+    cursor = conn.cursor()
+    try:
+        cursor.execute('''
+            CREATE TABLE IF NOT EXISTS tenants_config (
+                whatsapp_phone_number_id TEXT PRIMARY KEY,
+                tenant_id TEXT NOT NULL UNIQUE,
+                tenant_name TEXT,
+                created_at INTEGER NOT NULL
+            )
+        ''')
+        conn.commit()
+        logger.info("Tenants config table checked/created successfully.")
+    except sqlite3.Error as e:
+        logger.error(f"Error creating tenants_config table: {e}")
+    finally:
+        conn.close()
+
+def add_tenant_config(whatsapp_phone_number_id, tenant_id, tenant_name=None):
+    """Adds or updates a tenant configuration."""
+    conn = get_db_connection()
+    cursor = conn.cursor()
+    current_time = int(time.time())
+    try:
+        cursor.execute(
+            "INSERT OR REPLACE INTO tenants_config (whatsapp_phone_number_id, tenant_id, tenant_name, created_at) VALUES (?, ?, ?, ?)",
+            (whatsapp_phone_number_id, tenant_id, tenant_name, current_time)
+        )
+        conn.commit()
+        logger.info(f"Tenant config added/updated: WhatsApp Phone ID {whatsapp_phone_number_id} mapped to Tenant ID {tenant_id}")
+        return True
+    except sqlite3.Error as e:
+        logger.error(f"Error adding/updating tenant config for WhatsApp Phone ID {whatsapp_phone_number_id}: {e}", exc_info=True)
+        return False
+    finally:
+        conn.close()
+
+def get_tenant_id_from_whatsapp_phone_number(whatsapp_phone_number_id):
+    """Retrieves the tenant_id for a given WhatsApp Business Phone Number ID."""
+    conn = get_db_connection()
+    cursor = conn.cursor()
+    try:
+        cursor.execute("SELECT tenant_id FROM tenants_config WHERE whatsapp_phone_number_id = ?", (whatsapp_phone_number_id,))
+        result = cursor.fetchone()
+        return result['tenant_id'] if result else None
+    except sqlite3.Error as e:
+        logger.error(f"Error retrieving tenant_id for WhatsApp Phone ID {whatsapp_phone_number_id}: {e}", exc_info=True)
+        return None
+    finally:
+        conn.close()
+# --- END NEW TENANT CONFIGURATION ---
+
 
 def init_db():
     """Initializes all necessary database tables."""
@@ -109,23 +147,20 @@ def init_db():
     create_conversations_table()
     create_last_message_time_table()
     create_faqs_table()
+    create_tenants_config_table() # NEW: Initialize the tenant config table
     logger.info("Database initialization complete.")
 
-
-def add_message(wa_id, message_text, sender, tenant_id, response_text=None):  # ADDED tenant_id
-    """Adds a message to the conversation history, associating it with a tenant_id."""
+def add_message(wa_id, message_text, sender, tenant_id, response_text=None):
     conn = get_db_connection()
     cursor = conn.cursor()
     timestamp = int(time.time())
     try:
         cursor.execute(
             "INSERT INTO conversations (wa_id, timestamp, message_text, sender, response_text, tenant_id) VALUES (?, ?, ?, ?, ?, ?)",
-            # ADDED tenant_id
-            (wa_id, timestamp, message_text, sender, response_text, tenant_id)  # ADDED tenant_id
+            (wa_id, timestamp, message_text, sender, response_text, tenant_id)
         )
         conn.commit()
-        logger.debug(
-            f"Message added for {wa_id} (Tenant: {tenant_id}): '{message_text}' (Sender: {sender}, Response: {response_text or 'N/A'})")
+        logger.debug(f"Message added for {wa_id} (Tenant: {tenant_id}): '{message_text}' (Sender: {sender}, Response: {response_text or 'N/A'})")
         return cursor.lastrowid
     except sqlite3.Error as e:
         logger.error(f"Error adding message to DB for {wa_id} (Tenant: {tenant_id}): {e}", exc_info=True)
@@ -133,17 +168,15 @@ def add_message(wa_id, message_text, sender, tenant_id, response_text=None):  # 
     finally:
         conn.close()
 
-
-def get_message_history(wa_id, tenant_id, limit=10):  # ADDED tenant_id
-    """Retrieves conversation history for a given WhatsApp ID and tenant_id."""
+def get_message_history(wa_id, tenant_id, limit=10):
     conn = get_db_connection()
     cursor = conn.cursor()
     try:
         cursor.execute(
             "SELECT message_text, response_text, sender FROM conversations "
-            "WHERE wa_id = ? AND tenant_id = ? "  # ADDED tenant_id filter
+            "WHERE wa_id = ? AND tenant_id = ? "
             "ORDER BY timestamp DESC LIMIT ?",
-            (wa_id, tenant_id, limit)  # ADDED tenant_id
+            (wa_id, tenant_id, limit)
         )
         history = cursor.fetchall()
         formatted_history = []
@@ -160,12 +193,7 @@ def get_message_history(wa_id, tenant_id, limit=10):  # ADDED tenant_id
     finally:
         conn.close()
 
-
 def update_last_message_time(wa_id):
-    """Updates the last message timestamp for a given WhatsApp ID.
-       Note: Rate limiting is currently not tenant-aware, applies globally per wa_id.
-       If you need tenant-specific rate limiting, this table would also need a tenant_id.
-    """
     conn = get_db_connection()
     cursor = conn.cursor()
     current_time = int(time.time())
@@ -181,11 +209,7 @@ def update_last_message_time(wa_id):
     finally:
         conn.close()
 
-
 def get_last_message_time(wa_id):
-    """Retrieves the last message timestamp for a given WhatsApp ID. Returns 0 if no record.
-       Note: Rate limiting is currently not tenant-aware, applies globally per wa_id.
-    """
     conn = get_db_connection()
     cursor = conn.cursor()
     try:
@@ -198,23 +222,14 @@ def get_last_message_time(wa_id):
     finally:
         conn.close()
 
-
-# --- FAQ Functions ---
-# Note: FAQs are currently shared across all tenants. If you need tenant-specific FAQs,
-# the 'faqs' table would also need a 'tenant_id' column, and add_faq/get_all_faqs
-# would need to be updated to include/filter by tenant_id.
 def add_faq(question, answer, embedding):
-    """Adds a new FAQ to the database with its pre-generated embedding."""
     conn = get_db_connection()
     cursor = conn.cursor()
-
     if embedding is None:
         logger.error(f"Cannot add FAQ '{question}' - embedding is None. Ensure embedding generation was successful.")
         conn.close()
         return None
-
     try:
-        # Store the embedding as a JSON string
         embedding_json = json.dumps(embedding)
         cursor.execute("INSERT INTO faqs (question, answer, embedding) VALUES (?, ?, ?)",
                        (question, answer, embedding_json))
@@ -227,9 +242,7 @@ def add_faq(question, answer, embedding):
     finally:
         conn.close()
 
-
 def get_all_faqs():
-    """Retrieves all FAQs from the database, including embeddings (parsed back to lists)."""
     conn = get_db_connection()
     cursor = conn.cursor()
     faqs = []
@@ -237,12 +250,11 @@ def get_all_faqs():
         cursor.execute("SELECT id, question, answer, embedding FROM faqs")
         for row in cursor.fetchall():
             faq_item = {"id": row['id'], "question": row['question'], "answer": row['answer']}
-            if row['embedding']:  # Check if embedding exists
+            if row['embedding']:
                 try:
                     faq_item["embedding"] = json.loads(row['embedding'])
                 except json.JSONDecodeError:
-                    logger.error(f"Error decoding embedding JSON for FAQ ID {row['id']}. Setting embedding to None.",
-                                 exc_info=True)
+                    logger.error(f"Error decoding embedding JSON for FAQ ID {row['id']}. Setting embedding to None.", exc_info=True)
                     faq_item["embedding"] = None
             else:
                 faq_item["embedding"] = None
@@ -253,9 +265,7 @@ def get_all_faqs():
         conn.close()
     return faqs
 
-
 def delete_faq(faq_id):
-    """Deletes an FAQ by its ID."""
     conn = get_db_connection()
     cursor = conn.cursor()
     try:
@@ -273,13 +283,7 @@ def delete_faq(faq_id):
     finally:
         conn.close()
 
-
-# --- NEW FUNCTION FOR ADMIN DASHBOARD ---
 def get_all_wa_ids(tenant_id=None):
-    """
-    Retrieves all unique WhatsApp IDs (users) for a given tenant_id.
-    If tenant_id is None, retrieves all unique IDs across all tenants (for super-admin view).
-    """
     conn = get_db_connection()
     cursor = conn.cursor()
     wa_ids = []
