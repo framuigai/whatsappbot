@@ -1,1 +1,8 @@
+# --- Python specific ---
+# Compiled Python files
+__pycache__/
+*.pyc
+
 .env
+*.db
+.idea/

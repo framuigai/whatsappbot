@@ -42,17 +42,10 @@ app = Flask(__name__)
 VERIFY_TOKEN = os.getenv("VERIFY_TOKEN")
 if not VERIFY_TOKEN:
     logger.error("VERIFY_TOKEN not set in environment variables. Webhook verification will fail.")
-# WHATSAPP_PHONE_NUMBER_ID is usually the ID of YOUR business's phone number on WhatsApp platform.
-# This is distinct from the 'phone_number_id' in the webhook which indicates which of your client's
-# phone numbers the message came from (if you manage multiple for different clients).
 WHATSAPP_PHONE_NUMBER_ID = os.getenv("WHATSAPP_PHONE_NUMBER_ID")
 if not WHATSAPP_PHONE_NUMBER_ID:
     logger.warning(
         "WHATSAPP_PHONE_NUMBER_ID not set in environment variables. This might be needed for sending messages via API if not dynamically determined by webhook metadata.")
-
-# --- REMOVED: DEFAULT_TENANT_ID is no longer a static global variable ---
-# logger.info(f"Bot instance operating with DEFAULT_TENANT_ID: {DEFAULT_TENANT_ID}")
-
 
 # Configure Gemini API globally when the app starts
 GEMINI_API_KEY = os.getenv('GEMINI_API_KEY')
@@ -89,14 +82,11 @@ with app.app_context():
             logger.error(f"Validation failed: FAQ question cannot be empty. Q: '{question}'")
             return False
         if not answer or not answer.strip():
-            logger.error(f"Validation failed: FAQ answer cannot be empty. Q: '{question}', A: '{answer}'")
+            logger.error(f"Validation failed: FAQ question: '{question}', answer cannot be empty. A: '{answer}'")
             return False
 
         embedding = generate_embedding(question)
         if embedding:
-            # Note: FAQs are currently NOT tenant-specific in db_utils.
-            # If you want tenant-specific FAQs, you'd need to modify db_utils.add_faq
-            # to accept and store a tenant_id, and pass it here.
             faq_id = db_utils.add_faq(question, answer, embedding)
             if faq_id:
                 logger.info(f"Successfully added FAQ (ID: {faq_id}): Q='{question[:50]}...'")
@@ -189,15 +179,12 @@ def webhook_post():
                         logger.error("Could not extract sender WhatsApp ID from message. Skipping.")
                         continue
 
-                    # --- NEW: Dynamically determine tenant_id from webhook payload ---
-                    # The 'phone_number_id' identifies the WhatsApp Business Account's phone number
-                    # through which the message was sent/received. This is your key for client identification.
+                    # --- Dynamically determine tenant_id from webhook payload ---
                     whatsapp_phone_number_id = change.get('value', {}).get('metadata', {}).get('phone_number_id')
 
                     if not whatsapp_phone_number_id:
                         logger.error(
                             f"Missing 'phone_number_id' in webhook metadata for message from {from_number}. Cannot determine tenant. Skipping.")
-                        # Optionally, send an error message back to the user if the tenant cannot be identified
                         send_whatsapp_message(from_number,
                                               "I'm sorry, I couldn't identify which service instance to route your message to. Please contact support.")
                         continue
@@ -210,25 +197,30 @@ def webhook_post():
                         send_whatsapp_message(from_number,
                                               "I'm sorry, your account isn't configured for this service. Please contact support to set it up.")
                         continue
-                    # --- END NEW TENANT_ID DETERMINATION ---
+                    # --- END TENANT_ID DETERMINATION ---
 
                     logger.info(
                         f"Processing message of type '{message_type}' from {from_number} for Tenant: `{current_tenant_id}` (WhatsApp Phone ID: {whatsapp_phone_number_id})")
 
-                    if message_type == 'text':
-                        user_message = message['text']['body']
-                        logger.info(
-                            f"Received text message from {from_number}: '{user_message}' (Tenant: `{current_tenant_id}`)")
+                    # Initialize variables for database storage to ensure they are strings
+                    user_message_to_save = ""
+                    final_ai_response_text_to_save = ""
 
-                        if not user_message.strip():
+                    if message_type == 'text':
+                        user_message_raw = message['text']['body']
+                        # Ensure user_message_to_save is a string, even if webhook sometimes sends objects
+                        user_message_to_save = str(user_message_raw)
+                        logger.info(
+                            f"Received text message from {from_number}: '{user_message_to_save}' (Tenant: `{current_tenant_id}`)")
+
+                        if not user_message_to_save.strip():
                             logger.info(f"Received empty or whitespace message from {from_number}. Ignoring.")
-                            db_utils.add_message(wa_id, user_message, 'user', current_tenant_id,
-                                                 'Ignored (empty/whitespace)')  # Pass tenant_id
+                            db_utils.add_message(wa_id, user_message_to_save, 'user', current_tenant_id,
+                                                 'Ignored (empty/whitespace)')
                             return jsonify({"status": "success"}), 200
 
                         # Rate Limiting Check
-                        last_message_time = db_utils.get_last_message_time(
-                            wa_id)  # Note: Rate limiting is per wa_id, not tenant-specific here
+                        last_message_time = db_utils.get_last_message_time(wa_id)
                         current_time = int(time.time())
                         time_since_last_message = current_time - last_message_time
 
@@ -238,58 +230,80 @@ def webhook_post():
                             logger.warning(
                                 f"Rate limit hit for {from_number}. Remaining: {wait_time_remaining}s (Tenant: `{current_tenant_id}`).")
                             send_whatsapp_message(from_number, response_message)
-                            db_utils.add_message(wa_id, user_message, 'user', current_tenant_id,
-                                                 response_message)  # Pass tenant_id
+                            db_utils.add_message(wa_id, user_message_to_save, 'user', current_tenant_id,
+                                                 response_message)
                             return jsonify({"status": "rate_limited"}), 200
 
                         db_utils.update_last_message_time(wa_id)
 
-                        # Get AI response
-                        # Note: If your AI context needs to be tenant-specific (e.g., different FAQs, persona per client),
-                        # you would need to pass current_tenant_id to generate_ai_reply too, and modify ai_utils accordingly.
-                        ai_response_text = generate_ai_reply(user_message,
-                                                             wa_id)  # Consider passing current_tenant_id here if AI needs tenant context
+                        # Get AI response object (might be string or an object)
+                        ai_response_object = generate_ai_reply(user_message_to_save, wa_id)
 
-                        if ai_response_text:
-                            success = send_whatsapp_message(from_number, ai_response_text)
+                        # Robustly extract plain text from AI response for saving to DB
+                        if ai_response_object:
+                            if isinstance(ai_response_object, str):
+                                final_ai_response_text_to_save = ai_response_object
+                            elif hasattr(ai_response_object, 'text'):
+                                final_ai_response_text_to_save = ai_response_object.text
+                            elif hasattr(ai_response_object, 'candidates') and ai_response_object.candidates:
+                                try:
+                                    # Assuming the first candidate's first text part from content.parts
+                                    parts_texts = [p.text for p in ai_response_object.candidates[0].content.parts if
+                                                   hasattr(p, 'text')]
+                                    final_ai_response_text_to_save = "".join(parts_texts)
+                                except Exception as e:
+                                    logger.warning(
+                                        f"Could not parse Gemini response object for saving text (candidates): {e}")
+                                    final_ai_response_text_to_save = str(
+                                        ai_response_object)  # Fallback to stringifying object
+                            else:
+                                final_ai_response_text_to_save = str(
+                                    ai_response_object)  # Fallback for other unexpected objects
+                        else:
+                            final_ai_response_text_to_save = ""  # If AI generated None
+
+                        if final_ai_response_text_to_save:
+                            success = send_whatsapp_message(from_number, final_ai_response_text_to_save)
                             if success:
-                                db_utils.add_message(wa_id, user_message, 'user', current_tenant_id,
-                                                     ai_response_text)  # Pass tenant_id
+                                db_utils.add_message(wa_id, user_message_to_save, 'user', current_tenant_id,
+                                                     final_ai_response_text_to_save)
                                 logger.info(
                                     f"Successfully sent AI response to {from_number} (Tenant: `{current_tenant_id}`).")
                             else:
                                 logger.error(
                                     f"Failed to send response to {from_number} via WhatsApp API (Tenant: `{current_tenant_id}`).")
-                                db_utils.add_message(wa_id, user_message, 'user', current_tenant_id,
-                                                     'Failed to send response via API')  # Pass tenant_id
+                                db_utils.add_message(wa_id, user_message_to_save, 'user', current_tenant_id,
+                                                     'Failed to send response via API')
                         else:
                             fallback_message = "I'm sorry, I couldn't generate a response for that. Please try rephrasing your question or contact support at support@example.com."
                             logger.warning(
                                 f"AI response was empty for message from {from_number}. Sending fallback (Tenant: `{current_tenant_id}`).")
                             send_whatsapp_message(from_number, fallback_message)
-                            db_utils.add_message(wa_id, user_message, 'user', current_tenant_id,
-                                                 fallback_message)  # Pass tenant_id
+                            db_utils.add_message(wa_id, user_message_to_save, 'user', current_tenant_id,
+                                                 fallback_message)
 
                     elif message_type == 'button':
                         button_payload = message.get('button', {}).get('payload')
+                        user_message_to_save = f"Button Click: {button_payload}" if button_payload else "Button click (no payload)"
                         if button_payload:
                             logger.info(
                                 f"Received button click from {from_number} with payload: {button_payload} (Tenant: `{current_tenant_id}`).")
                             response_message = f"You clicked: {button_payload}"
                             send_whatsapp_message(from_number, response_message)
-                            db_utils.add_message(wa_id, f"Button Click: {button_payload}", 'user', current_tenant_id,
-                                                 response_message)  # Pass tenant_id
+                            db_utils.add_message(wa_id, user_message_to_save, 'user', current_tenant_id,
+                                                 response_message)
                         else:
                             logger.warning(
                                 f"Received button message from {from_number} but no payload found (Tenant: `{current_tenant_id}`).")
-                            db_utils.add_message(wa_id, "Button click (no payload)", 'user', current_tenant_id,
-                                                 'No action for button')  # Pass tenant_id
+                            db_utils.add_message(wa_id, user_message_to_save, 'user', current_tenant_id,
+                                                 'No action for button')
 
-                    else:
+                    else:  # Handle other message types that are not text or button
+                        user_message_to_save = f"Unhandled type: {message_type}"
                         logger.info(
                             f"Received unhandled message type '{message_type}' from {from_number} (Tenant: `{current_tenant_id}`).")
-                        db_utils.add_message(wa_id, f"Unhandled type: {message_type}", 'user', current_tenant_id,
-                                             'Unsupported message type')  # Pass tenant_id
+                        db_utils.add_message(wa_id, user_message_to_save, 'user', current_tenant_id,
+                                             'Unsupported message type')
 
     return jsonify({"status": "success"}), 200
 
@@ -339,9 +353,8 @@ if __name__ == "__main__":
         else:
             logger.error(
                 "WHATSAPP_PHONE_NUMBER_ID environment variable not set. Cannot auto-add initial tenant config.")
-            
+
     """
     # --- END IMPORTANT: Initial tenant configuration setup ---
 
     app.run(debug=os.getenv("FLASK_DEBUG", "False").lower() == "true", host='0.0.0.0', port=5000)
-
