@@ -110,7 +110,7 @@ with app.app_context():
 
 
     # --- Initial FAQ Loading (Run once for setup, then keep commented) ---
-    """   
+    """
     logger.info("Attempting to add initial FAQs (if not already present)...")
     if not db_utils.get_all_faqs(): # Only add if no FAQs exist
         if add_faq_with_validation_and_embedding("What is the company's return policy?", "Our return policy allows returns within 30 days of purchase with a valid receipt."):
@@ -301,6 +301,7 @@ if __name__ == "__main__":
     logging.getLogger('ai_utils').setLevel(log_level_map.get(LOGGING_LEVEL, logging.INFO))
 
     # --- IMPORTANT: Initial tenant configuration setup ---
+    """
     # This block will add your first tenant mapping to the 'tenants_config' table.
     # Replace the placeholder values with your ACTUAL WhatsApp Business Phone Number ID
     # (found in your Meta Developers App Dashboard, e.g., 736065142913405 from your screenshot)
@@ -338,6 +339,8 @@ if __name__ == "__main__":
         else:
             logger.error(
                 "WHATSAPP_PHONE_NUMBER_ID environment variable not set. Cannot auto-add initial tenant config.")
+            
+    """
     # --- END IMPORTANT: Initial tenant configuration setup ---
 
     app.run(debug=os.getenv("FLASK_DEBUG", "False").lower() == "true", host='0.0.0.0', port=5000)
