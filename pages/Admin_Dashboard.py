@@ -3,11 +3,30 @@ import streamlit as st
 import os
 import json
 from dotenv import load_dotenv
+from auth_utils import auth_guard, add_logout_button, init_session_state
 
-# Note: We no longer import firebase_auth_component here directly.
-# The login status is maintained via st.session_state.
+# IMPORTANT: Initialize session state and perform auth guard at the very top
+init_session_state()
+auth_guard() # This will redirect to "pages/Login.py" if not logged in and stops execution
 
-# Placeholder for db_utils functions (remove if you have your actual db_utils.py)
+st.set_page_config(page_title="Admin Dashboard", layout="wide")
+st.title("Admin Dashboard")
+
+# Consistent Sidebar Navigation
+st.sidebar.title("Menu")
+if st.session_state.logged_in_user_info:
+    st.sidebar.write(f"**Logged in as:** {st.session_state.logged_in_user_info.get('email')}")
+st.sidebar.markdown("---")
+st.sidebar.page_link("Home.py", label="Home")
+st.sidebar.page_link("pages/Admin_Dashboard.py", label="Dashboard", icon="📊")
+st.sidebar.page_link("pages/Manage_Tenants.py", label="Manage Tenants", icon="👥")
+st.sidebar.page_link("pages/View_Reports.py", label="View Reports", icon="📈")
+st.sidebar.markdown("---")
+
+# Add Consistent Logout Button
+add_logout_button()
+
+# Placeholder for db_utils functions (replace with actual imports from your db_utils.py)
 def get_all_wa_ids(tenant_id):
     st.info(f"DB: Fetching WhatsApp IDs for tenant '{tenant_id}'...")
     if tenant_id == "my_initial_client_id":
@@ -19,62 +38,29 @@ def get_message_history(wa_id, tenant_id, limit=50):
     if wa_id == "whatsapp:+1234567890":
         return [
             ("Hello bot!", "Hi there! How can I help you?"),
-            ("What are your hours?", "We are open Monday to Friday, 9 AM to 5 PM."),
+            ("What are your hours?","We are open Monday to Friday, 9 AM to 5 PM."),
             ("Thank you!", "You're welcome!")
         ]
     return []
 
 def get_tenant_id_from_whatsapp_phone_number(whatsapp_phone_number_id):
     st.info(f"DB: Getting tenant ID for WhatsApp Phone ID: {whatsapp_phone_number_id}...")
-    return "my_initial_client_id"
+    if whatsapp_phone_number_id == os.getenv("WHATSAPP_PHONE_NUMBER_ID"):
+        return "my_initial_client_id"
+    return None
 
+load_dotenv() # Ensure .env variables are loaded for this page if needed
 
-load_dotenv()
+st.subheader("Welcome to the Admin Dashboard!")
+st.write("This dashboard provides an overview of your WhatsApp bot's activity.")
+st.write("Use the sidebar to navigate to other management sections.")
 
-st.set_page_config(page_title="WhatsApp Bot Admin Dashboard", layout="wide")
-st.title("WhatsApp Bot Admin Dashboard")
-
-# --- Authentication Check and Redirection ---
-# If not logged in, redirect to login page and stop execution of this page.
-if 'logged_in_user_info' not in st.session_state or not st.session_state.logged_in_user_info:
-    st.warning("You are not logged in. Redirecting to login page...")
-    st.switch_page("Login") # Correct: "Login" (page name, not "pages/Login.py")
-    st.stop() # Important: Stop further execution of this page
-
-# --- Dashboard Content (Only if logged in) ---
-
-# Display user info and logout button at the top of the sidebar
-st.sidebar.title("Dashboard Menu")
-st.sidebar.write(f"**Logged in as:** {st.session_state.logged_in_user_info.get('email')}")
-
-# Static Sidebar Menu Items
-st.sidebar.markdown("---")
-# Corrected page_link paths:
-st.sidebar.page_link("Home.py", label="Home") # Home.py is in the root, so direct path
-st.sidebar.page_link("pages/Admin_Dashboard.py", label="Dashboard Overview", icon="📊")
-st.sidebar.page_link("pages/Manage_Tenants.py", label="Manage Tenants", icon="👥") # Added pages/ prefix
-st.sidebar.page_link("pages/View_Reports.py", label="View Reports", icon="📈") # Added pages/ prefix
-st.sidebar.markdown("---")
-
-# Logout Button
-if st.sidebar.button("Logout", key="sidebar_logout_button"):
-    # Clear session state and redirect to login
-    st.session_state.logged_in_user_info = None
-    st.switch_page("Login") # Correct: "Login" (page name)
-
-
-# --- Main Dashboard Functionality ---
 st.subheader("Conversations Overview")
-st.write("This section allows you to view and manage WhatsApp conversations per tenant.")
-
-# Tenant ID input in the main area
 selected_tenant_id = st.text_input("Enter Tenant ID", value="", key="main_tenant_id_input")
 
 if selected_tenant_id:
     st.subheader(f"Conversations for Tenant: `{selected_tenant_id}`")
 
-    # Display clients in the sidebar for selection for this tenant
-    # This part of the sidebar is dynamic based on tenant selection
     st.sidebar.subheader("Clients for Tenant")
     wa_ids = get_all_wa_ids(selected_tenant_id)
 
@@ -82,7 +68,6 @@ if selected_tenant_id:
         st.info(f"No conversations found for tenant `{selected_tenant_id}` yet.")
         st.sidebar.info("No WhatsApp users found for this tenant.")
     else:
-        # Provide a unique key for the selectbox
         selected_wa_id = st.sidebar.selectbox("Select a WhatsApp User:", wa_ids, key="whatsapp_user_select")
 
         if selected_wa_id:
@@ -98,6 +83,6 @@ if selected_tenant_id:
             else:
                 st.info("No chat history found for this user within this tenant.")
         else:
-            st.info("Please select a WhatsApp user to view chat history.")
+            st.info("Select a WhatsApp user from the sidebar to view chat history.")
 else:
-    st.info("Please enter a Tenant ID above to view conversations and select clients.")
+    st.info("Enter a Tenant ID to view conversations.")

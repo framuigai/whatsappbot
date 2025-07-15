@@ -1,33 +1,48 @@
 # pages/Manage_Tenants.py
 import streamlit as st
+from auth_utils import auth_guard, add_logout_button, init_session_state
+
+# IMPORTANT: Initialize session state and perform auth guard at the very top
+init_session_state()
 
 st.set_page_config(page_title="Manage Tenants", layout="wide")
 
-# Authentication check for this page
-if 'logged_in_user_info' not in st.session_state or not st.session_state.logged_in_user_info:
-    st.warning("You are not logged in. Redirecting to login page...")
-    st.switch_page("Login") # Corrected: Just the page name, assuming Login.py is in pages/
-    st.stop() # Stop further execution
+# Authentication Check - MUST be at the very top of restricted pages
+auth_guard() # This will redirect to "pages/Login.py" if not authenticated and stops execution
 
 st.title("Manage Tenants")
-st.write("This is where you would manage your tenant configurations.")
+
+# Consistent Sidebar Navigation
+st.sidebar.title("Menu")
+if st.session_state.logged_in_user_info:
+    st.sidebar.write(f"**Logged in as:** {st.session_state.logged_in_user_info.get('email')}")
+st.sidebar.markdown("---")
+st.sidebar.page_link("Home.py", label="Home")
+st.sidebar.page_link("pages/Admin_Dashboard.py", label="Dashboard", icon="📊")
+st.sidebar.page_link("pages/Manage_Tenants.py", label="Manage Tenants", icon="👥") # Self-link
+st.sidebar.page_link("pages/View_Reports.py", label="View Reports", icon="📈")
+st.sidebar.markdown("---")
+
+# Add Consistent Logout Button
+add_logout_button()
+
+# Main Content for Manage Tenants
 st.info(f"Logged in as: {st.session_state.logged_in_user_info.get('email')}")
 
-# Add your tenant management UI here (e.g., forms, tables for tenant data)
-st.write("---")
 st.subheader("Add New Tenant")
-tenant_name = st.text_input("Tenant Name")
-tenant_id = st.text_input("Tenant ID (e.g., unique identifier)")
-whatsapp_phone_id = st.text_input("WhatsApp Phone Number ID (from Meta/WhatsApp Business Account)")
+tenant_name = st.text_input("Tenant Name", key="new_tenant_name")
+tenant_id = st.text_input("Tenant ID", key="new_tenant_id")
+whatsapp_id = st.text_input("WhatsApp Phone ID", key="new_whatsapp_id")
 
 if st.button("Add Tenant"):
-    if tenant_name and tenant_id and whatsapp_phone_id:
-        # You'd call your db_utils.add_tenant_config here
-        # db_utils.add_tenant_config(whatsapp_phone_id, tenant_id, tenant_name)
-        st.success(f"Tenant '{tenant_name}' (ID: {tenant_id}) added successfully! (Placeholder)")
+    if tenant_name and tenant_id and whatsapp_id:
+        st.success(f"Tenant '{tenant_name}' added successfully!")
+        st.session_state.new_tenant_name = ""
+        st.session_state.new_tenant_id = ""
+        st.session_state.new_whatsapp_id = ""
+        st.experimental_rerun()
     else:
-        st.error("Please fill in all tenant details.")
+        st.error("Please fill all fields.")
 
 st.subheader("Existing Tenants")
-st.write("List and edit existing tenants here.")
-# Example: Use db_utils.get_all_tenants() and display in a table
+st.info("No tenants found yet. Add some above!")
