@@ -1,4 +1,3 @@
-# firebase_auth_component.py
 import streamlit.components.v1 as components
 import os
 import json
@@ -24,7 +23,14 @@ def firebase_auth_component(key=None):
         <meta charset="UTF-8">
         <script type="module" src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app.js"></script>
         <script type="module" src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth.js"></script>
-        <script src="https://cdn.jsdelivr.net/npm/@streamlit/streamlit-component-lib@1.5.0/dist/streamlit-component-lib.js"></script>
+        <script src="/static/js/streamlit-component-lib.js"></script>
+        <script>
+            document.addEventListener("DOMContentLoaded", function() {{
+                if (typeof Streamlit === 'undefined') {{
+                    console.error("❌ Streamlit library not loaded!");
+                }}
+            }});
+        </script>
     </head>
     <body>
         <div>
@@ -48,33 +54,33 @@ def firebase_auth_component(key=None):
             const passwordInput = document.getElementById("password");
             const status = document.getElementById("status");
 
-            // Function to send authentication status to Streamlit
             function sendStatus(user) {{
+                if (typeof Streamlit === "undefined") {{
+                    console.error("❌ Streamlit is not available.");
+                    return;
+                }}
                 if (user) {{
                     user.getIdToken().then(token => {{
-                        Streamlit.setComponentValue(JSON.stringify({{
+                        Streamlit.setComponentValue({{
                             loggedIn: true,
                             email: user.email,
                             uid: user.uid,
                             idToken: token
-                        }}));
+                        }});
                     }});
                 }} else {{
-                    Streamlit.setComponentValue(JSON.stringify({{ loggedIn: false }}));
+                    Streamlit.setComponentValue({{ loggedIn: false }});
                 }}
             }}
 
-            // Function to update the UI based on authentication state
             function updateUI(user) {{
                 if (user) {{
-                    // If logged in, hide login UI, show logout UI
                     emailInput.style.display = 'none';
                     passwordInput.style.display = 'none';
                     loginBtn.style.display = 'none';
                     logoutBtn.style.display = 'inline-block';
                     status.textContent = `Logged in as ${{user.email}}`;
                 }} else {{
-                    // If logged out, show login UI, hide logout UI
                     emailInput.style.display = 'inline-block';
                     passwordInput.style.display = 'inline-block';
                     loginBtn.style.display = 'inline-block';
@@ -85,13 +91,12 @@ def firebase_auth_component(key=None):
 
             loginBtn.addEventListener("click", async () => {{
                 try {{
-                    const userCredential = await signInWithEmailAndPassword(auth, emailInput.value, passwordInput.value);
+                    await signInWithEmailAndPassword(auth, emailInput.value, passwordInput.value);
                     status.textContent = "Login successful!";
-                    // The onAuthStateChanged listener will handle UI update and sending status
                 }} catch (e) {{
                     status.textContent = "Login failed: " + e.message;
-                    sendStatus(null); // Ensure Streamlit state is updated even on login failure
-                    updateUI(null); // Explicitly update UI to logged out state
+                    sendStatus(null);
+                    updateUI(null);
                 }}
             }});
 
@@ -99,24 +104,21 @@ def firebase_auth_component(key=None):
                 try {{
                     await signOut(auth);
                     status.textContent = "Logged out.";
-                    // The onAuthStateChanged listener will handle UI update and sending status
                 }} catch (e) {{
                     status.textContent = "Error logging out: " + e.message;
                 }}
             }});
 
-            // IMPORTANT: This listener is the primary way to manage UI and Streamlit state
-            // It runs whenever the authentication state changes (login, logout, page refresh)
             onAuthStateChanged(auth, (user) => {{
-                sendStatus(user); // Always send the current status to Streamlit
-                updateUI(user); // Always update UI based on current auth state
+                sendStatus(user);
+                updateUI(user);
             }});
 
-            Streamlit.setComponentReady();
-            // The initial UI state will be handled by the onAuthStateChanged listener when the component loads.
+            if (typeof Streamlit !== "undefined") {{
+                Streamlit.setComponentReady();
+            }}
         </script>
     </body>
     </html>
     """
-
     return components.html(component_html, height=450, scrolling=False)
