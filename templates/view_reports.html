@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>View Reports</title> {# Updated title #}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>View Reports</h1> {# Updated heading #}
+        <p>Welcome, {{ user_email }}!</p>
+        <nav>
+            <a href="{{ url_for('admin_routes.dashboard') }}">Dashboard</a> |
+            <a href="{{ url_for('admin_routes.manage_clients') }}">Manage Clients</a> | {# Updated link #}
+            <a href="{{ url_for('admin_routes.view_reports') }}">View Reports</a> |
+            <a href="{{ url_for('auth.logout') }}">Logout</a>
+        </nav>
+
+        <h2>Monthly Statistics</h2>
+        {% if monthly_stats %}
+            <ul>
+                {% for month, value in monthly_stats.items() %}
+                    <li>{{ month }}: {{ value }} conversations</li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p>No monthly statistics available.</p>
+        {% endif %}
+
+        <p>More detailed reports will be displayed here.</p>
+    </div>
+</body>
+</html>

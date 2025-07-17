@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manage Clients</title> {# Updated title #}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>Manage Clients</h1> {# Updated heading #}
+        <p>Welcome, {{ user_email }}!</p>
+        <nav>
+            <a href="{{ url_for('admin_routes.dashboard') }}">Dashboard</a> |
+            <a href="{{ url_for('admin_routes.manage_clients') }}">Manage Clients</a> | {# Corrected link #}
+            <a href="{{ url_for('admin_routes.view_reports') }}">View Reports</a> |
+            <a href="{{ url_for('auth.logout') }}">Logout</a>
+        </nav>
+
+        <h2>Client List</h2>
+        {% if tenants %}
+            <ul>
+                {% for tenant in tenants %}
+                    <li>
+                        <strong>Name:</strong> {{ tenant.tenant_name }} <br>
+                        <strong>Internal ID:</strong> {{ tenant.tenant_id }} <br>
+                        <strong>WhatsApp Phone ID:</strong> {{ tenant.whatsapp_phone_number_id }}
+                    </li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p>No clients configured yet. Add them via `db_utils.add_tenant_config` initially.</p>
+        {% endif %}
+
+        {# You can add forms here later for adding/editing clients #}
+        <p>Client management features (add, edit, delete) will be implemented here later.</p>
+    </div>
+</body>
+</html>
