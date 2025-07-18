@@ -143,6 +143,36 @@ def get_conversation_history(wa_id, limit=10, tenant_id=None):
     finally:
         conn.close()
 
+def get_last_message_time(wa_id, tenant_id=None):
+    """
+    Retrieves the timestamp of the last message for a given wa_id.
+    Returns 0 if no messages are found.
+    """
+    conn = get_db_connection()
+    cursor = conn.cursor()
+    last_timestamp = 0
+    try:
+        if tenant_id:
+            cursor.execute(
+                "SELECT timestamp FROM conversations WHERE wa_id = ? AND tenant_id = ? ORDER BY timestamp DESC LIMIT 1",
+                (wa_id, tenant_id)
+            )
+            logger.debug(f"Fetching last message time for {wa_id} (Tenant: {tenant_id})")
+        else:
+            cursor.execute(
+                "SELECT timestamp FROM conversations WHERE wa_id = ? ORDER BY timestamp DESC LIMIT 1",
+                (wa_id,)
+            )
+            logger.debug(f"Fetching last message time for {wa_id}")
+        result = cursor.fetchone()
+        if result:
+            last_timestamp = result['timestamp']
+    except sqlite3.Error as e:
+        logger.error(f"Error retrieving last message time for {wa_id}: {e}", exc_info=True)
+    finally:
+        conn.close()
+    return last_timestamp
+
 def add_faq(question, answer, embedding):
     conn = get_db_connection()
     cursor = conn.cursor()

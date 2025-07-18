@@ -30,7 +30,10 @@ def load_user(user_id):
     # For now, we assume if the user_id is in the session, they are valid.
     # The actual token verification happened at /api/login.
     if user_id:
-        return User(user_id, email=None) # Email can't be fetched easily here without another DB lookup
+        # Note: If you need the email consistently after load_user,
+        # you'd store it in the session or fetch it from a user database.
+        # For this setup, we rely on the email passed during login.
+        return User(user_id, email=None)
     return None
 
 # --- Auth Routes ---
@@ -38,7 +41,8 @@ def load_user(user_id):
 def login():
     """Serves the login page."""
     if current_user.is_authenticated:
-        return redirect(url_for('admin_routes.dashboard')) # Redirect to dashboard if already logged in
+        # Redirect to the dashboard route defined in admin_routes.py
+        return redirect(url_for('admin_routes.dashboard'))
     return render_template('login.html')
 
 @auth_bp.route('/api/login', methods=['POST'])
@@ -49,6 +53,7 @@ def api_login():
     """
     id_token = request.json.get('idToken')
     if not id_token:
+        logger.warning("Attempted /api/login with missing ID token.")
         return jsonify({"status": "error", "message": "ID token missing"}), 400
 
     try:

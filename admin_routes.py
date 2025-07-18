@@ -17,12 +17,12 @@ def dashboard():
     total_conversations = db_utils.get_conversation_count() # Assuming this function exists in db_utils
     return render_template('dashboard.html', user_email=current_user.email, total_conversations=total_conversations)
 
-@admin_bp.route('/manage-clients') # <--- Changed route path
+@admin_bp.route('/manage-clients')
 @login_required # Protect this route
-def manage_clients(): # <--- Changed function name
-    """Serves the manage clients page.""" # <--- Changed docstring
+def manage_clients():
+    """Serves the manage clients page."""
     all_tenants = db_utils.get_all_tenants_config()
-    return render_template('manage_clients.html', user_email=current_user.email, tenants=all_tenants) # <--- Changed template name
+    return render_template('manage_clients.html', user_email=current_user.email, tenants=all_tenants)
 
 @admin_bp.route('/view-reports')
 @login_required # Protect this route

@@ -1,0 +1,1934 @@
+2025-07-18 10:42:24 - __main__ - INFO - Gemini API configured successfully.
+2025-07-18 10:42:24 - db_utils - INFO - Conversations table ensured.
+2025-07-18 10:42:24 - db_utils - INFO - FAQs table ensured.
+2025-07-18 10:42:24 - db_utils - INFO - Tenants config table ensured.
+2025-07-18 10:42:24 - db_utils - INFO - All database tables initialized.
+2025-07-18 10:42:24 - __main__ - INFO - Database initialization complete.
+2025-07-18 10:42:24 - firebase_admin_utils - WARNING - Firebase Admin SDK initialized without explicit credentials file. Ensure GOOGLE_APPLICATION_CREDENTIALS is set or it's running on GCP. Highly recommend using a service account JSON file for production.
+2025-07-18 10:42:24 - __main__ - INFO - Firebase Admin SDK initialized successfully.
+2025-07-18 10:42:24 - __main__ - INFO - Flask app starting...
+2025-07-18 10:42:24 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://192.168.100.26:5000
+2025-07-18 10:42:24 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2025-07-18 10:42:24 - werkzeug - INFO -  * Restarting with watchdog (windowsapi)
+2025-07-18 10:42:25 - __main__ - INFO - Gemini API configured successfully.
+2025-07-18 10:42:25 - db_utils - INFO - Conversations table ensured.
+2025-07-18 10:42:25 - db_utils - INFO - FAQs table ensured.
+2025-07-18 10:42:25 - db_utils - INFO - Tenants config table ensured.
+2025-07-18 10:42:25 - db_utils - INFO - All database tables initialized.
+2025-07-18 10:42:25 - __main__ - INFO - Database initialization complete.
+2025-07-18 10:42:25 - firebase_admin_utils - WARNING - Firebase Admin SDK initialized without explicit credentials file. Ensure GOOGLE_APPLICATION_CREDENTIALS is set or it's running on GCP. Highly recommend using a service account JSON file for production.
+2025-07-18 10:42:25 - __main__ - INFO - Firebase Admin SDK initialized successfully.
+2025-07-18 10:42:25 - __main__ - INFO - Flask app starting...
+2025-07-18 10:42:25 - werkzeug - WARNING -  * Debugger is active!
+2025-07-18 10:42:25 - werkzeug - INFO -  * Debugger PIN: 496-718-321
+2025-07-18 10:48:29 - werkzeug - INFO - 127.0.0.1 - - [18/Jul/2025 10:48:29] "[32mGET / HTTP/1.1[0m" 302 -
+2025-07-18 10:48:29 - werkzeug - INFO - 127.0.0.1 - - [18/Jul/2025 10:48:29] "GET /login HTTP/1.1" 200 -
+2025-07-18 10:48:29 - werkzeug - INFO - 127.0.0.1 - - [18/Jul/2025 10:48:29] "GET /static/css/main.css HTTP/1.1" 200 -
+2025-07-18 10:48:29 - werkzeug - INFO - 127.0.0.1 - - [18/Jul/2025 10:48:29] "[33mGET /favicon.ico HTTP/1.1[0m" 404 -
+2025-07-18 10:48:31 - werkzeug - INFO - 127.0.0.1 - - [18/Jul/2025 10:48:31] "[32mGET /dashboard HTTP/1.1[0m" 302 -
+2025-07-18 10:48:31 - werkzeug - INFO - 127.0.0.1 - - [18/Jul/2025 10:48:31] "GET /login?next=/dashboard HTTP/1.1" 200 -
+2025-07-18 10:48:31 - werkzeug - INFO - 127.0.0.1 - - [18/Jul/2025 10:48:31] "[36mGET /static/css/main.css HTTP/1.1[0m" 304 -
+2025-07-18 10:48:35 - werkzeug - INFO - 127.0.0.1 - - [18/Jul/2025 10:48:35] "[32mGET /dashboard HTTP/1.1[0m" 302 -
+2025-07-18 10:48:35 - werkzeug - INFO - 127.0.0.1 - - [18/Jul/2025 10:48:35] "GET /login?next=/dashboard HTTP/1.1" 200 -
+2025-07-18 10:48:35 - werkzeug - INFO - 127.0.0.1 - - [18/Jul/2025 10:48:35] "[36mGET /static/css/main.css HTTP/1.1[0m" 304 -
+2025-07-18 10:48:58 - werkzeug - INFO - 127.0.0.1 - - [18/Jul/2025 10:48:58] "GET /login HTTP/1.1" 200 -
+2025-07-18 10:48:58 - werkzeug - INFO - 127.0.0.1 - - [18/Jul/2025 10:48:58] "[36mGET /static/css/main.css HTTP/1.1[0m" 304 -
+2025-07-18 10:49:02 - werkzeug - INFO - 127.0.0.1 - - [18/Jul/2025 10:49:02] "GET /login HTTP/1.1" 200 -
+2025-07-18 10:49:02 - werkzeug - INFO - 127.0.0.1 - - [18/Jul/2025 10:49:02] "[36mGET /static/css/main.css HTTP/1.1[0m" 304 -
+2025-07-18 10:49:15 - werkzeug - INFO - 127.0.0.1 - - [18/Jul/2025 10:49:15] "[32mGET /dashboard HTTP/1.1[0m" 302 -
+2025-07-18 10:49:15 - werkzeug - INFO - 127.0.0.1 - - [18/Jul/2025 10:49:15] "GET /login?next=/dashboard HTTP/1.1" 200 -
+2025-07-18 10:49:15 - werkzeug - INFO - 127.0.0.1 - - [18/Jul/2025 10:49:15] "[36mGET /static/css/main.css HTTP/1.1[0m" 304 -
+2025-07-18 10:49:24 - werkzeug - INFO - 127.0.0.1 - - [18/Jul/2025 10:49:24] "[33mGET /index HTTP/1.1[0m" 404 -
+2025-07-18 10:49:32 - werkzeug - INFO - 127.0.0.1 - - [18/Jul/2025 10:49:32] "[32mGET / HTTP/1.1[0m" 302 -
+2025-07-18 10:49:32 - werkzeug - INFO - 127.0.0.1 - - [18/Jul/2025 10:49:32] "GET /login HTTP/1.1" 200 -
+2025-07-18 10:49:32 - werkzeug - INFO - 127.0.0.1 - - [18/Jul/2025 10:49:32] "[36mGET /static/css/main.css HTTP/1.1[0m" 304 -
+2025-07-18 10:49:33 - werkzeug - INFO - 127.0.0.1 - - [18/Jul/2025 10:49:33] "[32mGET /dashboard HTTP/1.1[0m" 302 -
+2025-07-18 10:49:33 - werkzeug - INFO - 127.0.0.1 - - [18/Jul/2025 10:49:33] "GET /login?next=/dashboard HTTP/1.1" 200 -
+2025-07-18 10:49:33 - werkzeug - INFO - 127.0.0.1 - - [18/Jul/2025 10:49:33] "[36mGET /static/css/main.css HTTP/1.1[0m" 304 -
+2025-07-18 10:52:41 - werkzeug - INFO -  * Detected change in 'C:\\Users\\Admin\\PycharmProjects\\whatsappbot\\app.py', reloading
+2025-07-18 10:52:41 - werkzeug - INFO -  * Detected change in 'C:\\Users\\Admin\\PycharmProjects\\whatsappbot\\app.py', reloading
+2025-07-18 10:52:42 - werkzeug - INFO -  * Restarting with watchdog (windowsapi)
+2025-07-18 10:52:43 - __main__ - INFO - Gemini API configured successfully.
+2025-07-18 10:52:43 - db_utils - INFO - Conversations table ensured.
+2025-07-18 10:52:43 - db_utils - INFO - FAQs table ensured.
+2025-07-18 10:52:43 - db_utils - INFO - Tenants config table ensured.
+2025-07-18 10:52:43 - db_utils - INFO - All database tables initialized.
+2025-07-18 10:52:43 - __main__ - INFO - Database initialization complete.
+2025-07-18 10:52:43 - firebase_admin_utils - WARNING - Firebase Admin SDK initialized without explicit credentials file. Ensure GOOGLE_APPLICATION_CREDENTIALS is set or it's running on GCP. Highly recommend using a service account JSON file for production.
+2025-07-18 10:52:43 - __main__ - INFO - Firebase Admin SDK initialized successfully.
+2025-07-18 10:52:43 - __main__ - INFO - Flask app starting...
+2025-07-18 10:52:43 - werkzeug - WARNING -  * Debugger is active!
+2025-07-18 10:52:43 - werkzeug - INFO -  * Debugger PIN: 496-718-321
+2025-07-18 10:53:05 - werkzeug - INFO -  * Detected change in 'C:\\Users\\Admin\\PycharmProjects\\whatsappbot\\app.py', reloading
+2025-07-18 10:53:05 - werkzeug - INFO -  * Detected change in 'C:\\Users\\Admin\\PycharmProjects\\whatsappbot\\app.py', reloading
+2025-07-18 10:53:05 - werkzeug - INFO -  * Detected change in 'C:\\Users\\Admin\\PycharmProjects\\whatsappbot\\app.py', reloading
+2025-07-18 10:53:05 - werkzeug - INFO -  * Restarting with watchdog (windowsapi)
+2025-07-18 10:53:07 - __main__ - INFO - Gemini API configured successfully.
+2025-07-18 10:53:07 - db_utils - INFO - Conversations table ensured.
+2025-07-18 10:53:07 - db_utils - INFO - FAQs table ensured.
+2025-07-18 10:53:07 - db_utils - INFO - Tenants config table ensured.
+2025-07-18 10:53:07 - db_utils - INFO - All database tables initialized.
+2025-07-18 10:53:07 - __main__ - INFO - Database initialization complete.
+2025-07-18 10:53:07 - firebase_admin_utils - WARNING - Firebase Admin SDK initialized without explicit credentials file. Ensure GOOGLE_APPLICATION_CREDENTIALS is set or it's running on GCP. Highly recommend using a service account JSON file for production.
+2025-07-18 10:53:07 - __main__ - INFO - Firebase Admin SDK initialized successfully.
+2025-07-18 10:53:07 - __main__ - INFO - Flask app starting...
+2025-07-18 10:53:07 - werkzeug - WARNING -  * Debugger is active!
+2025-07-18 10:53:07 - werkzeug - INFO -  * Debugger PIN: 496-718-321
+2025-07-18 10:53:23 - werkzeug - INFO -  * Detected change in 'C:\\Users\\Admin\\PycharmProjects\\whatsappbot\\auth.py', reloading
+2025-07-18 10:53:23 - werkzeug - INFO -  * Detected change in 'C:\\Users\\Admin\\PycharmProjects\\whatsappbot\\auth.py', reloading
+2025-07-18 10:53:24 - werkzeug - INFO -  * Restarting with watchdog (windowsapi)
+2025-07-18 11:03:56 - __main__ - INFO - Gemini API configured successfully.
+2025-07-18 11:03:56 - db_utils - INFO - Conversations table ensured.
+2025-07-18 11:03:56 - db_utils - INFO - FAQs table ensured.
+2025-07-18 11:03:56 - db_utils - INFO - Tenants config table ensured.
+2025-07-18 11:03:56 - db_utils - INFO - All database tables initialized.
+2025-07-18 11:03:56 - __main__ - INFO - Database initialization complete.
+2025-07-18 11:03:56 - firebase_admin_utils - WARNING - Firebase Admin SDK initialized without explicit credentials file. Ensure GOOGLE_APPLICATION_CREDENTIALS is set or it's running on GCP. Highly recommend using a service account JSON file for production.
+2025-07-18 11:03:56 - __main__ - INFO - Firebase Admin SDK initialized successfully.
+2025-07-18 11:03:56 - __main__ - INFO - Flask app starting...
+2025-07-18 11:03:56 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://192.168.100.26:5000
+2025-07-18 11:03:56 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2025-07-18 11:03:56 - werkzeug - INFO -  * Restarting with watchdog (windowsapi)
+2025-07-18 11:03:57 - __main__ - INFO - Gemini API configured successfully.
+2025-07-18 11:03:57 - db_utils - INFO - Conversations table ensured.
+2025-07-18 11:03:57 - db_utils - INFO - FAQs table ensured.
+2025-07-18 11:03:57 - db_utils - INFO - Tenants config table ensured.
+2025-07-18 11:03:57 - db_utils - INFO - All database tables initialized.
+2025-07-18 11:03:57 - __main__ - INFO - Database initialization complete.
+2025-07-18 11:03:57 - firebase_admin_utils - WARNING - Firebase Admin SDK initialized without explicit credentials file. Ensure GOOGLE_APPLICATION_CREDENTIALS is set or it's running on GCP. Highly recommend using a service account JSON file for production.
+2025-07-18 11:03:57 - __main__ - INFO - Firebase Admin SDK initialized successfully.
+2025-07-18 11:03:57 - __main__ - INFO - Flask app starting...
+2025-07-18 11:03:57 - werkzeug - WARNING -  * Debugger is active!
+2025-07-18 11:03:57 - werkzeug - INFO -  * Debugger PIN: 496-718-321
+2025-07-18 11:04:37 - webhook - INFO - WEBHOOK_VERIFIED
+2025-07-18 11:04:37 - werkzeug - INFO - 127.0.0.1 - - [18/Jul/2025 11:04:37] "GET /webhook?hub.mode=subscribe&hub.challenge=1964727993&hub.verify_token=thisisthesecretverifytokenforfrans0 HTTP/1.1" 200 -
+2025-07-18 11:05:12 - webhook - INFO - Processing message of type 'text' from 254715849926 for Tenant: `my_initial_client_id` (WhatsApp Phone ID: 736065142913405)
+2025-07-18 11:05:12 - webhook - INFO - Received text message from 254715849926: 'Are you awake' (Tenant: `my_initial_client_id`)
+2025-07-18 11:05:12 - werkzeug - INFO -  * Detected change in 'C:\\Users\\Admin\\.conda\\envs\\whatsappbot\\Lib\\site-packages\\flask\\app.py', reloading
+2025-07-18 11:05:12 - werkzeug - INFO - 127.0.0.1 - - [18/Jul/2025 11:05:12] "[35m[1mPOST /webhook HTTP/1.1[0m" 500 -
+2025-07-18 11:05:13 - werkzeug - INFO -  * Restarting with watchdog (windowsapi)
+2025-07-18 11:05:14 - __main__ - INFO - Gemini API configured successfully.
+2025-07-18 11:05:14 - db_utils - INFO - Conversations table ensured.
+2025-07-18 11:05:14 - db_utils - INFO - FAQs table ensured.
+2025-07-18 11:05:14 - db_utils - INFO - Tenants config table ensured.
+2025-07-18 11:05:14 - db_utils - INFO - All database tables initialized.
+2025-07-18 11:05:14 - __main__ - INFO - Database initialization complete.
+2025-07-18 11:05:14 - firebase_admin_utils - WARNING - Firebase Admin SDK initialized without explicit credentials file. Ensure GOOGLE_APPLICATION_CREDENTIALS is set or it's running on GCP. Highly recommend using a service account JSON file for production.
+2025-07-18 11:05:14 - __main__ - INFO - Firebase Admin SDK initialized successfully.
+2025-07-18 11:05:14 - __main__ - INFO - Flask app starting...
+2025-07-18 11:05:14 - werkzeug - WARNING -  * Debugger is active!
+2025-07-18 11:05:14 - werkzeug - INFO -  * Debugger PIN: 496-718-321
+2025-07-18 11:05:14 - webhook - INFO - Processing message of type 'text' from 254715849926 for Tenant: `my_initial_client_id` (WhatsApp Phone ID: 736065142913405)
+2025-07-18 11:05:14 - webhook - INFO - Received text message from 254715849926: 'Are you awake' (Tenant: `my_initial_client_id`)
+2025-07-18 11:05:14 - werkzeug - INFO - 127.0.0.1 - - [18/Jul/2025 11:05:14] "[35m[1mPOST /webhook HTTP/1.1[0m" 500 -
+2025-07-18 11:05:15 - webhook - INFO - Processing message of type 'text' from 254715849926 for Tenant: `my_initial_client_id` (WhatsApp Phone ID: 736065142913405)
+2025-07-18 11:05:15 - webhook - INFO - Received text message from 254715849926: 'Are you awake' (Tenant: `my_initial_client_id`)
+2025-07-18 11:05:15 - werkzeug - INFO - 127.0.0.1 - - [18/Jul/2025 11:05:15] "[35m[1mPOST /webhook HTTP/1.1[0m" 500 -
+2025-07-18 11:05:18 - webhook - INFO - Processing message of type 'text' from 254715849926 for Tenant: `my_initial_client_id` (WhatsApp Phone ID: 736065142913405)
+2025-07-18 11:05:18 - webhook - INFO - Received text message from 254715849926: 'Are you awake' (Tenant: `my_initial_client_id`)
+2025-07-18 11:05:18 - werkzeug - INFO - 127.0.0.1 - - [18/Jul/2025 11:05:18] "[35m[1mPOST /webhook HTTP/1.1[0m" 500 -
+2025-07-18 11:05:42 - webhook - INFO - Processing message of type 'text' from 254715849926 for Tenant: `my_initial_client_id` (WhatsApp Phone ID: 736065142913405)
+2025-07-18 11:05:42 - webhook - INFO - Received text message from 254715849926: 'Are you awake' (Tenant: `my_initial_client_id`)
+2025-07-18 11:05:42 - werkzeug - INFO - 127.0.0.1 - - [18/Jul/2025 11:05:42] "[35m[1mPOST /webhook HTTP/1.1[0m" 500 -
+2025-07-18 11:06:49 - werkzeug - INFO -  * Detected change in 'C:\\Users\\Admin\\PycharmProjects\\whatsappbot\\db_utils.py', reloading
+2025-07-18 11:06:49 - werkzeug - INFO -  * Detected change in 'C:\\Users\\Admin\\PycharmProjects\\whatsappbot\\db_utils.py', reloading
+2025-07-18 11:06:50 - werkzeug - INFO -  * Restarting with watchdog (windowsapi)
+2025-07-18 11:06:51 - __main__ - INFO - Gemini API configured successfully.
+2025-07-18 11:06:51 - db_utils - INFO - Conversations table ensured.
+2025-07-18 11:06:51 - db_utils - INFO - FAQs table ensured.
+2025-07-18 11:06:51 - db_utils - INFO - Tenants config table ensured.
+2025-07-18 11:06:51 - db_utils - INFO - All database tables initialized.
+2025-07-18 11:06:51 - __main__ - INFO - Database initialization complete.
+2025-07-18 11:06:51 - firebase_admin_utils - WARNING - Firebase Admin SDK initialized without explicit credentials file. Ensure GOOGLE_APPLICATION_CREDENTIALS is set or it's running on GCP. Highly recommend using a service account JSON file for production.
+2025-07-18 11:06:51 - __main__ - INFO - Firebase Admin SDK initialized successfully.
+2025-07-18 11:06:51 - __main__ - INFO - Flask app starting...
+2025-07-18 11:06:51 - werkzeug - WARNING -  * Debugger is active!
+2025-07-18 11:06:51 - werkzeug - INFO -  * Debugger PIN: 496-718-321
+2025-07-18 11:07:04 - __main__ - INFO - Gemini API configured successfully.
+2025-07-18 11:07:04 - db_utils - INFO - Conversations table ensured.
+2025-07-18 11:07:04 - db_utils - INFO - FAQs table ensured.
+2025-07-18 11:07:04 - db_utils - INFO - Tenants config table ensured.
+2025-07-18 11:07:04 - db_utils - INFO - All database tables initialized.
+2025-07-18 11:07:04 - __main__ - INFO - Database initialization complete.
+2025-07-18 11:07:04 - firebase_admin_utils - WARNING - Firebase Admin SDK initialized without explicit credentials file. Ensure GOOGLE_APPLICATION_CREDENTIALS is set or it's running on GCP. Highly recommend using a service account JSON file for production.
+2025-07-18 11:07:04 - __main__ - INFO - Firebase Admin SDK initialized successfully.
+2025-07-18 11:07:04 - __main__ - INFO - Flask app starting...
+2025-07-18 11:07:04 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://192.168.100.26:5000
+2025-07-18 11:07:04 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2025-07-18 11:07:04 - werkzeug - INFO -  * Restarting with watchdog (windowsapi)
+2025-07-18 11:07:05 - __main__ - INFO - Gemini API configured successfully.
+2025-07-18 11:07:05 - db_utils - INFO - Conversations table ensured.
+2025-07-18 11:07:05 - db_utils - INFO - FAQs table ensured.
+2025-07-18 11:07:05 - db_utils - INFO - Tenants config table ensured.
+2025-07-18 11:07:05 - db_utils - INFO - All database tables initialized.
+2025-07-18 11:07:05 - __main__ - INFO - Database initialization complete.
+2025-07-18 11:07:05 - firebase_admin_utils - WARNING - Firebase Admin SDK initialized without explicit credentials file. Ensure GOOGLE_APPLICATION_CREDENTIALS is set or it's running on GCP. Highly recommend using a service account JSON file for production.
+2025-07-18 11:07:05 - __main__ - INFO - Firebase Admin SDK initialized successfully.
+2025-07-18 11:07:05 - __main__ - INFO - Flask app starting...
+2025-07-18 11:07:05 - werkzeug - WARNING -  * Debugger is active!
+2025-07-18 11:07:05 - werkzeug - INFO -  * Debugger PIN: 496-718-321
+2025-07-18 11:07:15 - db_utils - WARNING - No tenant configuration found for WhatsApp Phone ID '736065142913405'.
+2025-07-18 11:07:15 - webhook - WARNING - No tenant mapping found for WhatsApp Phone ID: 736065142913405 (message from 254715849926). Please configure this phone number in the tenants_config table.
+2025-07-18 11:07:16 - whatsapp_api_utils - INFO - Message sent to 254715849926: I'm sorry, your account isn't configured for this ...
+2025-07-18 11:07:16 - werkzeug - INFO - 127.0.0.1 - - [18/Jul/2025 11:07:16] "POST /webhook HTTP/1.1" 200 -
+2025-07-18 11:07:18 - werkzeug - INFO - 127.0.0.1 - - [18/Jul/2025 11:07:18] "POST /webhook HTTP/1.1" 200 -
+2025-07-18 11:07:18 - werkzeug - INFO - 127.0.0.1 - - [18/Jul/2025 11:07:18] "POST /webhook HTTP/1.1" 200 -
+2025-07-18 11:10:28 - werkzeug - INFO -  * Detected change in 'C:\\Users\\Admin\\PycharmProjects\\whatsappbot\\app.py', reloading
+2025-07-18 11:10:28 - werkzeug - INFO -  * Detected change in 'C:\\Users\\Admin\\PycharmProjects\\whatsappbot\\app.py', reloading
+2025-07-18 11:10:28 - werkzeug - INFO -  * Detected change in 'C:\\Users\\Admin\\PycharmProjects\\whatsappbot\\app.py', reloading
+2025-07-18 11:10:28 - werkzeug - INFO -  * Detected change in 'C:\\Users\\Admin\\PycharmProjects\\whatsappbot\\app.py', reloading
+2025-07-18 11:10:28 - werkzeug - INFO -  * Restarting with watchdog (windowsapi)
+2025-07-18 11:10:29 - __main__ - INFO - Gemini API configured successfully.
+2025-07-18 11:10:29 - db_utils - INFO - Conversations table ensured.
+2025-07-18 11:10:29 - db_utils - INFO - FAQs table ensured.
+2025-07-18 11:10:29 - db_utils - INFO - Tenants config table ensured.
+2025-07-18 11:10:29 - db_utils - INFO - All database tables initialized.
+2025-07-18 11:10:29 - __main__ - INFO - Database initialization complete.
+2025-07-18 11:10:29 - __main__ - INFO - Attempting to add initial FAQs (if not already present)...
+2025-07-18 11:10:31 - db_utils - INFO - FAQ added/updated: Q='What is the company's return policy?...'
+2025-07-18 11:10:31 - __main__ - INFO - Successfully added FAQ (ID: 1): Q='What is the company's return policy?...'
+2025-07-18 11:10:32 - db_utils - INFO - FAQ added/updated: Q='How do I contact customer support?...'
+2025-07-18 11:10:32 - __main__ - INFO - Successfully added FAQ (ID: 2): Q='How do I contact customer support?...'
+2025-07-18 11:10:32 - db_utils - INFO - FAQ added/updated: Q='Where are you located?...'
+2025-07-18 11:10:32 - __main__ - INFO - Successfully added FAQ (ID: 3): Q='Where are you located?...'
+2025-07-18 11:10:32 - db_utils - INFO - FAQ added/updated: Q='Do you offer international shipping?...'
+2025-07-18 11:10:32 - __main__ - INFO - Successfully added FAQ (ID: 4): Q='Do you offer international shipping?...'
+2025-07-18 11:10:33 - db_utils - INFO - FAQ added/updated: Q='What is your refund procedure?...'
+2025-07-18 11:10:33 - __main__ - INFO - Successfully added FAQ (ID: 5): Q='What is your refund procedure?...'
+2025-07-18 11:10:33 - firebase_admin_utils - WARNING - Firebase Admin SDK initialized without explicit credentials file. Ensure GOOGLE_APPLICATION_CREDENTIALS is set or it's running on GCP. Highly recommend using a service account JSON file for production.
+2025-07-18 11:10:33 - __main__ - INFO - Firebase Admin SDK initialized successfully.
+2025-07-18 11:10:33 - __main__ - INFO - Flask app starting...
+2025-07-18 11:10:33 - werkzeug - WARNING -  * Debugger is active!
+2025-07-18 11:10:33 - werkzeug - INFO -  * Debugger PIN: 496-718-321
+2025-07-18 11:11:53 - werkzeug - INFO -  * Detected change in 'C:\\Users\\Admin\\PycharmProjects\\whatsappbot\\app.py', reloading
+2025-07-18 11:11:53 - werkzeug - INFO -  * Detected change in 'C:\\Users\\Admin\\PycharmProjects\\whatsappbot\\app.py', reloading
+2025-07-18 11:11:56 - werkzeug - INFO -  * Restarting with watchdog (windowsapi)
+2025-07-18 11:11:57 - __main__ - INFO - Gemini API configured successfully.
+2025-07-18 11:11:57 - db_utils - INFO - Conversations table ensured.
+2025-07-18 11:11:57 - db_utils - INFO - FAQs table ensured.
+2025-07-18 11:11:57 - db_utils - INFO - Tenants config table ensured.
+2025-07-18 11:11:57 - db_utils - INFO - All database tables initialized.
+2025-07-18 11:11:57 - __main__ - INFO - Database initialization complete.
+2025-07-18 11:11:57 - __main__ - INFO - Attempting to add initial FAQs (if not already present)...
+2025-07-18 11:11:57 - __main__ - INFO - FAQs already exist in the database. Skipping initial FAQ loading.
+2025-07-18 11:11:57 - db_utils - WARNING - No tenant configuration found for WhatsApp Phone ID '736065142913405'.
+2025-07-18 11:11:57 - __main__ - INFO - Adding initial tenant configuration for WhatsApp Phone ID: 736065142913405
+2025-07-18 11:11:57 - db_utils - INFO - Tenant configuration added/updated for WhatsApp Phone ID: 736065142913405
+2025-07-18 11:11:57 - firebase_admin_utils - WARNING - Firebase Admin SDK initialized without explicit credentials file. Ensure GOOGLE_APPLICATION_CREDENTIALS is set or it's running on GCP. Highly recommend using a service account JSON file for production.
+2025-07-18 11:11:57 - __main__ - INFO - Firebase Admin SDK initialized successfully.
+2025-07-18 11:11:57 - __main__ - INFO - Flask app starting...
+2025-07-18 11:11:57 - werkzeug - WARNING -  * Debugger is active!
+2025-07-18 11:11:57 - werkzeug - INFO -  * Debugger PIN: 496-718-321
+2025-07-18 11:12:13 - werkzeug - INFO -  * Detected change in 'C:\\Users\\Admin\\PycharmProjects\\whatsappbot\\app.py', reloading
+2025-07-18 11:12:13 - werkzeug - INFO -  * Detected change in 'C:\\Users\\Admin\\PycharmProjects\\whatsappbot\\app.py', reloading
+2025-07-18 11:12:13 - werkzeug - INFO -  * Detected change in 'C:\\Users\\Admin\\PycharmProjects\\whatsappbot\\app.py', reloading
+2025-07-18 11:12:13 - werkzeug - INFO -  * Detected change in 'C:\\Users\\Admin\\PycharmProjects\\whatsappbot\\app.py', reloading
+2025-07-18 11:12:14 - werkzeug - INFO -  * Restarting with watchdog (windowsapi)
+2025-07-18 11:12:15 - __main__ - INFO - Gemini API configured successfully.
+2025-07-18 11:12:15 - db_utils - INFO - Conversations table ensured.
+2025-07-18 11:12:15 - db_utils - INFO - FAQs table ensured.
+2025-07-18 11:12:15 - db_utils - INFO - Tenants config table ensured.
+2025-07-18 11:12:15 - db_utils - INFO - All database tables initialized.
+2025-07-18 11:12:15 - __main__ - INFO - Database initialization complete.
+2025-07-18 11:12:15 - __main__ - INFO - Attempting to add initial FAQs (if not already present)...
+2025-07-18 11:12:15 - __main__ - INFO - FAQs already exist in the database. Skipping initial FAQ loading.
+2025-07-18 11:12:15 - __main__ - INFO - Tenant configuration for WhatsApp Phone ID 736065142913405 already exists in DB.
+2025-07-18 11:12:15 - firebase_admin_utils - WARNING - Firebase Admin SDK initialized without explicit credentials file. Ensure GOOGLE_APPLICATION_CREDENTIALS is set or it's running on GCP. Highly recommend using a service account JSON file for production.
+2025-07-18 11:12:15 - __main__ - INFO - Firebase Admin SDK initialized successfully.
+2025-07-18 11:12:15 - __main__ - INFO - Flask app starting...
+2025-07-18 11:12:15 - werkzeug - WARNING -  * Debugger is active!
+2025-07-18 11:12:15 - werkzeug - INFO -  * Debugger PIN: 496-718-321
+2025-07-18 11:12:54 - webhook - INFO - Processing message of type 'text' from 254715849926 for Tenant: `my_initial_client_id` (WhatsApp Phone ID: 736065142913405)
+2025-07-18 11:12:54 - webhook - INFO - Received text message from 254715849926: 'Are you awake' (Tenant: `my_initial_client_id`)
+2025-07-18 11:12:54 - werkzeug - INFO - 127.0.0.1 - - [18/Jul/2025 11:12:54] "[35m[1mPOST /webhook HTTP/1.1[0m" 500 -
+2025-07-18 11:13:24 - __main__ - INFO - Gemini API configured successfully.
+2025-07-18 11:13:24 - db_utils - INFO - Conversations table ensured.
+2025-07-18 11:13:24 - db_utils - INFO - FAQs table ensured.
+2025-07-18 11:13:24 - db_utils - INFO - Tenants config table ensured.
+2025-07-18 11:13:24 - db_utils - INFO - All database tables initialized.
+2025-07-18 11:13:24 - __main__ - INFO - Database initialization complete.
+2025-07-18 11:13:24 - __main__ - INFO - Attempting to add initial FAQs (if not already present)...
+2025-07-18 11:13:24 - __main__ - INFO - FAQs already exist in the database. Skipping initial FAQ loading.
+2025-07-18 11:13:24 - __main__ - INFO - Tenant configuration for WhatsApp Phone ID 736065142913405 already exists in DB.
+2025-07-18 11:13:24 - firebase_admin_utils - WARNING - Firebase Admin SDK initialized without explicit credentials file. Ensure GOOGLE_APPLICATION_CREDENTIALS is set or it's running on GCP. Highly recommend using a service account JSON file for production.
+2025-07-18 11:13:24 - __main__ - INFO - Firebase Admin SDK initialized successfully.
+2025-07-18 11:13:24 - __main__ - INFO - Flask app starting...
+2025-07-18 11:13:24 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://192.168.100.26:5000
+2025-07-18 11:13:24 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2025-07-18 11:13:24 - werkzeug - INFO -  * Restarting with watchdog (windowsapi)
+2025-07-18 11:13:25 - __main__ - INFO - Gemini API configured successfully.
+2025-07-18 11:13:25 - db_utils - INFO - Conversations table ensured.
+2025-07-18 11:13:25 - db_utils - INFO - FAQs table ensured.
+2025-07-18 11:13:25 - db_utils - INFO - Tenants config table ensured.
+2025-07-18 11:13:25 - db_utils - INFO - All database tables initialized.
+2025-07-18 11:13:25 - __main__ - INFO - Database initialization complete.
+2025-07-18 11:13:25 - __main__ - INFO - Attempting to add initial FAQs (if not already present)...
+2025-07-18 11:13:25 - __main__ - INFO - FAQs already exist in the database. Skipping initial FAQ loading.
+2025-07-18 11:13:25 - __main__ - INFO - Tenant configuration for WhatsApp Phone ID 736065142913405 already exists in DB.
+2025-07-18 11:13:25 - firebase_admin_utils - WARNING - Firebase Admin SDK initialized without explicit credentials file. Ensure GOOGLE_APPLICATION_CREDENTIALS is set or it's running on GCP. Highly recommend using a service account JSON file for production.
+2025-07-18 11:13:25 - __main__ - INFO - Firebase Admin SDK initialized successfully.
+2025-07-18 11:13:25 - __main__ - INFO - Flask app starting...
+2025-07-18 11:13:25 - werkzeug - WARNING -  * Debugger is active!
+2025-07-18 11:13:25 - werkzeug - INFO -  * Debugger PIN: 496-718-321
+2025-07-18 11:13:39 - werkzeug - INFO -  * Detected change in 'C:\\Users\\Admin\\.conda\\envs\\whatsappbot\\Lib\\site-packages\\flask\\blueprints.py', reloading
+2025-07-18 11:13:40 - werkzeug - INFO -  * Restarting with watchdog (windowsapi)
+2025-07-18 11:13:41 - __main__ - INFO - Gemini API configured successfully.
+2025-07-18 11:13:41 - db_utils - INFO - Conversations table ensured.
+2025-07-18 11:13:41 - db_utils - INFO - FAQs table ensured.
+2025-07-18 11:13:41 - db_utils - INFO - Tenants config table ensured.
+2025-07-18 11:13:41 - db_utils - INFO - All database tables initialized.
+2025-07-18 11:13:41 - __main__ - INFO - Database initialization complete.
+2025-07-18 11:13:41 - __main__ - INFO - Attempting to add initial FAQs (if not already present)...
+2025-07-18 11:13:41 - __main__ - INFO - FAQs already exist in the database. Skipping initial FAQ loading.
+2025-07-18 11:13:41 - __main__ - INFO - Tenant configuration for WhatsApp Phone ID 736065142913405 already exists in DB.
+2025-07-18 11:13:41 - firebase_admin_utils - WARNING - Firebase Admin SDK initialized without explicit credentials file. Ensure GOOGLE_APPLICATION_CREDENTIALS is set or it's running on GCP. Highly recommend using a service account JSON file for production.
+2025-07-18 11:13:41 - __main__ - INFO - Firebase Admin SDK initialized successfully.
+2025-07-18 11:13:41 - __main__ - INFO - Flask app starting...
+2025-07-18 11:13:41 - werkzeug - WARNING -  * Debugger is active!
+2025-07-18 11:13:41 - werkzeug - INFO -  * Debugger PIN: 496-718-321
+2025-07-18 11:14:42 - werkzeug - INFO -  * Detected change in 'C:\\Users\\Admin\\PycharmProjects\\whatsappbot\\app.py', reloading
+2025-07-18 11:14:42 - werkzeug - INFO -  * Detected change in 'C:\\Users\\Admin\\PycharmProjects\\whatsappbot\\app.py', reloading
+2025-07-18 11:14:43 - werkzeug - INFO -  * Restarting with watchdog (windowsapi)
+2025-07-18 11:14:44 - __main__ - INFO - Gemini API configured successfully.
+2025-07-18 11:14:44 - db_utils - INFO - Conversations table ensured.
+2025-07-18 11:14:44 - db_utils - INFO - FAQs table ensured.
+2025-07-18 11:14:44 - db_utils - INFO - Tenants config table ensured.
+2025-07-18 11:14:44 - db_utils - INFO - All database tables initialized.
+2025-07-18 11:14:44 - __main__ - INFO - Database initialization complete.
+2025-07-18 11:14:44 - firebase_admin_utils - WARNING - Firebase Admin SDK initialized without explicit credentials file. Ensure GOOGLE_APPLICATION_CREDENTIALS is set or it's running on GCP. Highly recommend using a service account JSON file for production.
+2025-07-18 11:14:44 - __main__ - INFO - Firebase Admin SDK initialized successfully.
+2025-07-18 11:14:44 - __main__ - INFO - Flask app starting...
+2025-07-18 11:14:44 - werkzeug - WARNING -  * Debugger is active!
+2025-07-18 11:14:44 - werkzeug - INFO -  * Debugger PIN: 496-718-321
+2025-07-18 11:15:23 - __main__ - INFO - Gemini API configured successfully.
+2025-07-18 11:15:23 - db_utils - INFO - Conversations table ensured.
+2025-07-18 11:15:23 - db_utils - INFO - FAQs table ensured.
+2025-07-18 11:15:23 - db_utils - INFO - Tenants config table ensured.
+2025-07-18 11:15:23 - db_utils - INFO - All database tables initialized.
+2025-07-18 11:15:23 - __main__ - INFO - Database initialization complete.
+2025-07-18 11:15:23 - firebase_admin_utils - WARNING - Firebase Admin SDK initialized without explicit credentials file. Ensure GOOGLE_APPLICATION_CREDENTIALS is set or it's running on GCP. Highly recommend using a service account JSON file for production.
+2025-07-18 11:15:23 - __main__ - INFO - Firebase Admin SDK initialized successfully.
+2025-07-18 11:15:23 - __main__ - INFO - Flask app starting...
+2025-07-18 11:15:23 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://192.168.100.26:5000
+2025-07-18 11:15:23 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2025-07-18 11:15:23 - werkzeug - INFO -  * Restarting with watchdog (windowsapi)
+2025-07-18 11:15:24 - __main__ - INFO - Gemini API configured successfully.
+2025-07-18 11:15:24 - db_utils - INFO - Conversations table ensured.
+2025-07-18 11:15:24 - db_utils - INFO - FAQs table ensured.
+2025-07-18 11:15:24 - db_utils - INFO - Tenants config table ensured.
+2025-07-18 11:15:24 - db_utils - INFO - All database tables initialized.
+2025-07-18 11:15:24 - __main__ - INFO - Database initialization complete.
+2025-07-18 11:15:24 - firebase_admin_utils - WARNING - Firebase Admin SDK initialized without explicit credentials file. Ensure GOOGLE_APPLICATION_CREDENTIALS is set or it's running on GCP. Highly recommend using a service account JSON file for production.
+2025-07-18 11:15:24 - __main__ - INFO - Firebase Admin SDK initialized successfully.
+2025-07-18 11:15:24 - __main__ - INFO - Flask app starting...
+2025-07-18 11:15:24 - werkzeug - WARNING -  * Debugger is active!
+2025-07-18 11:15:24 - werkzeug - INFO -  * Debugger PIN: 496-718-321
+2025-07-18 11:16:26 - webhook - INFO - Processing message of type 'text' from 254715849926 for Tenant: `my_initial_client_id` (WhatsApp Phone ID: 736065142913405)
+2025-07-18 11:16:26 - webhook - INFO - Received text message from 254715849926: 'Awake?' (Tenant: `my_initial_client_id`)
+2025-07-18 11:16:26 - werkzeug - INFO - 127.0.0.1 - - [18/Jul/2025 11:16:26] "[35m[1mPOST /webhook HTTP/1.1[0m" 500 -
+2025-07-18 11:16:28 - webhook - INFO - Processing message of type 'text' from 254715849926 for Tenant: `my_initial_client_id` (WhatsApp Phone ID: 736065142913405)
+2025-07-18 11:16:28 - webhook - INFO - Received text message from 254715849926: 'Awake?' (Tenant: `my_initial_client_id`)
+2025-07-18 11:16:28 - werkzeug - INFO - 127.0.0.1 - - [18/Jul/2025 11:16:28] "[35m[1mPOST /webhook HTTP/1.1[0m" 500 -
+2025-07-18 11:16:29 - webhook - INFO - Processing message of type 'text' from 254715849926 for Tenant: `my_initial_client_id` (WhatsApp Phone ID: 736065142913405)
+2025-07-18 11:16:29 - webhook - INFO - Received text message from 254715849926: 'Awake?' (Tenant: `my_initial_client_id`)
+2025-07-18 11:16:29 - werkzeug - INFO - 127.0.0.1 - - [18/Jul/2025 11:16:29] "[35m[1mPOST /webhook HTTP/1.1[0m" 500 -
+2025-07-18 11:16:31 - webhook - INFO - Processing message of type 'text' from 254715849926 for Tenant: `my_initial_client_id` (WhatsApp Phone ID: 736065142913405)
+2025-07-18 11:16:31 - webhook - INFO - Received text message from 254715849926: 'Awake?' (Tenant: `my_initial_client_id`)
+2025-07-18 11:16:31 - werkzeug - INFO - 127.0.0.1 - - [18/Jul/2025 11:16:31] "[35m[1mPOST /webhook HTTP/1.1[0m" 500 -
+2025-07-18 11:16:57 - webhook - INFO - Processing message of type 'text' from 254715849926 for Tenant: `my_initial_client_id` (WhatsApp Phone ID: 736065142913405)
+2025-07-18 11:16:57 - webhook - INFO - Received text message from 254715849926: 'Awake?' (Tenant: `my_initial_client_id`)
+2025-07-18 11:16:57 - werkzeug - INFO - 127.0.0.1 - - [18/Jul/2025 11:16:57] "[35m[1mPOST /webhook HTTP/1.1[0m" 500 -
+2025-07-18 11:18:30 - werkzeug - INFO -  * Detected change in 'C:\\Users\\Admin\\PycharmProjects\\whatsappbot\\webhook.py', reloading
+2025-07-18 11:18:31 - werkzeug - INFO -  * Restarting with watchdog (windowsapi)
+2025-07-18 11:18:32 - __main__ - INFO - Gemini API configured successfully.
+2025-07-18 11:18:32 - db_utils - INFO - Conversations table ensured.
+2025-07-18 11:18:32 - db_utils - INFO - FAQs table ensured.
+2025-07-18 11:18:32 - db_utils - INFO - Tenants config table ensured.
+2025-07-18 11:18:32 - db_utils - INFO - All database tables initialized.
+2025-07-18 11:18:32 - __main__ - INFO - Database initialization complete.
+2025-07-18 11:18:32 - firebase_admin_utils - WARNING - Firebase Admin SDK initialized without explicit credentials file. Ensure GOOGLE_APPLICATION_CREDENTIALS is set or it's running on GCP. Highly recommend using a service account JSON file for production.
+2025-07-18 11:18:32 - __main__ - INFO - Firebase Admin SDK initialized successfully.
+2025-07-18 11:18:32 - __main__ - INFO - Flask app starting...
+2025-07-18 11:18:32 - werkzeug - WARNING -  * Debugger is active!
+2025-07-18 11:18:32 - werkzeug - INFO -  * Debugger PIN: 496-718-321
+2025-07-18 11:22:56 - webhook - INFO - Processing message of type 'text' from 254715849926 for Tenant: `my_initial_client_id` (WhatsApp Phone ID: 736065142913405)
+2025-07-18 11:22:56 - webhook - INFO - Received text message from 254715849926: 'Awake?' (Tenant: `my_initial_client_id`)
+2025-07-18 11:22:56 - werkzeug - INFO - 127.0.0.1 - - [18/Jul/2025 11:22:56] "[35m[1mPOST /webhook HTTP/1.1[0m" 500 -
+2025-07-18 11:24:10 - werkzeug - INFO -  * Detected change in 'C:\\Users\\Admin\\PycharmProjects\\whatsappbot\\webhook.py', reloading
+2025-07-18 11:24:11 - werkzeug - INFO -  * Restarting with watchdog (windowsapi)
+2025-07-18 11:24:12 - __main__ - INFO - Gemini API configured successfully.
+2025-07-18 11:24:12 - db_utils - INFO - Conversations table ensured.
+2025-07-18 11:24:12 - db_utils - INFO - FAQs table ensured.
+2025-07-18 11:24:12 - db_utils - INFO - Tenants config table ensured.
+2025-07-18 11:24:12 - db_utils - INFO - All database tables initialized.
+2025-07-18 11:24:12 - __main__ - INFO - Database initialization complete.
+2025-07-18 11:24:12 - firebase_admin_utils - WARNING - Firebase Admin SDK initialized without explicit credentials file. Ensure GOOGLE_APPLICATION_CREDENTIALS is set or it's running on GCP. Highly recommend using a service account JSON file for production.
+2025-07-18 11:24:12 - __main__ - INFO - Firebase Admin SDK initialized successfully.
+2025-07-18 11:24:12 - __main__ - INFO - Flask app starting...
+2025-07-18 11:24:12 - werkzeug - WARNING -  * Debugger is active!
+2025-07-18 11:24:12 - werkzeug - INFO -  * Debugger PIN: 496-718-321
+2025-07-18 11:24:24 - __main__ - INFO - Gemini API configured successfully.
+2025-07-18 11:24:24 - db_utils - INFO - Conversations table ensured.
+2025-07-18 11:24:24 - db_utils - INFO - FAQs table ensured.
+2025-07-18 11:24:24 - db_utils - INFO - Tenants config table ensured.
+2025-07-18 11:24:24 - db_utils - INFO - All database tables initialized.
+2025-07-18 11:24:24 - __main__ - INFO - Database initialization complete.
+2025-07-18 11:24:24 - firebase_admin_utils - WARNING - Firebase Admin SDK initialized without explicit credentials file. Ensure GOOGLE_APPLICATION_CREDENTIALS is set or it's running on GCP. Highly recommend using a service account JSON file for production.
+2025-07-18 11:24:24 - __main__ - INFO - Firebase Admin SDK initialized successfully.
+2025-07-18 11:24:24 - __main__ - INFO - Flask app starting...
+2025-07-18 11:24:24 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://192.168.100.26:5000
+2025-07-18 11:24:24 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2025-07-18 11:24:24 - werkzeug - INFO -  * Restarting with watchdog (windowsapi)
+2025-07-18 11:24:25 - __main__ - INFO - Gemini API configured successfully.
+2025-07-18 11:24:25 - db_utils - INFO - Conversations table ensured.
+2025-07-18 11:24:25 - db_utils - INFO - FAQs table ensured.
+2025-07-18 11:24:25 - db_utils - INFO - Tenants config table ensured.
+2025-07-18 11:24:25 - db_utils - INFO - All database tables initialized.
+2025-07-18 11:24:25 - __main__ - INFO - Database initialization complete.
+2025-07-18 11:24:25 - firebase_admin_utils - WARNING - Firebase Admin SDK initialized without explicit credentials file. Ensure GOOGLE_APPLICATION_CREDENTIALS is set or it's running on GCP. Highly recommend using a service account JSON file for production.
+2025-07-18 11:24:25 - __main__ - INFO - Firebase Admin SDK initialized successfully.
+2025-07-18 11:24:25 - __main__ - INFO - Flask app starting...
+2025-07-18 11:24:25 - werkzeug - WARNING -  * Debugger is active!
+2025-07-18 11:24:25 - werkzeug - INFO -  * Debugger PIN: 496-718-321
+2025-07-18 11:24:35 - webhook - ERROR - Error processing webhook event: module 'db_utils' has no attribute 'get_tenant_id_by_whatsapp_id'
+Traceback (most recent call last):
+  File "C:\Users\Admin\PycharmProjects\whatsappbot\webhook.py", line 57, in handle_webhook
+    current_tenant_id = db_utils.get_tenant_id_by_whatsapp_id(WHATSAPP_PHONE_NUMBER_ID)
+                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: module 'db_utils' has no attribute 'get_tenant_id_by_whatsapp_id'
+2025-07-18 11:24:35 - werkzeug - INFO - 127.0.0.1 - - [18/Jul/2025 11:24:35] "[35m[1mPOST /webhook HTTP/1.1[0m" 500 -
+2025-07-18 11:24:37 - webhook - ERROR - Error processing webhook event: module 'db_utils' has no attribute 'get_tenant_id_by_whatsapp_id'
+Traceback (most recent call last):
+  File "C:\Users\Admin\PycharmProjects\whatsappbot\webhook.py", line 57, in handle_webhook
+    current_tenant_id = db_utils.get_tenant_id_by_whatsapp_id(WHATSAPP_PHONE_NUMBER_ID)
+                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: module 'db_utils' has no attribute 'get_tenant_id_by_whatsapp_id'
+2025-07-18 11:24:37 - werkzeug - INFO - 127.0.0.1 - - [18/Jul/2025 11:24:37] "[35m[1mPOST /webhook HTTP/1.1[0m" 500 -
+2025-07-18 11:24:38 - webhook - ERROR - Error processing webhook event: module 'db_utils' has no attribute 'get_tenant_id_by_whatsapp_id'
+Traceback (most recent call last):
+  File "C:\Users\Admin\PycharmProjects\whatsappbot\webhook.py", line 57, in handle_webhook
+    current_tenant_id = db_utils.get_tenant_id_by_whatsapp_id(WHATSAPP_PHONE_NUMBER_ID)
+                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: module 'db_utils' has no attribute 'get_tenant_id_by_whatsapp_id'
+2025-07-18 11:24:38 - werkzeug - INFO - 127.0.0.1 - - [18/Jul/2025 11:24:38] "[35m[1mPOST /webhook HTTP/1.1[0m" 500 -
+2025-07-18 11:24:41 - webhook - ERROR - Error processing webhook event: module 'db_utils' has no attribute 'get_tenant_id_by_whatsapp_id'
+Traceback (most recent call last):
+  File "C:\Users\Admin\PycharmProjects\whatsappbot\webhook.py", line 57, in handle_webhook
+    current_tenant_id = db_utils.get_tenant_id_by_whatsapp_id(WHATSAPP_PHONE_NUMBER_ID)
+                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: module 'db_utils' has no attribute 'get_tenant_id_by_whatsapp_id'
+2025-07-18 11:24:41 - werkzeug - INFO - 127.0.0.1 - - [18/Jul/2025 11:24:41] "[35m[1mPOST /webhook HTTP/1.1[0m" 500 -
+2025-07-18 11:25:05 - webhook - ERROR - Error processing webhook event: module 'db_utils' has no attribute 'get_tenant_id_by_whatsapp_id'
+Traceback (most recent call last):
+  File "C:\Users\Admin\PycharmProjects\whatsappbot\webhook.py", line 57, in handle_webhook
+    current_tenant_id = db_utils.get_tenant_id_by_whatsapp_id(WHATSAPP_PHONE_NUMBER_ID)
+                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: module 'db_utils' has no attribute 'get_tenant_id_by_whatsapp_id'
+2025-07-18 11:25:05 - werkzeug - INFO - 127.0.0.1 - - [18/Jul/2025 11:25:05] "[35m[1mPOST /webhook HTTP/1.1[0m" 500 -
+2025-07-18 11:26:15 - werkzeug - INFO -  * Detected change in 'C:\\Users\\Admin\\PycharmProjects\\whatsappbot\\webhook.py', reloading
+2025-07-18 11:26:15 - werkzeug - INFO -  * Detected change in 'C:\\Users\\Admin\\PycharmProjects\\whatsappbot\\webhook.py', reloading
+2025-07-18 11:26:16 - werkzeug - INFO -  * Restarting with watchdog (windowsapi)
+2025-07-18 11:26:17 - __main__ - INFO - Gemini API configured successfully.
+2025-07-18 11:26:17 - db_utils - INFO - Conversations table ensured.
+2025-07-18 11:26:17 - db_utils - INFO - FAQs table ensured.
+2025-07-18 11:26:17 - db_utils - INFO - Tenants config table ensured.
+2025-07-18 11:26:17 - db_utils - INFO - All database tables initialized.
+2025-07-18 11:26:17 - __main__ - INFO - Database initialization complete.
+2025-07-18 11:26:17 - firebase_admin_utils - WARNING - Firebase Admin SDK initialized without explicit credentials file. Ensure GOOGLE_APPLICATION_CREDENTIALS is set or it's running on GCP. Highly recommend using a service account JSON file for production.
+2025-07-18 11:26:17 - __main__ - INFO - Firebase Admin SDK initialized successfully.
+2025-07-18 11:26:17 - __main__ - INFO - Flask app starting...
+2025-07-18 11:26:17 - werkzeug - WARNING -  * Debugger is active!
+2025-07-18 11:26:17 - werkzeug - INFO -  * Debugger PIN: 496-718-321
+2025-07-18 11:26:25 - __main__ - INFO - Gemini API configured successfully.
+2025-07-18 11:26:25 - db_utils - INFO - Conversations table ensured.
+2025-07-18 11:26:25 - db_utils - INFO - FAQs table ensured.
+2025-07-18 11:26:25 - db_utils - INFO - Tenants config table ensured.
+2025-07-18 11:26:25 - db_utils - INFO - All database tables initialized.
+2025-07-18 11:26:25 - __main__ - INFO - Database initialization complete.
+2025-07-18 11:26:25 - firebase_admin_utils - WARNING - Firebase Admin SDK initialized without explicit credentials file. Ensure GOOGLE_APPLICATION_CREDENTIALS is set or it's running on GCP. Highly recommend using a service account JSON file for production.
+2025-07-18 11:26:25 - __main__ - INFO - Firebase Admin SDK initialized successfully.
+2025-07-18 11:26:25 - __main__ - INFO - Flask app starting...
+2025-07-18 11:26:25 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://192.168.100.26:5000
+2025-07-18 11:26:25 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2025-07-18 11:26:25 - werkzeug - INFO -  * Restarting with watchdog (windowsapi)
+2025-07-18 11:26:26 - __main__ - INFO - Gemini API configured successfully.
+2025-07-18 11:26:26 - db_utils - INFO - Conversations table ensured.
+2025-07-18 11:26:26 - db_utils - INFO - FAQs table ensured.
+2025-07-18 11:26:26 - db_utils - INFO - Tenants config table ensured.
+2025-07-18 11:26:26 - db_utils - INFO - All database tables initialized.
+2025-07-18 11:26:26 - __main__ - INFO - Database initialization complete.
+2025-07-18 11:26:26 - firebase_admin_utils - WARNING - Firebase Admin SDK initialized without explicit credentials file. Ensure GOOGLE_APPLICATION_CREDENTIALS is set or it's running on GCP. Highly recommend using a service account JSON file for production.
+2025-07-18 11:26:26 - __main__ - INFO - Firebase Admin SDK initialized successfully.
+2025-07-18 11:26:26 - __main__ - INFO - Flask app starting...
+2025-07-18 11:26:26 - werkzeug - WARNING -  * Debugger is active!
+2025-07-18 11:26:26 - werkzeug - INFO -  * Debugger PIN: 496-718-321
+2025-07-18 11:26:32 - webhook - ERROR - Error processing webhook event: module 'db_utils' has no attribute 'get_tenant_id_by_whatsapp_phone_number'
+Traceback (most recent call last):
+  File "C:\Users\Admin\PycharmProjects\whatsappbot\webhook.py", line 57, in handle_webhook
+    current_tenant_id = db_utils.get_tenant_id_by_whatsapp_phone_number(WHATSAPP_PHONE_NUMBER_ID)
+                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: module 'db_utils' has no attribute 'get_tenant_id_by_whatsapp_phone_number'. Did you mean: 'get_tenant_id_from_whatsapp_phone_number'?
+2025-07-18 11:26:32 - werkzeug - INFO - 127.0.0.1 - - [18/Jul/2025 11:26:32] "[35m[1mPOST /webhook HTTP/1.1[0m" 500 -
+2025-07-18 11:26:33 - webhook - ERROR - Error processing webhook event: module 'db_utils' has no attribute 'get_tenant_id_by_whatsapp_phone_number'
+Traceback (most recent call last):
+  File "C:\Users\Admin\PycharmProjects\whatsappbot\webhook.py", line 57, in handle_webhook
+    current_tenant_id = db_utils.get_tenant_id_by_whatsapp_phone_number(WHATSAPP_PHONE_NUMBER_ID)
+                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: module 'db_utils' has no attribute 'get_tenant_id_by_whatsapp_phone_number'. Did you mean: 'get_tenant_id_from_whatsapp_phone_number'?
+2025-07-18 11:26:33 - werkzeug - INFO - 127.0.0.1 - - [18/Jul/2025 11:26:33] "[35m[1mPOST /webhook HTTP/1.1[0m" 500 -
+2025-07-18 11:26:34 - webhook - ERROR - Error processing webhook event: module 'db_utils' has no attribute 'get_tenant_id_by_whatsapp_phone_number'
+Traceback (most recent call last):
+  File "C:\Users\Admin\PycharmProjects\whatsappbot\webhook.py", line 57, in handle_webhook
+    current_tenant_id = db_utils.get_tenant_id_by_whatsapp_phone_number(WHATSAPP_PHONE_NUMBER_ID)
+                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: module 'db_utils' has no attribute 'get_tenant_id_by_whatsapp_phone_number'. Did you mean: 'get_tenant_id_from_whatsapp_phone_number'?
+2025-07-18 11:26:34 - werkzeug - INFO - 127.0.0.1 - - [18/Jul/2025 11:26:34] "[35m[1mPOST /webhook HTTP/1.1[0m" 500 -
+2025-07-18 11:26:47 - __main__ - INFO - Gemini API configured successfully.
+2025-07-18 11:26:47 - db_utils - INFO - Conversations table ensured.
+2025-07-18 11:26:47 - db_utils - INFO - FAQs table ensured.
+2025-07-18 11:26:47 - db_utils - INFO - Tenants config table ensured.
+2025-07-18 11:26:47 - db_utils - INFO - All database tables initialized.
+2025-07-18 11:26:47 - __main__ - INFO - Database initialization complete.
+2025-07-18 11:26:47 - firebase_admin_utils - WARNING - Firebase Admin SDK initialized without explicit credentials file. Ensure GOOGLE_APPLICATION_CREDENTIALS is set or it's running on GCP. Highly recommend using a service account JSON file for production.
+2025-07-18 11:26:47 - __main__ - INFO - Firebase Admin SDK initialized successfully.
+2025-07-18 11:26:47 - __main__ - INFO - Flask app starting...
+2025-07-18 11:26:47 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://192.168.100.26:5000
+2025-07-18 11:26:47 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2025-07-18 11:26:47 - werkzeug - INFO -  * Restarting with watchdog (windowsapi)
+2025-07-18 11:26:48 - __main__ - INFO - Gemini API configured successfully.
+2025-07-18 11:26:48 - db_utils - INFO - Conversations table ensured.
+2025-07-18 11:26:48 - db_utils - INFO - FAQs table ensured.
+2025-07-18 11:26:48 - db_utils - INFO - Tenants config table ensured.
+2025-07-18 11:26:48 - db_utils - INFO - All database tables initialized.
+2025-07-18 11:26:48 - __main__ - INFO - Database initialization complete.
+2025-07-18 11:26:48 - firebase_admin_utils - WARNING - Firebase Admin SDK initialized without explicit credentials file. Ensure GOOGLE_APPLICATION_CREDENTIALS is set or it's running on GCP. Highly recommend using a service account JSON file for production.
+2025-07-18 11:26:48 - __main__ - INFO - Firebase Admin SDK initialized successfully.
+2025-07-18 11:26:48 - __main__ - INFO - Flask app starting...
+2025-07-18 11:26:48 - werkzeug - WARNING -  * Debugger is active!
+2025-07-18 11:26:48 - werkzeug - INFO -  * Debugger PIN: 496-718-321
+2025-07-18 11:27:00 - webhook - ERROR - Error processing webhook event: module 'db_utils' has no attribute 'get_tenant_id_by_whatsapp_phone_number'
+Traceback (most recent call last):
+  File "C:\Users\Admin\PycharmProjects\whatsappbot\webhook.py", line 57, in handle_webhook
+    current_tenant_id = db_utils.get_tenant_id_by_whatsapp_phone_number(WHATSAPP_PHONE_NUMBER_ID)
+                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: module 'db_utils' has no attribute 'get_tenant_id_by_whatsapp_phone_number'. Did you mean: 'get_tenant_id_from_whatsapp_phone_number'?
+2025-07-18 11:27:00 - werkzeug - INFO - 127.0.0.1 - - [18/Jul/2025 11:27:00] "[35m[1mPOST /webhook HTTP/1.1[0m" 500 -
+2025-07-18 11:29:56 - __main__ - INFO - Gemini API configured successfully.
+2025-07-18 11:29:56 - db_utils - INFO - Conversations table ensured.
+2025-07-18 11:29:56 - db_utils - INFO - FAQs table ensured.
+2025-07-18 11:29:56 - db_utils - INFO - Tenants config table ensured.
+2025-07-18 11:29:56 - db_utils - INFO - All database tables initialized.
+2025-07-18 11:29:56 - __main__ - INFO - Database initialization complete.
+2025-07-18 11:29:56 - firebase_admin_utils - INFO - Firebase Admin SDK initialized using service account file.
+2025-07-18 11:29:56 - __main__ - INFO - Firebase Admin SDK initialized successfully.
+2025-07-18 11:29:56 - __main__ - INFO - Flask app starting...
+2025-07-18 11:29:56 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://192.168.100.26:5000
+2025-07-18 11:29:56 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2025-07-18 11:29:56 - werkzeug - INFO -  * Restarting with watchdog (windowsapi)
+2025-07-18 11:29:57 - __main__ - INFO - Gemini API configured successfully.
+2025-07-18 11:29:57 - db_utils - INFO - Conversations table ensured.
+2025-07-18 11:29:57 - db_utils - INFO - FAQs table ensured.
+2025-07-18 11:29:57 - db_utils - INFO - Tenants config table ensured.
+2025-07-18 11:29:57 - db_utils - INFO - All database tables initialized.
+2025-07-18 11:29:57 - __main__ - INFO - Database initialization complete.
+2025-07-18 11:29:57 - firebase_admin_utils - INFO - Firebase Admin SDK initialized using service account file.
+2025-07-18 11:29:57 - __main__ - INFO - Firebase Admin SDK initialized successfully.
+2025-07-18 11:29:57 - __main__ - INFO - Flask app starting...
+2025-07-18 11:29:57 - werkzeug - WARNING -  * Debugger is active!
+2025-07-18 11:29:57 - werkzeug - INFO -  * Debugger PIN: 496-718-321
+2025-07-18 11:30:07 - webhook - ERROR - Error processing webhook event: module 'db_utils' has no attribute 'get_tenant_id_by_whatsapp_phone_number'
+Traceback (most recent call last):
+  File "C:\Users\Admin\PycharmProjects\whatsappbot\webhook.py", line 57, in handle_webhook
+    current_tenant_id = db_utils.get_tenant_id_by_whatsapp_phone_number(WHATSAPP_PHONE_NUMBER_ID)
+                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: module 'db_utils' has no attribute 'get_tenant_id_by_whatsapp_phone_number'. Did you mean: 'get_tenant_id_from_whatsapp_phone_number'?
+2025-07-18 11:30:07 - werkzeug - INFO - 127.0.0.1 - - [18/Jul/2025 11:30:07] "[35m[1mPOST /webhook HTTP/1.1[0m" 500 -
+2025-07-18 11:30:08 - webhook - ERROR - Error processing webhook event: module 'db_utils' has no attribute 'get_tenant_id_by_whatsapp_phone_number'
+Traceback (most recent call last):
+  File "C:\Users\Admin\PycharmProjects\whatsappbot\webhook.py", line 57, in handle_webhook
+    current_tenant_id = db_utils.get_tenant_id_by_whatsapp_phone_number(WHATSAPP_PHONE_NUMBER_ID)
+                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: module 'db_utils' has no attribute 'get_tenant_id_by_whatsapp_phone_number'. Did you mean: 'get_tenant_id_from_whatsapp_phone_number'?
+2025-07-18 11:30:08 - werkzeug - INFO - 127.0.0.1 - - [18/Jul/2025 11:30:08] "[35m[1mPOST /webhook HTTP/1.1[0m" 500 -
+2025-07-18 11:30:09 - webhook - ERROR - Error processing webhook event: module 'db_utils' has no attribute 'get_tenant_id_by_whatsapp_phone_number'
+Traceback (most recent call last):
+  File "C:\Users\Admin\PycharmProjects\whatsappbot\webhook.py", line 57, in handle_webhook
+    current_tenant_id = db_utils.get_tenant_id_by_whatsapp_phone_number(WHATSAPP_PHONE_NUMBER_ID)
+                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: module 'db_utils' has no attribute 'get_tenant_id_by_whatsapp_phone_number'. Did you mean: 'get_tenant_id_from_whatsapp_phone_number'?
+2025-07-18 11:30:09 - werkzeug - INFO - 127.0.0.1 - - [18/Jul/2025 11:30:09] "[35m[1mPOST /webhook HTTP/1.1[0m" 500 -
+2025-07-18 11:30:12 - webhook - ERROR - Error processing webhook event: module 'db_utils' has no attribute 'get_tenant_id_by_whatsapp_phone_number'
+Traceback (most recent call last):
+  File "C:\Users\Admin\PycharmProjects\whatsappbot\webhook.py", line 57, in handle_webhook
+    current_tenant_id = db_utils.get_tenant_id_by_whatsapp_phone_number(WHATSAPP_PHONE_NUMBER_ID)
+                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: module 'db_utils' has no attribute 'get_tenant_id_by_whatsapp_phone_number'. Did you mean: 'get_tenant_id_from_whatsapp_phone_number'?
+2025-07-18 11:30:12 - werkzeug - INFO - 127.0.0.1 - - [18/Jul/2025 11:30:12] "[35m[1mPOST /webhook HTTP/1.1[0m" 500 -
+2025-07-18 11:30:37 - webhook - ERROR - Error processing webhook event: module 'db_utils' has no attribute 'get_tenant_id_by_whatsapp_phone_number'
+Traceback (most recent call last):
+  File "C:\Users\Admin\PycharmProjects\whatsappbot\webhook.py", line 57, in handle_webhook
+    current_tenant_id = db_utils.get_tenant_id_by_whatsapp_phone_number(WHATSAPP_PHONE_NUMBER_ID)
+                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: module 'db_utils' has no attribute 'get_tenant_id_by_whatsapp_phone_number'. Did you mean: 'get_tenant_id_from_whatsapp_phone_number'?
+2025-07-18 11:30:37 - werkzeug - INFO - 127.0.0.1 - - [18/Jul/2025 11:30:37] "[35m[1mPOST /webhook HTTP/1.1[0m" 500 -
+2025-07-18 11:31:44 - webhook - ERROR - Error processing webhook event: module 'db_utils' has no attribute 'get_tenant_id_by_whatsapp_phone_number'
+Traceback (most recent call last):
+  File "C:\Users\Admin\PycharmProjects\whatsappbot\webhook.py", line 57, in handle_webhook
+    current_tenant_id = db_utils.get_tenant_id_by_whatsapp_phone_number(WHATSAPP_PHONE_NUMBER_ID)
+                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: module 'db_utils' has no attribute 'get_tenant_id_by_whatsapp_phone_number'. Did you mean: 'get_tenant_id_from_whatsapp_phone_number'?
+2025-07-18 11:31:44 - werkzeug - INFO - 127.0.0.1 - - [18/Jul/2025 11:31:44] "[35m[1mPOST /webhook HTTP/1.1[0m" 500 -
+2025-07-18 11:32:25 - werkzeug - INFO -  * Detected change in 'C:\\Users\\Admin\\PycharmProjects\\whatsappbot\\webhook.py', reloading
+2025-07-18 11:32:26 - werkzeug - INFO -  * Restarting with watchdog (windowsapi)
+2025-07-18 11:32:27 - __main__ - INFO - Gemini API configured successfully.
+2025-07-18 11:32:27 - db_utils - INFO - Conversations table ensured.
+2025-07-18 11:32:27 - db_utils - INFO - FAQs table ensured.
+2025-07-18 11:32:27 - db_utils - INFO - Tenants config table ensured.
+2025-07-18 11:32:27 - db_utils - INFO - All database tables initialized.
+2025-07-18 11:32:27 - __main__ - INFO - Database initialization complete.
+2025-07-18 11:32:27 - firebase_admin_utils - INFO - Firebase Admin SDK initialized using service account file.
+2025-07-18 11:32:27 - __main__ - INFO - Firebase Admin SDK initialized successfully.
+2025-07-18 11:32:27 - __main__ - INFO - Flask app starting...
+2025-07-18 11:32:27 - werkzeug - WARNING -  * Debugger is active!
+2025-07-18 11:32:27 - werkzeug - INFO -  * Debugger PIN: 496-718-321
+2025-07-18 11:32:42 - __main__ - INFO - Gemini API configured successfully.
+2025-07-18 11:32:42 - db_utils - INFO - Conversations table ensured.
+2025-07-18 11:32:42 - db_utils - INFO - FAQs table ensured.
+2025-07-18 11:32:42 - db_utils - INFO - Tenants config table ensured.
+2025-07-18 11:32:42 - db_utils - INFO - All database tables initialized.
+2025-07-18 11:32:42 - __main__ - INFO - Database initialization complete.
+2025-07-18 11:32:42 - firebase_admin_utils - INFO - Firebase Admin SDK initialized using service account file.
+2025-07-18 11:32:42 - __main__ - INFO - Firebase Admin SDK initialized successfully.
+2025-07-18 11:32:42 - __main__ - INFO - Flask app starting...
+2025-07-18 11:32:42 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://192.168.100.26:5000
+2025-07-18 11:32:42 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2025-07-18 11:32:42 - werkzeug - INFO -  * Restarting with watchdog (windowsapi)
+2025-07-18 11:32:43 - __main__ - INFO - Gemini API configured successfully.
+2025-07-18 11:32:43 - db_utils - INFO - Conversations table ensured.
+2025-07-18 11:32:43 - db_utils - INFO - FAQs table ensured.
+2025-07-18 11:32:43 - db_utils - INFO - Tenants config table ensured.
+2025-07-18 11:32:43 - db_utils - INFO - All database tables initialized.
+2025-07-18 11:32:43 - __main__ - INFO - Database initialization complete.
+2025-07-18 11:32:43 - firebase_admin_utils - INFO - Firebase Admin SDK initialized using service account file.
+2025-07-18 11:32:43 - __main__ - INFO - Firebase Admin SDK initialized successfully.
+2025-07-18 11:32:43 - __main__ - INFO - Flask app starting...
+2025-07-18 11:32:43 - werkzeug - WARNING -  * Debugger is active!
+2025-07-18 11:32:43 - werkzeug - INFO -  * Debugger PIN: 496-718-321
+2025-07-18 11:32:49 - webhook - INFO - Received webhook event: {
+  "object": "whatsapp_business_account",
+  "entry": [
+    {
+      "id": "1041290827721473",
+      "changes": [
+        {
+          "value": {
+            "messaging_product": "whatsapp",
+            "metadata": {
+              "display_phone_number": "15556477738",
+              "phone_number_id": "736065142913405"
+            },
+            "contacts": [
+              {
+                "profile": {
+                  "name": "Francis"
+                },
+                "wa_id": "254715849926"
+              }
+            ],
+            "messages": [
+              {
+                "from": "254715849926",
+                "id": "wamid.HBgMMjU0NzE1ODQ5OTI2FQIAEhggMDM1MTRFQjM4RjI0RjRGQUYzNDZGNzU0NThFRDc0QjAA",
+                "timestamp": "1752827568",
+                "text": {
+                  "body": "Testy"
+                },
+                "type": "text"
+              }
+            ]
+          },
+          "field": "messages"
+        }
+      ]
+    }
+  ]
+}
+2025-07-18 11:32:49 - webhook - INFO - Received message from 254715849926 (Tenant: `my_initial_client_id`): 'Testy'
+2025-07-18 11:32:49 - webhook - ERROR - Error processing webhook event: generate_ai_reply() takes 2 positional arguments but 3 were given
+Traceback (most recent call last):
+  File "C:\Users\Admin\PycharmProjects\whatsappbot\webhook.py", line 90, in handle_webhook
+    response_message = generate_ai_reply(user_message, wa_id, current_tenant_id)
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: generate_ai_reply() takes 2 positional arguments but 3 were given
+2025-07-18 11:32:49 - werkzeug - INFO - 127.0.0.1 - - [18/Jul/2025 11:32:49] "[35m[1mPOST /webhook HTTP/1.1[0m" 500 -
+2025-07-18 11:32:50 - webhook - INFO - Received webhook event: {
+  "object": "whatsapp_business_account",
+  "entry": [
+    {
+      "id": "1041290827721473",
+      "changes": [
+        {
+          "value": {
+            "messaging_product": "whatsapp",
+            "metadata": {
+              "display_phone_number": "15556477738",
+              "phone_number_id": "736065142913405"
+            },
+            "contacts": [
+              {
+                "profile": {
+                  "name": "Francis"
+                },
+                "wa_id": "254715849926"
+              }
+            ],
+            "messages": [
+              {
+                "from": "254715849926",
+                "id": "wamid.HBgMMjU0NzE1ODQ5OTI2FQIAEhggMDM1MTRFQjM4RjI0RjRGQUYzNDZGNzU0NThFRDc0QjAA",
+                "timestamp": "1752827568",
+                "text": {
+                  "body": "Testy"
+                },
+                "type": "text"
+              }
+            ]
+          },
+          "field": "messages"
+        }
+      ]
+    }
+  ]
+}
+2025-07-18 11:32:50 - webhook - INFO - Received message from 254715849926 (Tenant: `my_initial_client_id`): 'Testy'
+2025-07-18 11:32:50 - webhook - ERROR - Error processing webhook event: generate_ai_reply() takes 2 positional arguments but 3 were given
+Traceback (most recent call last):
+  File "C:\Users\Admin\PycharmProjects\whatsappbot\webhook.py", line 90, in handle_webhook
+    response_message = generate_ai_reply(user_message, wa_id, current_tenant_id)
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: generate_ai_reply() takes 2 positional arguments but 3 were given
+2025-07-18 11:32:50 - werkzeug - INFO - 127.0.0.1 - - [18/Jul/2025 11:32:50] "[35m[1mPOST /webhook HTTP/1.1[0m" 500 -
+2025-07-18 11:32:51 - webhook - INFO - Received webhook event: {
+  "object": "whatsapp_business_account",
+  "entry": [
+    {
+      "id": "1041290827721473",
+      "changes": [
+        {
+          "value": {
+            "messaging_product": "whatsapp",
+            "metadata": {
+              "display_phone_number": "15556477738",
+              "phone_number_id": "736065142913405"
+            },
+            "contacts": [
+              {
+                "profile": {
+                  "name": "Francis"
+                },
+                "wa_id": "254715849926"
+              }
+            ],
+            "messages": [
+              {
+                "from": "254715849926",
+                "id": "wamid.HBgMMjU0NzE1ODQ5OTI2FQIAEhggMDM1MTRFQjM4RjI0RjRGQUYzNDZGNzU0NThFRDc0QjAA",
+                "timestamp": "1752827568",
+                "text": {
+                  "body": "Testy"
+                },
+                "type": "text"
+              }
+            ]
+          },
+          "field": "messages"
+        }
+      ]
+    }
+  ]
+}
+2025-07-18 11:32:51 - webhook - INFO - Received message from 254715849926 (Tenant: `my_initial_client_id`): 'Testy'
+2025-07-18 11:32:51 - webhook - ERROR - Error processing webhook event: generate_ai_reply() takes 2 positional arguments but 3 were given
+Traceback (most recent call last):
+  File "C:\Users\Admin\PycharmProjects\whatsappbot\webhook.py", line 90, in handle_webhook
+    response_message = generate_ai_reply(user_message, wa_id, current_tenant_id)
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: generate_ai_reply() takes 2 positional arguments but 3 were given
+2025-07-18 11:32:51 - werkzeug - INFO - 127.0.0.1 - - [18/Jul/2025 11:32:51] "[35m[1mPOST /webhook HTTP/1.1[0m" 500 -
+2025-07-18 11:32:54 - webhook - INFO - Received webhook event: {
+  "object": "whatsapp_business_account",
+  "entry": [
+    {
+      "id": "1041290827721473",
+      "changes": [
+        {
+          "value": {
+            "messaging_product": "whatsapp",
+            "metadata": {
+              "display_phone_number": "15556477738",
+              "phone_number_id": "736065142913405"
+            },
+            "contacts": [
+              {
+                "profile": {
+                  "name": "Francis"
+                },
+                "wa_id": "254715849926"
+              }
+            ],
+            "messages": [
+              {
+                "from": "254715849926",
+                "id": "wamid.HBgMMjU0NzE1ODQ5OTI2FQIAEhggMDM1MTRFQjM4RjI0RjRGQUYzNDZGNzU0NThFRDc0QjAA",
+                "timestamp": "1752827568",
+                "text": {
+                  "body": "Testy"
+                },
+                "type": "text"
+              }
+            ]
+          },
+          "field": "messages"
+        }
+      ]
+    }
+  ]
+}
+2025-07-18 11:32:54 - webhook - INFO - Received message from 254715849926 (Tenant: `my_initial_client_id`): 'Testy'
+2025-07-18 11:32:54 - webhook - ERROR - Error processing webhook event: generate_ai_reply() takes 2 positional arguments but 3 were given
+Traceback (most recent call last):
+  File "C:\Users\Admin\PycharmProjects\whatsappbot\webhook.py", line 90, in handle_webhook
+    response_message = generate_ai_reply(user_message, wa_id, current_tenant_id)
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: generate_ai_reply() takes 2 positional arguments but 3 were given
+2025-07-18 11:32:54 - werkzeug - INFO - 127.0.0.1 - - [18/Jul/2025 11:32:54] "[35m[1mPOST /webhook HTTP/1.1[0m" 500 -
+2025-07-18 11:32:59 - webhook - INFO - Received webhook event: {
+  "object": "whatsapp_business_account",
+  "entry": [
+    {
+      "id": "1041290827721473",
+      "changes": [
+        {
+          "value": {
+            "messaging_product": "whatsapp",
+            "metadata": {
+              "display_phone_number": "15556477738",
+              "phone_number_id": "736065142913405"
+            },
+            "contacts": [
+              {
+                "profile": {
+                  "name": "Francis"
+                },
+                "wa_id": "254715849926"
+              }
+            ],
+            "messages": [
+              {
+                "from": "254715849926",
+                "id": "wamid.HBgMMjU0NzE1ODQ5OTI2FQIAEhggOTBCODdCN0NBQ0EzQTk5QjFFRDA4RTYwMjFBNjE4MUIA",
+                "timestamp": "1752827191",
+                "text": {
+                  "body": "Awake"
+                },
+                "type": "text"
+              }
+            ]
+          },
+          "field": "messages"
+        }
+      ]
+    }
+  ]
+}
+2025-07-18 11:32:59 - webhook - INFO - Received message from 254715849926 (Tenant: `my_initial_client_id`): 'Awake'
+2025-07-18 11:32:59 - webhook - ERROR - Error processing webhook event: generate_ai_reply() takes 2 positional arguments but 3 were given
+Traceback (most recent call last):
+  File "C:\Users\Admin\PycharmProjects\whatsappbot\webhook.py", line 90, in handle_webhook
+    response_message = generate_ai_reply(user_message, wa_id, current_tenant_id)
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: generate_ai_reply() takes 2 positional arguments but 3 were given
+2025-07-18 11:32:59 - werkzeug - INFO - 127.0.0.1 - - [18/Jul/2025 11:32:59] "[35m[1mPOST /webhook HTTP/1.1[0m" 500 -
+2025-07-18 11:33:18 - webhook - INFO - Received webhook event: {
+  "object": "whatsapp_business_account",
+  "entry": [
+    {
+      "id": "1041290827721473",
+      "changes": [
+        {
+          "value": {
+            "messaging_product": "whatsapp",
+            "metadata": {
+              "display_phone_number": "15556477738",
+              "phone_number_id": "736065142913405"
+            },
+            "contacts": [
+              {
+                "profile": {
+                  "name": "Francis"
+                },
+                "wa_id": "254715849926"
+              }
+            ],
+            "messages": [
+              {
+                "from": "254715849926",
+                "id": "wamid.HBgMMjU0NzE1ODQ5OTI2FQIAEhggMDM1MTRFQjM4RjI0RjRGQUYzNDZGNzU0NThFRDc0QjAA",
+                "timestamp": "1752827568",
+                "text": {
+                  "body": "Testy"
+                },
+                "type": "text"
+              }
+            ]
+          },
+          "field": "messages"
+        }
+      ]
+    }
+  ]
+}
+2025-07-18 11:33:18 - webhook - INFO - Received message from 254715849926 (Tenant: `my_initial_client_id`): 'Testy'
+2025-07-18 11:33:18 - webhook - ERROR - Error processing webhook event: generate_ai_reply() takes 2 positional arguments but 3 were given
+Traceback (most recent call last):
+  File "C:\Users\Admin\PycharmProjects\whatsappbot\webhook.py", line 90, in handle_webhook
+    response_message = generate_ai_reply(user_message, wa_id, current_tenant_id)
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: generate_ai_reply() takes 2 positional arguments but 3 were given
+2025-07-18 11:33:18 - werkzeug - INFO - 127.0.0.1 - - [18/Jul/2025 11:33:18] "[35m[1mPOST /webhook HTTP/1.1[0m" 500 -
+2025-07-18 11:36:56 - webhook - INFO - Received webhook event: {
+  "object": "whatsapp_business_account",
+  "entry": [
+    {
+      "id": "1041290827721473",
+      "changes": [
+        {
+          "value": {
+            "messaging_product": "whatsapp",
+            "metadata": {
+              "display_phone_number": "15556477738",
+              "phone_number_id": "736065142913405"
+            },
+            "contacts": [
+              {
+                "profile": {
+                  "name": "Francis"
+                },
+                "wa_id": "254715849926"
+              }
+            ],
+            "messages": [
+              {
+                "from": "254715849926",
+                "id": "wamid.HBgMMjU0NzE1ODQ5OTI2FQIAEhggRjYzMjQwNjk3OTk1MEM5QjMzNDQ2RUE5MkE4MjQyQTYA",
+                "timestamp": "1752827406",
+                "text": {
+                  "body": "Test"
+                },
+                "type": "text"
+              }
+            ]
+          },
+          "field": "messages"
+        }
+      ]
+    }
+  ]
+}
+2025-07-18 11:36:56 - webhook - INFO - Received message from 254715849926 (Tenant: `my_initial_client_id`): 'Test'
+2025-07-18 11:36:56 - webhook - ERROR - Error processing webhook event: generate_ai_reply() takes 2 positional arguments but 3 were given
+Traceback (most recent call last):
+  File "C:\Users\Admin\PycharmProjects\whatsappbot\webhook.py", line 90, in handle_webhook
+    response_message = generate_ai_reply(user_message, wa_id, current_tenant_id)
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: generate_ai_reply() takes 2 positional arguments but 3 were given
+2025-07-18 11:36:56 - werkzeug - INFO - 127.0.0.1 - - [18/Jul/2025 11:36:56] "[35m[1mPOST /webhook HTTP/1.1[0m" 500 -
+2025-07-18 11:38:12 - werkzeug - INFO -  * Detected change in 'C:\\Users\\Admin\\PycharmProjects\\whatsappbot\\webhook.py', reloading
+2025-07-18 11:38:13 - werkzeug - INFO -  * Restarting with watchdog (windowsapi)
+2025-07-18 11:38:14 - __main__ - INFO - Gemini API configured successfully.
+2025-07-18 11:38:14 - db_utils - INFO - Conversations table ensured.
+2025-07-18 11:38:14 - db_utils - INFO - FAQs table ensured.
+2025-07-18 11:38:14 - db_utils - INFO - Tenants config table ensured.
+2025-07-18 11:38:14 - db_utils - INFO - All database tables initialized.
+2025-07-18 11:38:14 - __main__ - INFO - Database initialization complete.
+2025-07-18 11:38:14 - firebase_admin_utils - INFO - Firebase Admin SDK initialized using service account file.
+2025-07-18 11:38:14 - __main__ - INFO - Firebase Admin SDK initialized successfully.
+2025-07-18 11:38:14 - __main__ - INFO - Flask app starting...
+2025-07-18 11:38:14 - werkzeug - WARNING -  * Debugger is active!
+2025-07-18 11:38:14 - werkzeug - INFO -  * Debugger PIN: 496-718-321
+2025-07-18 11:38:36 - __main__ - INFO - Gemini API configured successfully.
+2025-07-18 11:38:36 - db_utils - INFO - Conversations table ensured.
+2025-07-18 11:38:36 - db_utils - INFO - FAQs table ensured.
+2025-07-18 11:38:36 - db_utils - INFO - Tenants config table ensured.
+2025-07-18 11:38:36 - db_utils - INFO - All database tables initialized.
+2025-07-18 11:38:36 - __main__ - INFO - Database initialization complete.
+2025-07-18 11:38:36 - firebase_admin_utils - INFO - Firebase Admin SDK initialized using service account file.
+2025-07-18 11:38:36 - __main__ - INFO - Firebase Admin SDK initialized successfully.
+2025-07-18 11:38:36 - __main__ - INFO - Flask app starting...
+2025-07-18 11:38:36 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://192.168.100.26:5000
+2025-07-18 11:38:36 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2025-07-18 11:38:36 - werkzeug - INFO -  * Restarting with watchdog (windowsapi)
+2025-07-18 11:38:37 - __main__ - INFO - Gemini API configured successfully.
+2025-07-18 11:38:37 - db_utils - INFO - Conversations table ensured.
+2025-07-18 11:38:37 - db_utils - INFO - FAQs table ensured.
+2025-07-18 11:38:37 - db_utils - INFO - Tenants config table ensured.
+2025-07-18 11:38:37 - db_utils - INFO - All database tables initialized.
+2025-07-18 11:38:37 - __main__ - INFO - Database initialization complete.
+2025-07-18 11:38:37 - firebase_admin_utils - INFO - Firebase Admin SDK initialized using service account file.
+2025-07-18 11:38:37 - __main__ - INFO - Firebase Admin SDK initialized successfully.
+2025-07-18 11:38:37 - __main__ - INFO - Flask app starting...
+2025-07-18 11:38:37 - werkzeug - WARNING -  * Debugger is active!
+2025-07-18 11:38:37 - werkzeug - INFO -  * Debugger PIN: 496-718-321
+2025-07-18 11:38:47 - webhook - INFO - Received webhook event: {
+  "object": "whatsapp_business_account",
+  "entry": [
+    {
+      "id": "1041290827721473",
+      "changes": [
+        {
+          "value": {
+            "messaging_product": "whatsapp",
+            "metadata": {
+              "display_phone_number": "15556477738",
+              "phone_number_id": "736065142913405"
+            },
+            "contacts": [
+              {
+                "profile": {
+                  "name": "Francis"
+                },
+                "wa_id": "254715849926"
+              }
+            ],
+            "messages": [
+              {
+                "from": "254715849926",
+                "id": "wamid.HBgMMjU0NzE1ODQ5OTI2FQIAEhggRjNEOTMxMjNGM0Y1REMyRkZGMUJFQTUxNjkyMjYzRjYA",
+                "timestamp": "1752827926",
+                "text": {
+                  "body": "Test message"
+                },
+                "type": "text"
+              }
+            ]
+          },
+          "field": "messages"
+        }
+      ]
+    }
+  ]
+}
+2025-07-18 11:38:47 - webhook - INFO - Received message from 254715849926 (Tenant: `my_initial_client_id`): 'Test message'
+2025-07-18 11:38:47 - ai_utils - INFO - AI processing message from my_initial_client_id: 'Test message'
+2025-07-18 11:38:48 - ai_utils - INFO - No relevant FAQs found above the similarity threshold. Skipping FAQ injection.
+2025-07-18 11:38:49 - ai_utils - INFO - AI generated response for my_initial_client_id: This is a test message.  How can I help you?
+...
+2025-07-18 11:38:50 - whatsapp_api_utils - INFO - Message sent to 254715849926: This is a test message.  How can I help you?
+...
+2025-07-18 11:38:50 - db_utils - INFO - Message added to DB from user (Tenant: my_initial_client_id): 'Test message...'
+2025-07-18 11:38:50 - werkzeug - INFO - 127.0.0.1 - - [18/Jul/2025 11:38:50] "POST /webhook HTTP/1.1" 200 -
+2025-07-18 11:38:51 - webhook - INFO - Received webhook event: {
+  "object": "whatsapp_business_account",
+  "entry": [
+    {
+      "id": "1041290827721473",
+      "changes": [
+        {
+          "value": {
+            "messaging_product": "whatsapp",
+            "metadata": {
+              "display_phone_number": "15556477738",
+              "phone_number_id": "736065142913405"
+            },
+            "statuses": [
+              {
+                "id": "wamid.HBgMMjU0NzE1ODQ5OTI2FQIAERgSRkZDOEQxNTRENTY0RDNBNDc5AA==",
+                "status": "sent",
+                "timestamp": "1752827930",
+                "recipient_id": "254715849926",
+                "conversation": {
+                  "id": "aeb9f2baa774edebf4312f9fa0423261",
+                  "expiration_timestamp": "1752827930",
+                  "origin": {
+                    "type": "service"
+                  }
+                },
+                "pricing": {
+                  "billable": false,
+                  "pricing_model": "PMP",
+                  "category": "service",
+                  "type": "free_customer_service"
+                }
+              }
+            ]
+          },
+          "field": "messages"
+        }
+      ]
+    }
+  ]
+}
+2025-07-18 11:38:51 - werkzeug - INFO - 127.0.0.1 - - [18/Jul/2025 11:38:51] "POST /webhook HTTP/1.1" 200 -
+2025-07-18 11:38:52 - webhook - INFO - Received webhook event: {
+  "object": "whatsapp_business_account",
+  "entry": [
+    {
+      "id": "1041290827721473",
+      "changes": [
+        {
+          "value": {
+            "messaging_product": "whatsapp",
+            "metadata": {
+              "display_phone_number": "15556477738",
+              "phone_number_id": "736065142913405"
+            },
+            "statuses": [
+              {
+                "id": "wamid.HBgMMjU0NzE1ODQ5OTI2FQIAERgSRkZDOEQxNTRENTY0RDNBNDc5AA==",
+                "status": "read",
+                "timestamp": "1752827931",
+                "recipient_id": "254715849926",
+                "conversation": {
+                  "id": "aeb9f2baa774edebf4312f9fa0423261",
+                  "origin": {
+                    "type": "service"
+                  }
+                },
+                "pricing": {
+                  "billable": false,
+                  "pricing_model": "PMP",
+                  "category": "service",
+                  "type": "free_customer_service"
+                }
+              }
+            ]
+          },
+          "field": "messages"
+        }
+      ]
+    }
+  ]
+}
+2025-07-18 11:38:52 - werkzeug - INFO - 127.0.0.1 - - [18/Jul/2025 11:38:52] "POST /webhook HTTP/1.1" 200 -
+2025-07-18 11:39:03 - webhook - INFO - Received webhook event: {
+  "object": "whatsapp_business_account",
+  "entry": [
+    {
+      "id": "1041290827721473",
+      "changes": [
+        {
+          "value": {
+            "messaging_product": "whatsapp",
+            "metadata": {
+              "display_phone_number": "15556477738",
+              "phone_number_id": "736065142913405"
+            },
+            "contacts": [
+              {
+                "profile": {
+                  "name": "Francis"
+                },
+                "wa_id": "254715849926"
+              }
+            ],
+            "messages": [
+              {
+                "from": "254715849926",
+                "id": "wamid.HBgMMjU0NzE1ODQ5OTI2FQIAEhggQkVGRDQzQ0U1Njk0NjBERURFNUQ4NTNEN0ZCRDI3Q0EA",
+                "timestamp": "1752827942",
+                "text": {
+                  "body": "Good, where are you located"
+                },
+                "type": "text"
+              }
+            ]
+          },
+          "field": "messages"
+        }
+      ]
+    }
+  ]
+}
+2025-07-18 11:39:03 - webhook - INFO - Received message from 254715849926 (Tenant: `my_initial_client_id`): 'Good, where are you located'
+2025-07-18 11:39:03 - ai_utils - INFO - AI processing message from my_initial_client_id: 'Good, where are you located'
+2025-07-18 11:39:03 - ai_utils - INFO - Found 1 relevant FAQs above threshold (0.75).
+2025-07-18 11:39:04 - ai_utils - INFO - AI generated response for my_initial_client_id: Our main office is located in Nairobi, Kenya.
+...
+2025-07-18 11:39:05 - whatsapp_api_utils - INFO - Message sent to 254715849926: Our main office is located in Nairobi, Kenya.
+...
+2025-07-18 11:39:05 - db_utils - INFO - Message added to DB from user (Tenant: my_initial_client_id): 'Good, where are you located...'
+2025-07-18 11:39:05 - werkzeug - INFO - 127.0.0.1 - - [18/Jul/2025 11:39:05] "POST /webhook HTTP/1.1" 200 -
+2025-07-18 11:39:06 - webhook - INFO - Received webhook event: {
+  "object": "whatsapp_business_account",
+  "entry": [
+    {
+      "id": "1041290827721473",
+      "changes": [
+        {
+          "value": {
+            "messaging_product": "whatsapp",
+            "metadata": {
+              "display_phone_number": "15556477738",
+              "phone_number_id": "736065142913405"
+            },
+            "statuses": [
+              {
+                "id": "wamid.HBgMMjU0NzE1ODQ5OTI2FQIAERgSRjY0NjgwMUQ2NjUzMEE3MTk5AA==",
+                "status": "sent",
+                "timestamp": "1752827945",
+                "recipient_id": "254715849926",
+                "conversation": {
+                  "id": "4461d79d0b8239c7b7b3ee68f0a41de6",
+                  "expiration_timestamp": "1752827945",
+                  "origin": {
+                    "type": "service"
+                  }
+                },
+                "pricing": {
+                  "billable": false,
+                  "pricing_model": "PMP",
+                  "category": "service",
+                  "type": "free_customer_service"
+                }
+              }
+            ]
+          },
+          "field": "messages"
+        }
+      ]
+    }
+  ]
+}
+2025-07-18 11:39:06 - werkzeug - INFO - 127.0.0.1 - - [18/Jul/2025 11:39:06] "POST /webhook HTTP/1.1" 200 -
+2025-07-18 11:39:06 - webhook - INFO - Received webhook event: {
+  "object": "whatsapp_business_account",
+  "entry": [
+    {
+      "id": "1041290827721473",
+      "changes": [
+        {
+          "value": {
+            "messaging_product": "whatsapp",
+            "metadata": {
+              "display_phone_number": "15556477738",
+              "phone_number_id": "736065142913405"
+            },
+            "statuses": [
+              {
+                "id": "wamid.HBgMMjU0NzE1ODQ5OTI2FQIAERgSRjY0NjgwMUQ2NjUzMEE3MTk5AA==",
+                "status": "read",
+                "timestamp": "1752827946",
+                "recipient_id": "254715849926",
+                "conversation": {
+                  "id": "4461d79d0b8239c7b7b3ee68f0a41de6",
+                  "origin": {
+                    "type": "service"
+                  }
+                },
+                "pricing": {
+                  "billable": false,
+                  "pricing_model": "PMP",
+                  "category": "service",
+                  "type": "free_customer_service"
+                }
+              }
+            ]
+          },
+          "field": "messages"
+        }
+      ]
+    }
+  ]
+}
+2025-07-18 11:39:06 - werkzeug - INFO - 127.0.0.1 - - [18/Jul/2025 11:39:06] "POST /webhook HTTP/1.1" 200 -
+2025-07-18 11:39:14 - webhook - INFO - Received webhook event: {
+  "object": "whatsapp_business_account",
+  "entry": [
+    {
+      "id": "1041290827721473",
+      "changes": [
+        {
+          "value": {
+            "messaging_product": "whatsapp",
+            "metadata": {
+              "display_phone_number": "15556477738",
+              "phone_number_id": "736065142913405"
+            },
+            "contacts": [
+              {
+                "profile": {
+                  "name": "Francis"
+                },
+                "wa_id": "254715849926"
+              }
+            ],
+            "messages": [
+              {
+                "from": "254715849926",
+                "id": "wamid.HBgMMjU0NzE1ODQ5OTI2FQIAEhggQjYzNjcxNTYxRkRDNTU5NkZFQzM3REVFRDFGNjQ1QjMA",
+                "timestamp": "1752827953",
+                "text": {
+                  "body": "Return policy?"
+                },
+                "type": "text"
+              }
+            ]
+          },
+          "field": "messages"
+        }
+      ]
+    }
+  ]
+}
+2025-07-18 11:39:14 - webhook - INFO - Received message from 254715849926 (Tenant: `my_initial_client_id`): 'Return policy?'
+2025-07-18 11:39:14 - ai_utils - INFO - AI processing message from my_initial_client_id: 'Return policy?'
+2025-07-18 11:39:15 - ai_utils - INFO - Found 4 relevant FAQs above threshold (0.75).
+2025-07-18 11:39:16 - ai_utils - INFO - AI generated response for my_initial_client_id: Our return policy allows returns within 30 days of purchase with a valid receipt.
+...
+2025-07-18 11:39:17 - whatsapp_api_utils - INFO - Message sent to 254715849926: Our return policy allows returns within 30 days of...
+2025-07-18 11:39:17 - db_utils - INFO - Message added to DB from user (Tenant: my_initial_client_id): 'Return policy?...'
+2025-07-18 11:39:17 - werkzeug - INFO - 127.0.0.1 - - [18/Jul/2025 11:39:17] "POST /webhook HTTP/1.1" 200 -
+2025-07-18 11:39:18 - webhook - INFO - Received webhook event: {
+  "object": "whatsapp_business_account",
+  "entry": [
+    {
+      "id": "1041290827721473",
+      "changes": [
+        {
+          "value": {
+            "messaging_product": "whatsapp",
+            "metadata": {
+              "display_phone_number": "15556477738",
+              "phone_number_id": "736065142913405"
+            },
+            "statuses": [
+              {
+                "id": "wamid.HBgMMjU0NzE1ODQ5OTI2FQIAERgSQTI5MTlDRUE0REQwQjc1REE3AA==",
+                "status": "sent",
+                "timestamp": "1752827957",
+                "recipient_id": "254715849926",
+                "conversation": {
+                  "id": "94f13a8c0e193849711c82e9b02ad6b4",
+                  "expiration_timestamp": "1752827957",
+                  "origin": {
+                    "type": "service"
+                  }
+                },
+                "pricing": {
+                  "billable": false,
+                  "pricing_model": "PMP",
+                  "category": "service",
+                  "type": "free_customer_service"
+                }
+              }
+            ]
+          },
+          "field": "messages"
+        }
+      ]
+    }
+  ]
+}
+2025-07-18 11:39:18 - werkzeug - INFO - 127.0.0.1 - - [18/Jul/2025 11:39:18] "POST /webhook HTTP/1.1" 200 -
+2025-07-18 11:39:18 - webhook - INFO - Received webhook event: {
+  "object": "whatsapp_business_account",
+  "entry": [
+    {
+      "id": "1041290827721473",
+      "changes": [
+        {
+          "value": {
+            "messaging_product": "whatsapp",
+            "metadata": {
+              "display_phone_number": "15556477738",
+              "phone_number_id": "736065142913405"
+            },
+            "statuses": [
+              {
+                "id": "wamid.HBgMMjU0NzE1ODQ5OTI2FQIAERgSQTI5MTlDRUE0REQwQjc1REE3AA==",
+                "status": "read",
+                "timestamp": "1752827958",
+                "recipient_id": "254715849926",
+                "conversation": {
+                  "id": "94f13a8c0e193849711c82e9b02ad6b4",
+                  "origin": {
+                    "type": "service"
+                  }
+                },
+                "pricing": {
+                  "billable": false,
+                  "pricing_model": "PMP",
+                  "category": "service",
+                  "type": "free_customer_service"
+                }
+              }
+            ]
+          },
+          "field": "messages"
+        }
+      ]
+    }
+  ]
+}
+2025-07-18 11:39:18 - werkzeug - INFO - 127.0.0.1 - - [18/Jul/2025 11:39:18] "POST /webhook HTTP/1.1" 200 -
+2025-07-18 11:39:32 - webhook - INFO - Received webhook event: {
+  "object": "whatsapp_business_account",
+  "entry": [
+    {
+      "id": "1041290827721473",
+      "changes": [
+        {
+          "value": {
+            "messaging_product": "whatsapp",
+            "metadata": {
+              "display_phone_number": "15556477738",
+              "phone_number_id": "736065142913405"
+            },
+            "contacts": [
+              {
+                "profile": {
+                  "name": "Francis"
+                },
+                "wa_id": "254715849926"
+              }
+            ],
+            "messages": [
+              {
+                "from": "254715849926",
+                "id": "wamid.HBgMMjU0NzE1ODQ5OTI2FQIAEhggRkI5OUI2MTk5RDhFOEYyMENGNThFQzRGNDVFNzFGRDAA",
+                "timestamp": "1752827971",
+                "text": {
+                  "body": "Customer suport?"
+                },
+                "type": "text"
+              }
+            ]
+          },
+          "field": "messages"
+        }
+      ]
+    }
+  ]
+}
+2025-07-18 11:39:32 - webhook - INFO - Received message from 254715849926 (Tenant: `my_initial_client_id`): 'Customer suport?'
+2025-07-18 11:39:32 - ai_utils - INFO - AI processing message from my_initial_client_id: 'Customer suport?'
+2025-07-18 11:39:33 - ai_utils - INFO - Found 2 relevant FAQs above threshold (0.75).
+2025-07-18 11:39:34 - ai_utils - INFO - AI generated response for my_initial_client_id: You can contact customer support by calling 1-800-555-0199 or emailing support@example.com.
+...
+2025-07-18 11:39:34 - whatsapp_api_utils - INFO - Message sent to 254715849926: You can contact customer support by calling 1-800-...
+2025-07-18 11:39:34 - db_utils - INFO - Message added to DB from user (Tenant: my_initial_client_id): 'Customer suport?...'
+2025-07-18 11:39:34 - werkzeug - INFO - 127.0.0.1 - - [18/Jul/2025 11:39:34] "POST /webhook HTTP/1.1" 200 -
+2025-07-18 11:39:35 - webhook - INFO - Received webhook event: {
+  "object": "whatsapp_business_account",
+  "entry": [
+    {
+      "id": "1041290827721473",
+      "changes": [
+        {
+          "value": {
+            "messaging_product": "whatsapp",
+            "metadata": {
+              "display_phone_number": "15556477738",
+              "phone_number_id": "736065142913405"
+            },
+            "statuses": [
+              {
+                "id": "wamid.HBgMMjU0NzE1ODQ5OTI2FQIAERgSQjhEMEE2MTY4Q0I1M0ZCMkQyAA==",
+                "status": "sent",
+                "timestamp": "1752827975",
+                "recipient_id": "254715849926",
+                "conversation": {
+                  "id": "ddcb68ab2e89696640527f23475ec8ee",
+                  "expiration_timestamp": "1752827975",
+                  "origin": {
+                    "type": "service"
+                  }
+                },
+                "pricing": {
+                  "billable": false,
+                  "pricing_model": "PMP",
+                  "category": "service",
+                  "type": "free_customer_service"
+                }
+              }
+            ]
+          },
+          "field": "messages"
+        }
+      ]
+    }
+  ]
+}
+2025-07-18 11:39:35 - werkzeug - INFO - 127.0.0.1 - - [18/Jul/2025 11:39:35] "POST /webhook HTTP/1.1" 200 -
+2025-07-18 11:39:36 - webhook - INFO - Received webhook event: {
+  "object": "whatsapp_business_account",
+  "entry": [
+    {
+      "id": "1041290827721473",
+      "changes": [
+        {
+          "value": {
+            "messaging_product": "whatsapp",
+            "metadata": {
+              "display_phone_number": "15556477738",
+              "phone_number_id": "736065142913405"
+            },
+            "statuses": [
+              {
+                "id": "wamid.HBgMMjU0NzE1ODQ5OTI2FQIAERgSQjhEMEE2MTY4Q0I1M0ZCMkQyAA==",
+                "status": "read",
+                "timestamp": "1752827975",
+                "recipient_id": "254715849926",
+                "conversation": {
+                  "id": "ddcb68ab2e89696640527f23475ec8ee",
+                  "origin": {
+                    "type": "service"
+                  }
+                },
+                "pricing": {
+                  "billable": false,
+                  "pricing_model": "PMP",
+                  "category": "service",
+                  "type": "free_customer_service"
+                }
+              }
+            ]
+          },
+          "field": "messages"
+        }
+      ]
+    }
+  ]
+}
+2025-07-18 11:39:36 - werkzeug - INFO - 127.0.0.1 - - [18/Jul/2025 11:39:36] "POST /webhook HTTP/1.1" 200 -
+2025-07-18 11:39:50 - webhook - INFO - Received webhook event: {
+  "object": "whatsapp_business_account",
+  "entry": [
+    {
+      "id": "1041290827721473",
+      "changes": [
+        {
+          "value": {
+            "messaging_product": "whatsapp",
+            "metadata": {
+              "display_phone_number": "15556477738",
+              "phone_number_id": "736065142913405"
+            },
+            "contacts": [
+              {
+                "profile": {
+                  "name": "Francis"
+                },
+                "wa_id": "254715849926"
+              }
+            ],
+            "messages": [
+              {
+                "from": "254715849926",
+                "id": "wamid.HBgMMjU0NzE1ODQ5OTI2FQIAEhggMzM1QzhFQzU3QzJCMDM4NTQyQjMyM0E4NDkwQ0E3NTQA",
+                "timestamp": "1752827989",
+                "text": {
+                  "body": "Retarns policy?"
+                },
+                "type": "text"
+              }
+            ]
+          },
+          "field": "messages"
+        }
+      ]
+    }
+  ]
+}
+2025-07-18 11:39:50 - webhook - INFO - Received message from 254715849926 (Tenant: `my_initial_client_id`): 'Retarns policy?'
+2025-07-18 11:39:50 - ai_utils - INFO - AI processing message from my_initial_client_id: 'Retarns policy?'
+2025-07-18 11:39:50 - ai_utils - INFO - No relevant FAQs found above the similarity threshold. Skipping FAQ injection.
+2025-07-18 11:39:51 - ai_utils - INFO - AI generated response for my_initial_client_id: I do not have enough information to answer your question. Please contact support at support@example.com or call 1-800-555-0199.
+...
+2025-07-18 11:39:52 - whatsapp_api_utils - INFO - Message sent to 254715849926: I do not have enough information to answer your qu...
+2025-07-18 11:39:52 - db_utils - INFO - Message added to DB from user (Tenant: my_initial_client_id): 'Retarns policy?...'
+2025-07-18 11:39:52 - werkzeug - INFO - 127.0.0.1 - - [18/Jul/2025 11:39:52] "POST /webhook HTTP/1.1" 200 -
+2025-07-18 11:39:53 - webhook - INFO - Received webhook event: {
+  "object": "whatsapp_business_account",
+  "entry": [
+    {
+      "id": "1041290827721473",
+      "changes": [
+        {
+          "value": {
+            "messaging_product": "whatsapp",
+            "metadata": {
+              "display_phone_number": "15556477738",
+              "phone_number_id": "736065142913405"
+            },
+            "statuses": [
+              {
+                "id": "wamid.HBgMMjU0NzE1ODQ5OTI2FQIAERgSQjIyRjBENjBDNkRGOThGODlEAA==",
+                "status": "sent",
+                "timestamp": "1752827992",
+                "recipient_id": "254715849926",
+                "conversation": {
+                  "id": "cf83b87f5dcd0c1ebd89802235a53dc9",
+                  "expiration_timestamp": "1752827992",
+                  "origin": {
+                    "type": "service"
+                  }
+                },
+                "pricing": {
+                  "billable": false,
+                  "pricing_model": "PMP",
+                  "category": "service",
+                  "type": "free_customer_service"
+                }
+              }
+            ]
+          },
+          "field": "messages"
+        }
+      ]
+    }
+  ]
+}
+2025-07-18 11:39:53 - werkzeug - INFO - 127.0.0.1 - - [18/Jul/2025 11:39:53] "POST /webhook HTTP/1.1" 200 -
+2025-07-18 11:39:53 - webhook - INFO - Received webhook event: {
+  "object": "whatsapp_business_account",
+  "entry": [
+    {
+      "id": "1041290827721473",
+      "changes": [
+        {
+          "value": {
+            "messaging_product": "whatsapp",
+            "metadata": {
+              "display_phone_number": "15556477738",
+              "phone_number_id": "736065142913405"
+            },
+            "statuses": [
+              {
+                "id": "wamid.HBgMMjU0NzE1ODQ5OTI2FQIAERgSQjIyRjBENjBDNkRGOThGODlEAA==",
+                "status": "read",
+                "timestamp": "1752827993",
+                "recipient_id": "254715849926",
+                "conversation": {
+                  "id": "cf83b87f5dcd0c1ebd89802235a53dc9",
+                  "origin": {
+                    "type": "service"
+                  }
+                },
+                "pricing": {
+                  "billable": false,
+                  "pricing_model": "PMP",
+                  "category": "service",
+                  "type": "free_customer_service"
+                }
+              }
+            ]
+          },
+          "field": "messages"
+        }
+      ]
+    }
+  ]
+}
+2025-07-18 11:39:53 - werkzeug - INFO - 127.0.0.1 - - [18/Jul/2025 11:39:53] "POST /webhook HTTP/1.1" 200 -
+2025-07-18 11:40:15 - werkzeug - INFO - 127.0.0.1 - - [18/Jul/2025 11:40:15] "GET /login?next=/dashboard HTTP/1.1" 200 -
+2025-07-18 11:40:15 - werkzeug - INFO - 127.0.0.1 - - [18/Jul/2025 11:40:15] "GET /static/js/firebase-init.js HTTP/1.1" 200 -
+2025-07-18 11:40:15 - werkzeug - INFO - 127.0.0.1 - - [18/Jul/2025 11:40:15] "[36mGET /static/css/main.css HTTP/1.1[0m" 304 -
+2025-07-18 11:40:28 - webhook - INFO - Received webhook event: {
+  "object": "whatsapp_business_account",
+  "entry": [
+    {
+      "id": "1041290827721473",
+      "changes": [
+        {
+          "value": {
+            "messaging_product": "whatsapp",
+            "metadata": {
+              "display_phone_number": "15556477738",
+              "phone_number_id": "736065142913405"
+            },
+            "contacts": [
+              {
+                "profile": {
+                  "name": "Francis"
+                },
+                "wa_id": "254715849926"
+              }
+            ],
+            "messages": [
+              {
+                "from": "254715849926",
+                "id": "wamid.HBgMMjU0NzE1ODQ5OTI2FQIAEhggMDM1MTRFQjM4RjI0RjRGQUYzNDZGNzU0NThFRDc0QjAA",
+                "timestamp": "1752827568",
+                "text": {
+                  "body": "Testy"
+                },
+                "type": "text"
+              }
+            ]
+          },
+          "field": "messages"
+        }
+      ]
+    }
+  ]
+}
+2025-07-18 11:40:28 - webhook - INFO - Received message from 254715849926 (Tenant: `my_initial_client_id`): 'Testy'
+2025-07-18 11:40:28 - ai_utils - INFO - AI processing message from my_initial_client_id: 'Testy'
+2025-07-18 11:40:28 - ai_utils - INFO - No relevant FAQs found above the similarity threshold. Skipping FAQ injection.
+2025-07-18 11:40:29 - ai_utils - INFO - AI generated response for my_initial_client_id: I'm sorry, I don't understand your query.  Please provide more context or clarify your question.  If you need further assistance, please contact support@example.com or call 1-800-555-0199.
+...
+2025-07-18 11:40:30 - whatsapp_api_utils - INFO - Message sent to 254715849926: I'm sorry, I don't understand your query.  Please ...
+2025-07-18 11:40:30 - db_utils - INFO - Message added to DB from user (Tenant: my_initial_client_id): 'Testy...'
+2025-07-18 11:40:30 - werkzeug - INFO - 127.0.0.1 - - [18/Jul/2025 11:40:30] "POST /webhook HTTP/1.1" 200 -
+2025-07-18 11:40:31 - webhook - INFO - Received webhook event: {
+  "object": "whatsapp_business_account",
+  "entry": [
+    {
+      "id": "1041290827721473",
+      "changes": [
+        {
+          "value": {
+            "messaging_product": "whatsapp",
+            "metadata": {
+              "display_phone_number": "15556477738",
+              "phone_number_id": "736065142913405"
+            },
+            "statuses": [
+              {
+                "id": "wamid.HBgMMjU0NzE1ODQ5OTI2FQIAERgSQUFCNDE5NzA3QjYxNzg4MkI1AA==",
+                "status": "sent",
+                "timestamp": "1752828030",
+                "recipient_id": "254715849926",
+                "conversation": {
+                  "id": "937211ae347422c313f53c03f7f831dc",
+                  "expiration_timestamp": "1752828030",
+                  "origin": {
+                    "type": "service"
+                  }
+                },
+                "pricing": {
+                  "billable": false,
+                  "pricing_model": "PMP",
+                  "category": "service",
+                  "type": "free_customer_service"
+                }
+              }
+            ]
+          },
+          "field": "messages"
+        }
+      ]
+    }
+  ]
+}
+2025-07-18 11:40:31 - werkzeug - INFO - 127.0.0.1 - - [18/Jul/2025 11:40:31] "POST /webhook HTTP/1.1" 200 -
+2025-07-18 11:40:32 - webhook - INFO - Received webhook event: {
+  "object": "whatsapp_business_account",
+  "entry": [
+    {
+      "id": "1041290827721473",
+      "changes": [
+        {
+          "value": {
+            "messaging_product": "whatsapp",
+            "metadata": {
+              "display_phone_number": "15556477738",
+              "phone_number_id": "736065142913405"
+            },
+            "statuses": [
+              {
+                "id": "wamid.HBgMMjU0NzE1ODQ5OTI2FQIAERgSQUFCNDE5NzA3QjYxNzg4MkI1AA==",
+                "status": "read",
+                "timestamp": "1752828031",
+                "recipient_id": "254715849926",
+                "conversation": {
+                  "id": "937211ae347422c313f53c03f7f831dc",
+                  "origin": {
+                    "type": "service"
+                  }
+                },
+                "pricing": {
+                  "billable": false,
+                  "pricing_model": "PMP",
+                  "category": "service",
+                  "type": "free_customer_service"
+                }
+              }
+            ]
+          },
+          "field": "messages"
+        }
+      ]
+    }
+  ]
+}
+2025-07-18 11:40:32 - werkzeug - INFO - 127.0.0.1 - - [18/Jul/2025 11:40:32] "POST /webhook HTTP/1.1" 200 -
+2025-07-18 11:40:46 - werkzeug - INFO - 127.0.0.1 - - [18/Jul/2025 11:40:46] "[32mGET / HTTP/1.1[0m" 302 -
+2025-07-18 11:40:46 - werkzeug - INFO - 127.0.0.1 - - [18/Jul/2025 11:40:46] "GET /login HTTP/1.1" 200 -
+2025-07-18 11:40:46 - werkzeug - INFO - 127.0.0.1 - - [18/Jul/2025 11:40:46] "GET /static/css/main.css HTTP/1.1" 200 -
+2025-07-18 11:40:46 - werkzeug - INFO - 127.0.0.1 - - [18/Jul/2025 11:40:46] "GET /static/js/firebase-init.js HTTP/1.1" 200 -
+2025-07-18 11:40:48 - werkzeug - INFO - 127.0.0.1 - - [18/Jul/2025 11:40:48] "[33mGET /favicon.ico HTTP/1.1[0m" 404 -
+2025-07-18 11:42:58 - webhook - INFO - Received webhook event: {
+  "object": "whatsapp_business_account",
+  "entry": [
+    {
+      "id": "1041290827721473",
+      "changes": [
+        {
+          "value": {
+            "messaging_product": "whatsapp",
+            "metadata": {
+              "display_phone_number": "15556477738",
+              "phone_number_id": "736065142913405"
+            },
+            "contacts": [
+              {
+                "profile": {
+                  "name": "Francis"
+                },
+                "wa_id": "254715849926"
+              }
+            ],
+            "messages": [
+              {
+                "from": "254715849926",
+                "id": "wamid.HBgMMjU0NzE1ODQ5OTI2FQIAEhggMTJERDkwMDIwNUQ5RERGOTlCMTM1Q0U0QTA1MjAwOTUA",
+                "timestamp": "1752828177",
+                "text": {
+                  "body": "Okay, refunds?"
+                },
+                "type": "text"
+              }
+            ]
+          },
+          "field": "messages"
+        }
+      ]
+    }
+  ]
+}
+2025-07-18 11:42:58 - webhook - INFO - Received message from 254715849926 (Tenant: `my_initial_client_id`): 'Okay, refunds?'
+2025-07-18 11:42:58 - ai_utils - INFO - AI processing message from my_initial_client_id: 'Okay, refunds?'
+2025-07-18 11:42:59 - ai_utils - INFO - Found 2 relevant FAQs above threshold (0.75).
+2025-07-18 11:43:00 - ai_utils - INFO - AI generated response for my_initial_client_id: To obtain a refund, please return the item and receipt to any store location or mail them to us.
+...
+2025-07-18 11:43:01 - whatsapp_api_utils - INFO - Message sent to 254715849926: To obtain a refund, please return the item and rec...
+2025-07-18 11:43:01 - db_utils - INFO - Message added to DB from user (Tenant: my_initial_client_id): 'Okay, refunds?...'
+2025-07-18 11:43:01 - werkzeug - INFO - 127.0.0.1 - - [18/Jul/2025 11:43:01] "POST /webhook HTTP/1.1" 200 -
+2025-07-18 11:43:03 - webhook - INFO - Received webhook event: {
+  "object": "whatsapp_business_account",
+  "entry": [
+    {
+      "id": "1041290827721473",
+      "changes": [
+        {
+          "value": {
+            "messaging_product": "whatsapp",
+            "metadata": {
+              "display_phone_number": "15556477738",
+              "phone_number_id": "736065142913405"
+            },
+            "statuses": [
+              {
+                "id": "wamid.HBgMMjU0NzE1ODQ5OTI2FQIAERgSNDNCMjlCQjdCQjQ1MjVGQzM5AA==",
+                "status": "sent",
+                "timestamp": "1752828182",
+                "recipient_id": "254715849926",
+                "conversation": {
+                  "id": "f345547ee19b73e4db9bf245b31358c6",
+                  "expiration_timestamp": "1752828182",
+                  "origin": {
+                    "type": "service"
+                  }
+                },
+                "pricing": {
+                  "billable": false,
+                  "pricing_model": "PMP",
+                  "category": "service",
+                  "type": "free_customer_service"
+                }
+              }
+            ]
+          },
+          "field": "messages"
+        }
+      ]
+    }
+  ]
+}
+2025-07-18 11:43:03 - werkzeug - INFO - 127.0.0.1 - - [18/Jul/2025 11:43:03] "POST /webhook HTTP/1.1" 200 -
+2025-07-18 11:43:03 - webhook - INFO - Received webhook event: {
+  "object": "whatsapp_business_account",
+  "entry": [
+    {
+      "id": "1041290827721473",
+      "changes": [
+        {
+          "value": {
+            "messaging_product": "whatsapp",
+            "metadata": {
+              "display_phone_number": "15556477738",
+              "phone_number_id": "736065142913405"
+            },
+            "statuses": [
+              {
+                "id": "wamid.HBgMMjU0NzE1ODQ5OTI2FQIAERgSNDNCMjlCQjdCQjQ1MjVGQzM5AA==",
+                "status": "read",
+                "timestamp": "1752828182",
+                "recipient_id": "254715849926",
+                "conversation": {
+                  "id": "f345547ee19b73e4db9bf245b31358c6",
+                  "origin": {
+                    "type": "service"
+                  }
+                },
+                "pricing": {
+                  "billable": false,
+                  "pricing_model": "PMP",
+                  "category": "service",
+                  "type": "free_customer_service"
+                }
+              }
+            ]
+          },
+          "field": "messages"
+        }
+      ]
+    }
+  ]
+}
+2025-07-18 11:43:03 - werkzeug - INFO - 127.0.0.1 - - [18/Jul/2025 11:43:03] "POST /webhook HTTP/1.1" 200 -

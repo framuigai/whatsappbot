@@ -1,3 +1,4 @@
+<!-- templates/login.html -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -5,13 +6,52 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Login</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+
+    <!-- Firebase SDKs - Client-side -->
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
+
+    <!-- Pass Firebase config from Flask backend to frontend JS -->
+    <script>
+        // This 'firebase_config' variable is populated by Flask's Jinja2 templating engine.
+        // It uses the environment variables you set in your .env file.
+        const firebaseConfig = {
+            apiKey: "{{ config['FIREBASE_API_KEY'] }}",
+            authDomain: "{{ config['FIREBASE_AUTH_DOMAIN'] }}",
+            projectId: "{{ config['FIREBASE_PROJECT_ID'] }}",
+            storageBucket: "{{ config['FIREBASE_STORAGE_BUCKET'] }}",
+            messagingSenderId: "{{ config['FIREBASE_MESSAGING_SENDER_ID'] }}",
+            appId: "{{ config['FIREBASE_APP_ID'] }}"
+        };
+    </script>
 </head>
 <body>
     <div class="container">
         <h1>Admin Login</h1>
-        <p>Login form will go here.</p>
-        <p>If you see this, Flask routing for login is working.</p>
-        <a href="{{ url_for('admin_routes.dashboard') }}">Go to Dashboard (if already logged in)</a>
+
+        {# Display Flask flash messages (e.g., from logout or login_required redirect) #}
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                <ul class="flashes">
+                {% for category, message in messages %}
+                    <li class="{{ category }}">{{ message }}</li>
+                {% endfor %}
+                </ul>
+            {% endif %}
+        {% endwith %}
+
+        <div class="login-form">
+            <input type="email" id="email" placeholder="Email" required>
+            <input type="password" id="password" placeholder="Password" required>
+            <button id="loginBtn" class="button">Login</button>
+            <p id="status" style="color: red; margin-top: 10px;"></p>
+        </div>
+        <p style="margin-top: 20px;">
+            <a href="{{ url_for('admin_routes.dashboard') }}">Go to Dashboard (if already logged in)</a>
+        </p>
     </div>
+
+    <!-- Your custom Firebase initialization and login logic -->
+    <script src="{{ url_for('static', filename='js/firebase-init.js') }}"></script>
 </body>
 </html>

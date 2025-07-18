@@ -2,7 +2,7 @@
 import sys
 import logging
 import google.generativeai as genai
-from flask import Flask, redirect, url_for
+from flask import Flask, redirect, url_for, render_template
 from flask_login import LoginManager
 from config import (
     LOGGING_LEVEL, log_level_map, SECRET_KEY, SESSION_COOKIE_SECURE,
@@ -74,6 +74,12 @@ else:
 def index():
     """Serves the main index page. Redirects to dashboard if logged in, otherwise to login."""
     return redirect(url_for('auth.login')) # Always redirect to login as per Day 1's index.html
+
+@app.route('/login')
+def login():
+    """Serves the login page."""
+    # We removed the redirect here, as the JS on login.html will handle redirection
+    return render_template('login.html', config=app.config) # Pass app.config to template
 
 # --- Database Initialization & FAQ Setup ---
 with app.app_context():

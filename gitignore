@@ -3,6 +3,39 @@
 __pycache__/
 *.pyc
 
+# Virtual environment
+.venv/
+env/
+venv/
+
+# Package dependencies
+# pip-installed packages
+*.egg-info/
+.eggs/
+dist/
+build/
+
+
+# MyPy cache
+.mypy_cache/
+
+# pytest cache
+.pytest_cache/
+
+# --- Environment variables ---
 .env
+
+# --- Database files ---
 *.db
-.idea/
+
+
+# --- Firebase Service Account Key ---
+whatsappbot-a2a71-firebase-adminsdk-fbsvc-3fb61d7c40.json
+
+# --- IDE specific files ---
+.idea/             # JetBrains IDEs (PyCharm, IntelliJ, WebStorm)
+
+# --- Log files ---
+*.log
+logs/ # If you create a 'logs' directory
+
