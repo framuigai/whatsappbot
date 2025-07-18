@@ -4844,3 +4844,56 @@ requests.exceptions.HTTPError: 401 Client Error: Unauthorized for url: https://g
 2025-07-18 16:05:45 - __main__ - INFO - Flask app starting...
 2025-07-18 16:05:45 - werkzeug - WARNING -  * Debugger is active!
 2025-07-18 16:05:45 - werkzeug - INFO -  * Debugger PIN: 496-718-321
+2025-07-18 16:06:15 - __main__ - INFO - Gemini API configured successfully.
+2025-07-18 16:06:15 - db.db_connection - INFO - Conversations table ensured.
+2025-07-18 16:06:15 - db.db_connection - INFO - FAQs table ensured.
+2025-07-18 16:06:15 - db.db_connection - INFO - Tenants config table ensured.
+2025-07-18 16:06:15 - __main__ - INFO - Database initialization complete.
+2025-07-18 16:06:15 - firebase_admin_utils - INFO - Firebase Admin SDK initialized using service account file.
+2025-07-18 16:06:15 - __main__ - INFO - Firebase Admin SDK initialized successfully.
+2025-07-18 16:06:15 - __main__ - INFO - Flask app starting...
+2025-07-18 16:06:15 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://192.168.100.26:5000
+2025-07-18 16:06:15 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2025-07-18 16:06:15 - werkzeug - INFO -  * Restarting with watchdog (windowsapi)
+2025-07-18 16:06:16 - __main__ - INFO - Gemini API configured successfully.
+2025-07-18 16:06:16 - db.db_connection - INFO - Conversations table ensured.
+2025-07-18 16:06:16 - db.db_connection - INFO - FAQs table ensured.
+2025-07-18 16:06:16 - db.db_connection - INFO - Tenants config table ensured.
+2025-07-18 16:06:16 - __main__ - INFO - Database initialization complete.
+2025-07-18 16:06:16 - firebase_admin_utils - INFO - Firebase Admin SDK initialized using service account file.
+2025-07-18 16:06:16 - __main__ - INFO - Firebase Admin SDK initialized successfully.
+2025-07-18 16:06:16 - __main__ - INFO - Flask app starting...
+2025-07-18 16:06:16 - werkzeug - WARNING -  * Debugger is active!
+2025-07-18 16:06:16 - werkzeug - INFO -  * Debugger PIN: 496-718-321
+2025-07-18 16:06:24 - webhook - INFO - Processing message for tenant: `my_initial_client_id` (WA ID: 254715849926)
+2025-07-18 16:06:24 - webhook - INFO - Received text message from 254715849926 (Tenant: `my_initial_client_id`): 'where do i get help?'
+2025-07-18 16:06:24 - db.tenants_crud - WARNING - No tenant configuration found for WhatsApp Phone ID '254715849926'.
+2025-07-18 16:06:25 - ai_utils - INFO - No relevant FAQs found above threshold (0.75) for query 'where do i get help?...' for tenant 'my_initial_client_id'. Max similarity: 0.72.
+2025-07-18 16:06:25 - ai_utils - INFO - No relevant FAQ found for user query for tenant 'my_initial_client_id'. Proceeding with generative AI.
+2025-07-18 16:06:28 - ai_utils - INFO - Generative AI response for tenant 'my_initial_client_id': I'm sorry, but based on our conversation so far, I...
+2025-07-18 16:06:29 - whatsapp_api_utils - INFO - Message sent to 254715849926: I'm sorry, but based on our conversation so far, I...
+2025-07-18 16:06:29 - db.conversations_crud - INFO - Message added to DB from user (Tenant: my_initial_client_id): 'where do i get help?...'
+2025-07-18 16:06:29 - webhook - INFO - Processed and responded to 254715849926 (Tenant: `my_initial_client_id`).
+2025-07-18 16:06:29 - werkzeug - INFO - 127.0.0.1 - - [18/Jul/2025 16:06:29] "POST /webhook HTTP/1.1" 200 -
+2025-07-18 16:06:30 - werkzeug - INFO - 127.0.0.1 - - [18/Jul/2025 16:06:30] "POST /webhook HTTP/1.1" 200 -
+2025-07-18 16:06:30 - werkzeug - INFO - 127.0.0.1 - - [18/Jul/2025 16:06:30] "POST /webhook HTTP/1.1" 200 -
+2025-07-18 16:06:31 - werkzeug - INFO - 127.0.0.1 - - [18/Jul/2025 16:06:31] "POST /webhook HTTP/1.1" 200 -
+2025-07-18 16:06:38 - webhook - INFO - Processing message for tenant: `my_initial_client_id` (WA ID: 254715849926)
+2025-07-18 16:06:38 - webhook - INFO - Received text message from 254715849926 (Tenant: `my_initial_client_id`): 'support?'
+2025-07-18 16:06:38 - db.tenants_crud - WARNING - No tenant configuration found for WhatsApp Phone ID '254715849926'.
+2025-07-18 16:06:38 - ai_utils - INFO - Found relevant FAQ (Q='How do I contact customer support?...') with similarity 0.75 for tenant 'my_initial_client_id'.
+2025-07-18 16:06:38 - ai_utils - INFO - Responded with FAQ for tenant 'my_initial_client_id'. Q: 'How do I contact customer support?...', A: 'You can reach customer support by calling 1-800-55...'
+2025-07-18 16:06:40 - whatsapp_api_utils - INFO - Message sent to 254715849926: You can reach customer support by calling 1-800-55...
+2025-07-18 16:06:40 - db.conversations_crud - INFO - Message added to DB from user (Tenant: my_initial_client_id): 'support?...'
+2025-07-18 16:06:40 - webhook - INFO - Processed and responded to 254715849926 (Tenant: `my_initial_client_id`).
+2025-07-18 16:06:40 - werkzeug - INFO - 127.0.0.1 - - [18/Jul/2025 16:06:40] "POST /webhook HTTP/1.1" 200 -
+2025-07-18 16:06:41 - werkzeug - INFO - 127.0.0.1 - - [18/Jul/2025 16:06:41] "POST /webhook HTTP/1.1" 200 -
+2025-07-18 16:06:42 - werkzeug - INFO - 127.0.0.1 - - [18/Jul/2025 16:06:42] "POST /webhook HTTP/1.1" 200 -
+2025-07-18 16:06:43 - werkzeug - INFO - 127.0.0.1 - - [18/Jul/2025 16:06:43] "POST /webhook HTTP/1.1" 200 -
+2025-07-18 16:08:51 - werkzeug - INFO -  * Detected change in 'C:\\Users\\Admin\\PycharmProjects\\whatsappbot\\auth.py', reloading
+2025-07-18 16:08:51 - werkzeug - INFO -  * Detected change in 'C:\\Users\\Admin\\PycharmProjects\\whatsappbot\\db\\faqs_crud.py', reloading
+2025-07-18 16:08:51 - werkzeug - INFO -  * Detected change in 'C:\\Users\\Admin\\PycharmProjects\\whatsappbot\\firebase_admin_utils.py', reloading
+2025-07-18 16:08:51 - werkzeug - INFO -  * Detected change in 'C:\\Users\\Admin\\PycharmProjects\\whatsappbot\\webhook.py', reloading
