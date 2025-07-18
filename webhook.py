@@ -4,14 +4,23 @@ import logging
 import time
 from flask import Blueprint, request, jsonify
 from config import VERIFY_TOKEN, RATE_LIMIT_SECONDS, WHATSAPP_PHONE_NUMBER_ID, LOGGING_LEVEL, log_level_map
+
+# --- START MODIFICATION FOR DB REFACTORING ---
+# Removed: import db_utils
+# New: Import specific functions from the new database modules
+from db.conversations_crud import add_message, get_conversation_history_by_whatsapp_id # ADDED get_conversation_history_by_whatsapp_id
+from db.tenants_crud import get_tenant_config_by_whatsapp_id
+# --- END MODIFICATION FOR DB REFACTORING ---
+
 from whatsapp_api_utils import send_whatsapp_message
-import db_utils
-from ai_utils import generate_ai_reply  # generate_embedding not needed here, only for FAQ setup
+from ai_utils import generate_ai_reply # generate_embedding not needed here, only for FAQ setup
 
 webhook_bp = Blueprint('webhook', __name__)
-logger = logging.getLogger(__name__)
-logger.setLevel(log_level_map.get(LOGGING_LEVEL, logging.INFO))  # Set level for this module
+logger = logging.getLogger(__name__) # Logger for this module
+logger.setLevel(log_level_map.get(LOGGING_LEVEL, logging.INFO)) # Set level for this module
 
+# Dictionary to store last message timestamp for rate limiting
+last_message_time = {}
 
 @webhook_bp.route("/webhook", methods=["GET"])
 def verify_webhook():
@@ -31,92 +40,98 @@ def verify_webhook():
         return challenge, 200
     else:
         logger.warning(
-            f"Webhook verification failed. Mode: {mode}, Token received: {token}, Expected Token: {VERIFY_TOKEN}")
+            f"Webhook verification failed. Mode: {mode}, Token received: {token}, Expected Token: {VERIFY_TOKEN}"
+        )
         return "Verification failed", 403
-
 
 @webhook_bp.route("/webhook", methods=["POST"])
 def handle_webhook():
     """
-    Handles incoming webhook events from WhatsApp.
+    Handles incoming WhatsApp messages from the Meta Webhooks.
     """
-    try:
-        data = request.get_json()
-        logger.info(f"Received webhook event: {json.dumps(data, indent=2)}")
+    if request.method == 'POST':
+        try:
+            data = request.get_json()
+            logger.debug(f"Received webhook event: {json.dumps(data, indent=2)}")
 
-        if not data or "object" not in data or "entry" not in data:
-            logger.warning("Invalid webhook event structure.")
-            return jsonify({"status": "error", "message": "Invalid event structure"}), 400
+            # Check if the webhook event is a message from a WhatsApp Business Account
+            if "object" in data and "entry" in data:
+                for entry in data["entry"]:
+                    for change in entry["changes"]:
+                        if "value" in change and "messages" in change["value"]:
+                            message = change["value"]["messages"][0]
+                            from_number = message["from"]
+                            message_type = message["type"]
+                            wa_id = from_number # Use from_number as wa_id
 
-        for entry in data["entry"]:
-            for change in entry["changes"]:
-                if "value" in change and "messages" in change["value"]:
-                    for message in change["value"]["messages"]:
-                        from_number = message["from"]  # WhatsApp ID of the sender
-                        message_type = message["type"]
-                        timestamp = int(time.time())  # Current time for logging/db
+                            # Get tenant_id from tenant_config based on WHATSAPP_PHONE_NUMBER_ID
+                            tenant_config = get_tenant_config_by_whatsapp_id(WHATSAPP_PHONE_NUMBER_ID)
+                            current_tenant_id = tenant_config['tenant_id'] if tenant_config else 'default_tenant'
+                            logger.info(f"Processing message for tenant: `{current_tenant_id}` (WA ID: {wa_id})")
 
-                        # --- Tenant Identification ---
-                        # IMPORTANT: This is where the WHATSAPP_PHONE_NUMBER_ID of the *receiving* bot
-                        # is used to identify which tenant this message belongs to.
-                        # You would map this WHATSAPP_PHONE_NUMBER_ID to your internal tenant_id.
-                        # For now, we use the global WHATSAPP_PHONE_NUMBER_ID from config.
-                        # In a multi-tenant setup, you'd get this from change['value']['metadata']['phone_number_id']
-                        # and then look up the tenant_id in your db_utils.
+                            # Implement basic rate limiting
+                            now = time.time()
+                            if wa_id in last_message_time and (now - last_message_time[wa_id] < RATE_LIMIT_SECONDS):
+                                logger.warning(f"Rate limit exceeded for {wa_id}. Ignoring message.")
+                                return jsonify({"status": "ignored", "message": "Rate limit exceeded"}), 200
+                            last_message_time[wa_id] = now
 
-                        # Corrected line:
-                        current_tenant_id = db_utils.get_tenant_id_from_whatsapp_phone_number(WHATSAPP_PHONE_NUMBER_ID)
+                            user_message_to_save = ""
+                            response_message = "" # Initialize response_message
 
-                        if not current_tenant_id:
-                            logger.error(
-                                f"No tenant found for WHATSAPP_PHONE_NUMBER_ID: {WHATSAPP_PHONE_NUMBER_ID}. Cannot process message from {from_number}.")
-                            send_whatsapp_message(from_number,
-                                                  "Sorry, I'm unable to process your request at the moment. Please try again later.")
-                            return jsonify({"status": "error", "message": "Tenant not configured"}), 404
-
-                        # Use the 'from' number (wa_id) as the unique identifier for the conversation
-                        wa_id = from_number
-
-                        user_message_to_save = ""  # Initialize for potential logging/DB
-                        response_message = "I'm sorry, I didn't understand that."  # Default response
-
-                        if message_type == "text":
-                            user_message = message["text"]["body"]
-                            user_message_to_save = user_message
-                            logger.info(
-                                f"Received message from {from_number} (Tenant: `{current_tenant_id}`): '{user_message}'")
-
-                            # Generate AI reply
-                            response_message = generate_ai_reply(user_message, current_tenant_id)
-                            send_whatsapp_message(from_number, response_message)
-                            db_utils.add_message(wa_id, user_message_to_save, 'user', current_tenant_id,
-                                                 response_message)
-
-                        elif message_type == "button":
-                            button_payload = message["button"]["payload"]
-                            user_message_to_save = f"Button Click: {button_payload}"
-                            if button_payload:
+                            if message_type == "text":
+                                user_message_content = message["text"]["body"]
+                                user_message_to_save = user_message_content
                                 logger.info(
-                                    f"Received button click from {from_number} with payload: {button_payload} (Tenant: `{current_tenant_id}`).")
-                                response_message = f"You clicked: {button_payload}"
+                                    f"Received text message from {from_number} (Tenant: `{current_tenant_id}`): '{user_message_content}'"
+                                )
+
+                                # Generate AI reply
+                                # MODIFIED: generate_ai_reply now returns a dict
+                                ai_response_data = generate_ai_reply(user_message_content, wa_id, current_tenant_id)
+                                response_message = ai_response_data.get("response", "I'm sorry, I couldn't generate a response.")
+
                                 send_whatsapp_message(from_number, response_message)
-                                db_utils.add_message(wa_id, user_message_to_save, 'user', current_tenant_id,
-                                                     response_message)
-                            else:
-                                logger.warning(
-                                    f"Received button message from {from_number} but no payload found (Tenant: `{current_tenant_id}`).")
-                                db_utils.add_message(wa_id, user_message_to_save, 'user', current_tenant_id,
-                                                     'No action for button')
 
-                        else:  # Handle other message types that are not text or button
-                            user_message_to_save = f"Unhandled type: {message_type}"
-                            logger.info(
-                                f"Received unhandled message type '{message_type}' from {from_number} (Tenant: `{current_tenant_id}`).")
-                            db_utils.add_message(wa_id, user_message_to_save, 'user', current_tenant_id,
-                                                 'Unsupported message type')
+                                # Store both user message and AI response
+                                # Updated: Use conversations_crud.add_message
+                                add_message(wa_id, user_message_to_save, 'user', current_tenant_id, response_message)
 
-    except Exception as e:
-        logger.error(f"Error processing webhook event: {e}", exc_info=True)
-        return jsonify({"status": "error", "message": "Internal server error"}), 500
 
-    return jsonify({"status": "success"}), 200
+                            elif message_type == "button":
+                                button_payload = message["button"]["payload"]
+                                user_message_to_save = f"Button click: {button_payload}" # Save button click as user message
+
+                                if button_payload:
+                                    logger.info(
+                                        f"Received button message from {from_number} with payload '{button_payload}' (Tenant: `{current_tenant_id}`).")
+
+                                    # Here you would typically have logic to handle specific button payloads
+                                    # For this example, we'll just echo the payload
+                                    response_message = f"You clicked: {button_payload}"
+                                    send_whatsapp_message(from_number, response_message)
+                                    # Updated: Use conversations_crud.add_message
+                                    add_message(wa_id, user_message_to_save, 'user', current_tenant_id,
+                                                         response_message)
+                                else:
+                                    logger.warning(
+                                        f"Received button message from {from_number} but no payload found (Tenant: `{current_tenant_id}`).")
+                                    # Updated: Use conversations_crud.add_message
+                                    add_message(wa_id, user_message_to_save, 'user', current_tenant_id,
+                                                         'No action for button')
+
+                            else:  # Handle other message types that are not text or button
+                                user_message_to_save = f"Unhandled type: {message_type}"
+                                logger.info(
+                                    f"Received unhandled message type '{message_type}' from {from_number} (Tenant: `{current_tenant_id}`).")
+                                # Updated: Use conversations_crud.add_message
+                                add_message(wa_id, user_message_to_save, 'user', current_tenant_id,
+                                                     'Unsupported message type')
+
+                            logger.info(f"Processed and responded to {from_number} (Tenant: `{current_tenant_id}`).")
+
+        except Exception as e: # This except block should be for the outermost try block within the POST request
+            logger.error(f"Error processing webhook event: {e}", exc_info=True)
+            return jsonify({"status": "error", "message": "Internal server error"}), 500
+
+    return jsonify({"status": "success"}), 200 # This return should be at the same level as the initial "if request.method == 'POST':"

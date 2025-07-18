@@ -28,13 +28,20 @@ HOST = '0.0.0.0'
 PORT = 5000
 
 # --- WhatsApp API Configuration ---
-VERIFY_TOKEN = os.getenv("VERIFY_TOKEN")
 WHATSAPP_PHONE_NUMBER_ID = os.getenv("WHATSAPP_PHONE_NUMBER_ID")
-# Add WHATSAPP_ACCESS_TOKEN if it's not already read in whatsapp_api_utils
-# WHATSAPP_ACCESS_TOKEN = os.getenv("WHATSAPP_ACCESS_TOKEN")
+WHATSAPP_BUSINESS_ACCOUNT_ID = os.getenv("WHATSAPP_BUSINESS_ACCOUNT_ID")
+VERIFY_TOKEN = os.getenv("VERIFY_TOKEN") # Custom token for webhook verification
+# The WhatsApp Access Token should be retrieved securely, e.g., from a database per tenant
+# For development, you might have a default here, but ensure it's handled for multi-tenancy
+DEFAULT_WHATSAPP_ACCESS_TOKEN = os.getenv("WHATSAPP_ACCESS_TOKEN")
 
-# --- Gemini API Configuration ---
+# --- Gemini AI Configuration ---
 GEMINI_API_KEY = os.getenv('GEMINI_API_KEY')
+if not GEMINI_API_KEY:
+    logging.error("GEMINI_API_KEY not set in environment variables!")
+    # Depending on your application's needs, you might want to raise an error or exit
+    # sys.exit("GEMINI_API_KEY is required.")
+
 GEMINI_MODEL_NAME = os.getenv('GEMINI_MODEL_NAME', 'gemini-pro')
 GEMINI_EMBEDDING_MODEL = os.getenv('GEMINI_EMBEDDING_MODEL', 'embedding-001')
 
@@ -55,17 +62,23 @@ except ValueError:
     logging.warning("Invalid FAQ_SIMILARITY_THRESHOLD in .env. Defaulting to 0.75.")
     FAQ_SIMILARITY_THRESHOLD = 0.75
 
-# --- Firebase Client Config for Frontend (these will be read from .env in firebase_admin_utils for backend use) ---
-# For client-side JS, you'll still construct this from env vars in your HTML/JS directly
+# --- Firebase Client Config for Frontend ---
+# These variables are read from .env but are combined into a dict for easy passing to frontend
 FIREBASE_API_KEY = os.getenv("FIREBASE_API_KEY")
 FIREBASE_AUTH_DOMAIN = os.getenv("FIREBASE_AUTH_DOMAIN")
 FIREBASE_PROJECT_ID = os.getenv("FIREBASE_PROJECT_ID")
 FIREBASE_STORAGE_BUCKET = os.getenv("FIREBASE_STORAGE_BUCKET")
 FIREBASE_MESSAGING_SENDER_ID = os.getenv("FIREBASE_MESSAGING_SENDER_ID")
 FIREBASE_APP_ID = os.getenv("FIREBASE_APP_ID")
+FIREBASE_MEASUREMENT_ID = os.getenv("FIREBASE_MEASUREMENT_ID") # Optional, for Analytics
 
-# Log the loaded configuration levels
-logger = logging.getLogger(__name__) # Get a logger for config.py
-logger.info(f"Logging level set to: {LOGGING_LEVEL}")
-logger.info(f"FAQ Similarity Threshold set to: {FAQ_SIMILARITY_THRESHOLD}")
-logger.info(f"Database name: {DATABASE_NAME}")
+# Define the FIREBASE_CONFIG dictionary to be imported by other modules
+FIREBASE_CONFIG = {
+    "apiKey": FIREBASE_API_KEY,
+    "authDomain": FIREBASE_AUTH_DOMAIN,
+    "projectId": FIREBASE_PROJECT_ID,
+    "storageBucket": FIREBASE_STORAGE_BUCKET,
+    "messagingSenderId": FIREBASE_MESSAGING_SENDER_ID,
+    "appId": FIREBASE_APP_ID,
+    "measurementId": FIREBASE_MEASUREMENT_ID # Optional
+}
