@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+
+{% block title %}All Conversations{% endblock %}
+
+{% block body_content %}
+    <h2>All Conversations</h2>
+
+    {# Display Flask flash messages #}
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            <ul class="flashes">
+            {% for category, message in messages %}
+                <li class="{{ category }}">{{ message }}</li>
+            {% endfor %}
+            </ul>
+        {% endif %}
+    {% endwith %}
+
+    {% if conversations %}
+        <table class="data-table">
+            <thead>
+                <tr>
+                    <th>WhatsApp ID</th>
+                    <th>Last Message (Snippet)</th>
+                    <th>Last Activity</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for conv in conversations %}
+                    <tr>
+                        <td>{{ conv.wa_id }}</td>
+                        <td>{{ conv.last_message_text }}</td> {# Removed | truncate(50) #}
+                        <td>{{ moment(conv.last_timestamp).format('LLL') }}</td> {# Requires Flask-Moment in app.py #}
+                        <td>
+                            <a href="{{ url_for('admin_routes.view_conversation', wa_id=conv.wa_id) }}" class="button-small">View History</a>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p>No conversations found.</p>
+    {% endif %}
+{% endblock %}

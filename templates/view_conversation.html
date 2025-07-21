@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+
+{% block title %}Conversation with {{ wa_id }}{% endblock %}
+
+{% block body_content %}
+    <h2>Conversation with {{ wa_id }}</h2>
+
+    <div class="conversation-history">
+        {% if conversations %}
+            {% for message in conversations %}
+                <div class="message-item {% if message.from_user %}user-message{% else %}bot-message{% endif %}">
+                    <div class="message-header">
+                        <span class="message-sender">
+                            {% if message.from_user %}You{% else %}Bot{% endif %}
+                        </span>
+                        {# Use Flask-Moment to format the timestamp #}
+                        <span class="message-timestamp">
+                            {{ moment(message.timestamp).format('YYYY-MM-DD HH:mm:ss') }}
+                        </span>
+                    </div>
+                    <div class="message-content">
+                        {{ message.message_text }}
+                    </div>
+                </div>
+            {% endfor %}
+        {% else %}
+            <p>No conversation history found for this WhatsApp ID.</p>
+        {% endif %}
+    </div>
+
+    <a href="{{ url_for('admin_routes.all_conversations') }}" class="back-link">Back to All Conversations</a>
+{% endblock %}

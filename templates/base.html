@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}WhatsApp Bot Admin{% endblock %}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+    <link rel="icon" href="{{ url_for('static', filename='favicon.ico') }}" type="image/x-icon">
+
+    <!-- Explicitly include jQuery from a CDN before Flask-Moment. -->
+    <!-- Flask-Moment will detect this and not include its own version, preventing conflicts. -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
+
+    {# Include Moment.js provided by Flask-Moment #}
+    {{ moment.include_moment() }}
+    {{ moment.locale('en') }} {# Set your desired locale, e.g., 'en', 'es', etc. #}
+
+    {% block head_content %}{% endblock %}
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>WhatsApp Bot Admin Panel</h1>
+            <nav class="main-nav">
+                {% if current_user.is_authenticated %}
+                    <span class="welcome-message">Welcome, {{ current_user.email }}!</span>
+                    <a href="{{ url_for('admin_routes.dashboard') }}">Dashboard</a>
+                    <a href="{{ url_for('admin_routes.manage_clients') }}">Manage Clients</a>
+                    <a href="{{ url_for('admin_routes.manage_faqs') }}">Manage FAQs</a>
+                    <a href="{{ url_for('admin_routes.all_conversations') }}">Conversations</a>
+                    <a href="{{ url_for('admin_routes.view_reports') }}">Reports</a>
+                    <a href="{{ url_for('auth.logout') }}" id="logout-button">Logout</a> {# MODIFIED: Ensure href points to Flask logout route #}
+                {% else %}
+                    <a href="{{ url_for('auth.login') }}">Login</a>
+                {% endif %}
+            </nav>
+        </header>
+
+        {# Display Flask flash messages #}
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                <ul class="flashes">
+                {% for category, message in messages %}
+                    <li class="{{ category }}">{{ message }}</li>
+                {% endfor %}
+                </ul>
+            {% endif %}
+        {% endwith %}
+
+        <main>
+            {% block body_content %}{% endblock %}
+        </main>
+
+        <footer>
+            <p>&copy; 2025 WhatsApp Bot Admin. All rights reserved.</p>
+        </footer>
+    </div>
+    <script src="{{ url_for('static', filename='js/firebase-init.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/auth.js') }}"></script>
+    {# Flask-Moment includes its own JS. If you had custom JS that relies on moment, put it after moment.js is loaded #}
+    {# For example, if you need to manually refresh timestamps: #}
+    <script>
+        // Example: Refresh time every minute (optional)
+        // setInterval(function() {
+        //     $('.message-timestamp').each(function() {
+        //         var timestamp = $(this).data('timestamp'); // Assuming you store original timestamp in data-timestamp
+        //         $(this).text(moment(timestamp).fromNow());
+        //     });
+        // }, 60000); // 60 seconds
+    </script>
+</body>
+</html>
