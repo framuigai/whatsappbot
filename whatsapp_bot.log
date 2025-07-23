@@ -6211,3 +6211,445 @@ sqlite3.OperationalError: no such column: wa_id
  * Running on http://192.168.100.26:5000
 2025-07-23 15:53:48 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
 2025-07-23 15:54:01 - werkzeug - INFO - 127.0.0.1 - - [23/Jul/2025 15:54:01] "GET /api/ping HTTP/1.1" 200 -
+2025-07-23 18:23:04 - db.db_connection - INFO - Checked/Created 'tenants' table.
+2025-07-23 18:23:04 - db.db_connection - INFO - Checked/Created 'users' table with role and password support.
+2025-07-23 18:23:04 - db.db_connection - INFO - Checked/Created 'conversations' table.
+2025-07-23 18:23:04 - db.db_connection - INFO - Checked/Created 'faqs' table.
+2025-07-23 18:23:04 - db.db_connection - INFO - FAQs table ensured and migrated if necessary.
+2025-07-23 18:23:04 - __main__ - INFO - Database initialization complete.
+2025-07-23 18:23:04 - firebase_admin_utils - INFO - Firebase Admin SDK initialized using service account file.
+2025-07-23 18:23:04 - __main__ - INFO - Firebase Admin SDK initialized successfully.
+2025-07-23 18:23:04 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://192.168.100.208:5000
+2025-07-23 18:23:04 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2025-07-23 18:24:43 - webhook - INFO - Processing message for tenant: `my_initial_client_id` (WA ID: 254715849926)
+2025-07-23 18:24:43 - webhook - INFO - Received text message from 254715849926 (Tenant: `my_initial_client_id`): 'Hey'
+2025-07-23 18:24:44 - ai_utils - INFO - No relevant FAQs found above threshold (0.75) for query 'Hey...' for tenant 'my_initial_client_id'. Max similarity: 0.67.
+2025-07-23 18:24:44 - ai_utils - INFO - No relevant FAQ found for user query for tenant 'my_initial_client_id'. Proceeding with generative AI.
+2025-07-23 18:24:44 - db.conversations_crud - ERROR - Error getting conversation history for 254715849926: no such column: wa_id
+Traceback (most recent call last):
+  File "C:\Users\Admin\PycharmProjects\whatsappbot\db\conversations_crud.py", line 46, in get_conversation_history_by_whatsapp_id
+    cursor.execute(query, tuple(params))
+sqlite3.OperationalError: no such column: wa_id
+2025-07-23 18:24:44 - ai_utils - INFO - Generative AI response for tenant 'my_initial_client_id': Hello! How can I help you today?
+...
+2025-07-23 18:24:45 - whatsapp_api_utils - ERROR - HTTP error sending message to 254715849926: 401 Client Error: Unauthorized for url: https://graph.facebook.com/v19.0/736065142913405/messages - {"error":{"message":"Error validating access token: Session has expired on Wednesday, 23-Jul-25 04:00:00 PDT. The current time is Wednesday, 23-Jul-25 08:24:44 PDT.","type":"OAuthException","code":190,"error_subcode":463,"fbtrace_id":"AS3vlk6mqZD2s5RDBMvQZlP"}}
+Traceback (most recent call last):
+  File "C:\Users\Admin\PycharmProjects\whatsappbot\whatsapp_api_utils.py", line 38, in send_whatsapp_message
+    response.raise_for_status()  # Raise HTTPError for bad responses (4xx or 5xx)
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Admin\.conda\envs\whatsappbot\Lib\site-packages\requests\models.py", line 1026, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 401 Client Error: Unauthorized for url: https://graph.facebook.com/v19.0/736065142913405/messages
+2025-07-23 18:24:45 - db.conversations_crud - ERROR - Error adding message to DB: table conversations has no column named wa_id
+Traceback (most recent call last):
+  File "C:\Users\Admin\PycharmProjects\whatsappbot\db\conversations_crud.py", line 17, in add_message
+    cursor.execute(
+sqlite3.OperationalError: table conversations has no column named wa_id
+2025-07-23 18:24:45 - webhook - INFO - Processed and responded to 254715849926 (Tenant: `my_initial_client_id`).
+2025-07-23 18:24:45 - werkzeug - INFO - 127.0.0.1 - - [23/Jul/2025 18:24:45] "POST /webhook HTTP/1.1" 200 -
+2025-07-23 18:25:00 - webhook - INFO - Processing message for tenant: `my_initial_client_id` (WA ID: 254715849926)
+2025-07-23 18:25:00 - webhook - INFO - Received text message from 254715849926 (Tenant: `my_initial_client_id`): 'Can you get this?'
+2025-07-23 18:25:00 - ai_utils - INFO - No relevant FAQs found above threshold (0.75) for query 'Can you get this?...' for tenant 'my_initial_client_id'. Max similarity: 0.68.
+2025-07-23 18:25:00 - ai_utils - INFO - No relevant FAQ found for user query for tenant 'my_initial_client_id'. Proceeding with generative AI.
+2025-07-23 18:25:00 - db.conversations_crud - ERROR - Error getting conversation history for 254715849926: no such column: wa_id
+Traceback (most recent call last):
+  File "C:\Users\Admin\PycharmProjects\whatsappbot\db\conversations_crud.py", line 46, in get_conversation_history_by_whatsapp_id
+    cursor.execute(query, tuple(params))
+sqlite3.OperationalError: no such column: wa_id
+2025-07-23 18:25:01 - ai_utils - INFO - Generative AI response for tenant 'my_initial_client_id': I'm sorry, but I need more information to understa...
+2025-07-23 18:25:02 - whatsapp_api_utils - ERROR - HTTP error sending message to 254715849926: 401 Client Error: Unauthorized for url: https://graph.facebook.com/v19.0/736065142913405/messages - {"error":{"message":"Error validating access token: Session has expired on Wednesday, 23-Jul-25 04:00:00 PDT. The current time is Wednesday, 23-Jul-25 08:25:01 PDT.","type":"OAuthException","code":190,"error_subcode":463,"fbtrace_id":"A-Sha0JNIr6HG-_jMzG86g-"}}
+Traceback (most recent call last):
+  File "C:\Users\Admin\PycharmProjects\whatsappbot\whatsapp_api_utils.py", line 38, in send_whatsapp_message
+    response.raise_for_status()  # Raise HTTPError for bad responses (4xx or 5xx)
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Admin\.conda\envs\whatsappbot\Lib\site-packages\requests\models.py", line 1026, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 401 Client Error: Unauthorized for url: https://graph.facebook.com/v19.0/736065142913405/messages
+2025-07-23 18:25:02 - db.conversations_crud - ERROR - Error adding message to DB: table conversations has no column named wa_id
+Traceback (most recent call last):
+  File "C:\Users\Admin\PycharmProjects\whatsappbot\db\conversations_crud.py", line 17, in add_message
+    cursor.execute(
+sqlite3.OperationalError: table conversations has no column named wa_id
+2025-07-23 18:25:02 - webhook - INFO - Processed and responded to 254715849926 (Tenant: `my_initial_client_id`).
+2025-07-23 18:25:02 - werkzeug - INFO - 127.0.0.1 - - [23/Jul/2025 18:25:02] "POST /webhook HTTP/1.1" 200 -
+2025-07-23 18:26:26 - db.db_connection - INFO - Checked/Created 'tenants' table.
+2025-07-23 18:26:26 - db.db_connection - INFO - Checked/Created 'users' table with role and password support.
+2025-07-23 18:26:26 - db.db_connection - INFO - Checked/Created 'conversations' table.
+2025-07-23 18:26:26 - db.db_connection - INFO - Checked/Created 'faqs' table.
+2025-07-23 18:26:26 - db.db_connection - INFO - FAQs table ensured and migrated if necessary.
+2025-07-23 18:26:26 - __main__ - INFO - Database initialization complete.
+2025-07-23 18:26:26 - firebase_admin_utils - INFO - Firebase Admin SDK initialized using service account file.
+2025-07-23 18:26:26 - __main__ - INFO - Firebase Admin SDK initialized successfully.
+2025-07-23 18:26:26 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://192.168.100.208:5000
+2025-07-23 18:26:26 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2025-07-23 18:26:34 - webhook - INFO - Processing message for tenant: `my_initial_client_id` (WA ID: 254715849926)
+2025-07-23 18:26:34 - webhook - INFO - Received text message from 254715849926 (Tenant: `my_initial_client_id`): 'Hey'
+2025-07-23 18:26:35 - ai_utils - INFO - No relevant FAQs found above threshold (0.75) for query 'Hey...' for tenant 'my_initial_client_id'. Max similarity: 0.67.
+2025-07-23 18:26:35 - ai_utils - INFO - No relevant FAQ found for user query for tenant 'my_initial_client_id'. Proceeding with generative AI.
+2025-07-23 18:26:35 - db.conversations_crud - ERROR - Error getting conversation history for 254715849926: no such column: wa_id
+Traceback (most recent call last):
+  File "C:\Users\Admin\PycharmProjects\whatsappbot\db\conversations_crud.py", line 46, in get_conversation_history_by_whatsapp_id
+    cursor.execute(query, tuple(params))
+sqlite3.OperationalError: no such column: wa_id
+2025-07-23 18:26:37 - ai_utils - INFO - Generative AI response for tenant 'my_initial_client_id': Hello! How can I help you today?
+...
+2025-07-23 18:26:38 - whatsapp_api_utils - INFO - Message sent to 254715849926: Hello! How can I help you today?
+...
+2025-07-23 18:26:38 - db.conversations_crud - ERROR - Error adding message to DB: table conversations has no column named wa_id
+Traceback (most recent call last):
+  File "C:\Users\Admin\PycharmProjects\whatsappbot\db\conversations_crud.py", line 17, in add_message
+    cursor.execute(
+sqlite3.OperationalError: table conversations has no column named wa_id
+2025-07-23 18:26:38 - webhook - INFO - Processed and responded to 254715849926 (Tenant: `my_initial_client_id`).
+2025-07-23 18:26:38 - werkzeug - INFO - 127.0.0.1 - - [23/Jul/2025 18:26:38] "POST /webhook HTTP/1.1" 200 -
+2025-07-23 18:26:39 - werkzeug - INFO - 127.0.0.1 - - [23/Jul/2025 18:26:39] "POST /webhook HTTP/1.1" 200 -
+2025-07-23 18:26:40 - werkzeug - INFO - 127.0.0.1 - - [23/Jul/2025 18:26:40] "POST /webhook HTTP/1.1" 200 -
+2025-07-23 18:26:52 - webhook - INFO - Processing message for tenant: `my_initial_client_id` (WA ID: 254715849926)
+2025-07-23 18:26:52 - webhook - INFO - Received text message from 254715849926 (Tenant: `my_initial_client_id`): 'Location?'
+2025-07-23 18:26:53 - ai_utils - INFO - No relevant FAQs found above threshold (0.75) for query 'Location?...' for tenant 'my_initial_client_id'. Max similarity: 0.70.
+2025-07-23 18:26:53 - ai_utils - INFO - No relevant FAQ found for user query for tenant 'my_initial_client_id'. Proceeding with generative AI.
+2025-07-23 18:26:53 - db.conversations_crud - ERROR - Error getting conversation history for 254715849926: no such column: wa_id
+Traceback (most recent call last):
+  File "C:\Users\Admin\PycharmProjects\whatsappbot\db\conversations_crud.py", line 46, in get_conversation_history_by_whatsapp_id
+    cursor.execute(query, tuple(params))
+sqlite3.OperationalError: no such column: wa_id
+2025-07-23 18:26:54 - ai_utils - INFO - Generative AI response for tenant 'my_initial_client_id': I'm sorry, I don't have enough information to answ...
+2025-07-23 18:26:54 - whatsapp_api_utils - INFO - Message sent to 254715849926: I'm sorry, I don't have enough information to answ...
+2025-07-23 18:26:54 - db.conversations_crud - ERROR - Error adding message to DB: table conversations has no column named wa_id
+Traceback (most recent call last):
+  File "C:\Users\Admin\PycharmProjects\whatsappbot\db\conversations_crud.py", line 17, in add_message
+    cursor.execute(
+sqlite3.OperationalError: table conversations has no column named wa_id
+2025-07-23 18:26:54 - webhook - INFO - Processed and responded to 254715849926 (Tenant: `my_initial_client_id`).
+2025-07-23 18:26:54 - werkzeug - INFO - 127.0.0.1 - - [23/Jul/2025 18:26:54] "POST /webhook HTTP/1.1" 200 -
+2025-07-23 18:26:55 - werkzeug - INFO - 127.0.0.1 - - [23/Jul/2025 18:26:55] "POST /webhook HTTP/1.1" 200 -
+2025-07-23 18:26:56 - werkzeug - INFO - 127.0.0.1 - - [23/Jul/2025 18:26:56] "POST /webhook HTTP/1.1" 200 -
+2025-07-23 18:26:58 - werkzeug - INFO - 127.0.0.1 - - [23/Jul/2025 18:26:58] "POST /webhook HTTP/1.1" 200 -
+2025-07-23 18:27:13 - webhook - INFO - Processing message for tenant: `my_initial_client_id` (WA ID: 254715849926)
+2025-07-23 18:27:13 - webhook - INFO - Received unhandled message type 'audio' from 254715849926 (Tenant: `my_initial_client_id`).
+2025-07-23 18:27:13 - db.conversations_crud - ERROR - Error adding message to DB: table conversations has no column named wa_id
+Traceback (most recent call last):
+  File "C:\Users\Admin\PycharmProjects\whatsappbot\db\conversations_crud.py", line 17, in add_message
+    cursor.execute(
+sqlite3.OperationalError: table conversations has no column named wa_id
+2025-07-23 18:27:13 - webhook - INFO - Processed and responded to 254715849926 (Tenant: `my_initial_client_id`).
+2025-07-23 18:27:13 - werkzeug - INFO - 127.0.0.1 - - [23/Jul/2025 18:27:13] "POST /webhook HTTP/1.1" 200 -
+2025-07-23 18:45:32 - db.db_connection - INFO - Checked/Created 'tenants' table.
+2025-07-23 18:45:32 - db.db_connection - INFO - Checked/Created 'users' table with role and password support.
+2025-07-23 18:45:32 - db.db_connection - INFO - Checked/Created 'conversations' table.
+2025-07-23 18:45:32 - db.db_connection - INFO - Checked/Created 'faqs' table.
+2025-07-23 18:45:32 - db.db_connection - INFO - FAQs table ensured and migrated if necessary.
+2025-07-23 18:45:32 - __main__ - INFO - Database initialization complete.
+2025-07-23 18:45:32 - firebase_admin_utils - INFO - Firebase Admin SDK initialized using service account file.
+2025-07-23 18:45:32 - __main__ - INFO - Firebase Admin SDK initialized successfully.
+2025-07-23 18:45:32 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://192.168.100.208:5000
+2025-07-23 18:45:32 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2025-07-23 18:45:53 - webhook - INFO - Processing message for tenant: `my_initial_client_id` (WA ID: 254715849926)
+2025-07-23 18:45:53 - webhook - INFO - Received text message from 254715849926 (Tenant: `my_initial_client_id`): 'Hello'
+2025-07-23 18:45:54 - ai_utils - INFO - No relevant FAQs found above threshold (0.75) for query 'Hello...' for tenant 'my_initial_client_id'. Max similarity: 0.70.
+2025-07-23 18:45:54 - ai_utils - INFO - No relevant FAQ found for user query for tenant 'my_initial_client_id'. Proceeding with generative AI.
+2025-07-23 18:46:05 - ai_utils - INFO - Generative AI response for tenant 'my_initial_client_id': Hello! How can I help you today?
+...
+2025-07-23 18:46:06 - whatsapp_api_utils - INFO - Message sent to 254715849926: Hello! How can I help you today?
+...
+2025-07-23 18:46:06 - db.conversations_crud - INFO - Message added to DB from user (Tenant: my_initial_client_id): 'Hello...'
+2025-07-23 18:46:06 - webhook - INFO - Processed and responded to 254715849926 (Tenant: `my_initial_client_id`).
+2025-07-23 18:46:06 - werkzeug - INFO - 127.0.0.1 - - [23/Jul/2025 18:46:06] "POST /webhook HTTP/1.1" 200 -
+2025-07-23 18:46:08 - werkzeug - INFO - 127.0.0.1 - - [23/Jul/2025 18:46:08] "POST /webhook HTTP/1.1" 200 -
+2025-07-23 18:46:08 - werkzeug - INFO - 127.0.0.1 - - [23/Jul/2025 18:46:08] "POST /webhook HTTP/1.1" 200 -
+2025-07-23 18:46:24 - webhook - INFO - Processing message for tenant: `my_initial_client_id` (WA ID: 254715849926)
+2025-07-23 18:46:24 - webhook - INFO - Received text message from 254715849926 (Tenant: `my_initial_client_id`): 'If I buy an item what is the return policy?'
+2025-07-23 18:46:24 - ai_utils - INFO - Found relevant FAQ (Q='What is the company's return policy?...') with similarity 0.89 for tenant 'my_initial_client_id'.
+2025-07-23 18:46:24 - ai_utils - INFO - Responded with FAQ for tenant 'my_initial_client_id'. Q: 'What is the company's return policy?...', A: 'Returns within 30 days....'
+2025-07-23 18:46:25 - whatsapp_api_utils - INFO - Message sent to 254715849926: Returns within 30 days....
+2025-07-23 18:46:25 - db.conversations_crud - INFO - Message added to DB from user (Tenant: my_initial_client_id): 'If I buy an item what is the return policy?...'
+2025-07-23 18:46:25 - webhook - INFO - Processed and responded to 254715849926 (Tenant: `my_initial_client_id`).
+2025-07-23 18:46:25 - werkzeug - INFO - 127.0.0.1 - - [23/Jul/2025 18:46:25] "POST /webhook HTTP/1.1" 200 -
+2025-07-23 18:46:26 - werkzeug - INFO - 127.0.0.1 - - [23/Jul/2025 18:46:26] "POST /webhook HTTP/1.1" 200 -
+2025-07-23 18:46:26 - werkzeug - INFO - 127.0.0.1 - - [23/Jul/2025 18:46:26] "POST /webhook HTTP/1.1" 200 -
+2025-07-23 18:46:38 - webhook - INFO - Processing message for tenant: `my_initial_client_id` (WA ID: 254715849926)
+2025-07-23 18:46:38 - webhook - INFO - Received text message from 254715849926 (Tenant: `my_initial_client_id`): 'What if I want help?'
+2025-07-23 18:46:38 - ai_utils - INFO - Found relevant FAQ (Q='How do I contact support?...') with similarity 0.76 for tenant 'my_initial_client_id'.
+2025-07-23 18:46:38 - ai_utils - INFO - Responded with FAQ for tenant 'my_initial_client_id'. Q: 'How do I contact support?...', A: 'Email support@example.com....'
+2025-07-23 18:46:40 - whatsapp_api_utils - INFO - Message sent to 254715849926: Email support@example.com....
+2025-07-23 18:46:40 - db.conversations_crud - INFO - Message added to DB from user (Tenant: my_initial_client_id): 'What if I want help?...'
+2025-07-23 18:46:40 - webhook - INFO - Processed and responded to 254715849926 (Tenant: `my_initial_client_id`).
+2025-07-23 18:46:40 - werkzeug - INFO - 127.0.0.1 - - [23/Jul/2025 18:46:40] "POST /webhook HTTP/1.1" 200 -
+2025-07-23 18:46:41 - werkzeug - INFO - 127.0.0.1 - - [23/Jul/2025 18:46:41] "POST /webhook HTTP/1.1" 200 -
+2025-07-23 18:46:41 - werkzeug - INFO - 127.0.0.1 - - [23/Jul/2025 18:46:41] "POST /webhook HTTP/1.1" 200 -
+2025-07-23 18:46:47 - webhook - INFO - Processing message for tenant: `my_initial_client_id` (WA ID: 254715849926)
+2025-07-23 18:46:47 - webhook - INFO - Received text message from 254715849926 (Tenant: `my_initial_client_id`): 'Thank you'
+2025-07-23 18:46:47 - ai_utils - INFO - No relevant FAQs found above threshold (0.75) for query 'Thank you...' for tenant 'my_initial_client_id'. Max similarity: 0.72.
+2025-07-23 18:46:47 - ai_utils - INFO - No relevant FAQ found for user query for tenant 'my_initial_client_id'. Proceeding with generative AI.
+2025-07-23 18:46:55 - ai_utils - INFO - Generative AI response for tenant 'my_initial_client_id': Hello!  
+
+Our conversation history shows you asked...
+2025-07-23 18:46:56 - whatsapp_api_utils - INFO - Message sent to 254715849926: Hello!  
+
+Our conversation history shows you asked...
+2025-07-23 18:46:56 - db.conversations_crud - INFO - Message added to DB from user (Tenant: my_initial_client_id): 'Thank you...'
+2025-07-23 18:46:56 - webhook - INFO - Processed and responded to 254715849926 (Tenant: `my_initial_client_id`).
+2025-07-23 18:46:56 - werkzeug - INFO - 127.0.0.1 - - [23/Jul/2025 18:46:56] "POST /webhook HTTP/1.1" 200 -
+2025-07-23 18:46:57 - werkzeug - INFO - 127.0.0.1 - - [23/Jul/2025 18:46:57] "POST /webhook HTTP/1.1" 200 -
+2025-07-23 18:46:58 - werkzeug - INFO - 127.0.0.1 - - [23/Jul/2025 18:46:58] "POST /webhook HTTP/1.1" 200 -
+2025-07-23 18:47:04 - webhook - INFO - Processing message for tenant: `my_initial_client_id` (WA ID: 254715849926)
+2025-07-23 18:47:04 - webhook - INFO - Received text message from 254715849926 (Tenant: `my_initial_client_id`): '1'
+2025-07-23 18:47:05 - ai_utils - INFO - No relevant FAQs found above threshold (0.75) for query '1...' for tenant 'my_initial_client_id'. Max similarity: 0.65.
+2025-07-23 18:47:05 - ai_utils - INFO - No relevant FAQ found for user query for tenant 'my_initial_client_id'. Proceeding with generative AI.
+2025-07-23 18:47:07 - webhook - INFO - Processing message for tenant: `my_initial_client_id` (WA ID: 254715849926)
+2025-07-23 18:47:07 - webhook - WARNING - Rate limit exceeded for 254715849926. Ignoring message.
+2025-07-23 18:47:07 - werkzeug - INFO - 127.0.0.1 - - [23/Jul/2025 18:47:07] "POST /webhook HTTP/1.1" 200 -
+2025-07-23 18:47:08 - webhook - INFO - Processing message for tenant: `my_initial_client_id` (WA ID: 254715849926)
+2025-07-23 18:47:08 - webhook - WARNING - Rate limit exceeded for 254715849926. Ignoring message.
+2025-07-23 18:47:08 - werkzeug - INFO - 127.0.0.1 - - [23/Jul/2025 18:47:08] "POST /webhook HTTP/1.1" 200 -
+2025-07-23 18:47:11 - webhook - INFO - Processing message for tenant: `my_initial_client_id` (WA ID: 254715849926)
+2025-07-23 18:47:11 - webhook - INFO - Received text message from 254715849926 (Tenant: `my_initial_client_id`): 'Qq'
+2025-07-23 18:47:11 - ai_utils - INFO - No relevant FAQs found above threshold (0.75) for query 'Qq...' for tenant 'my_initial_client_id'. Max similarity: 0.53.
+2025-07-23 18:47:11 - ai_utils - INFO - No relevant FAQ found for user query for tenant 'my_initial_client_id'. Proceeding with generative AI.
+2025-07-23 18:47:11 - webhook - INFO - Processing message for tenant: `my_initial_client_id` (WA ID: 254715849926)
+2025-07-23 18:47:11 - webhook - WARNING - Rate limit exceeded for 254715849926. Ignoring message.
+2025-07-23 18:47:11 - werkzeug - INFO - 127.0.0.1 - - [23/Jul/2025 18:47:11] "POST /webhook HTTP/1.1" 200 -
+2025-07-23 18:47:12 - ai_utils - INFO - Generative AI response for tenant 'my_initial_client_id': Hello!  Based on our conversation, I know you aske...
+2025-07-23 18:47:13 - webhook - INFO - Processing message for tenant: `my_initial_client_id` (WA ID: 254715849926)
+2025-07-23 18:47:13 - webhook - WARNING - Rate limit exceeded for 254715849926. Ignoring message.
+2025-07-23 18:47:13 - werkzeug - INFO - 127.0.0.1 - - [23/Jul/2025 18:47:13] "POST /webhook HTTP/1.1" 200 -
+2025-07-23 18:47:13 - whatsapp_api_utils - INFO - Message sent to 254715849926: Hello!  Based on our conversation, I know you aske...
+2025-07-23 18:47:13 - db.conversations_crud - INFO - Message added to DB from user (Tenant: my_initial_client_id): '1...'
+2025-07-23 18:47:13 - webhook - INFO - Processed and responded to 254715849926 (Tenant: `my_initial_client_id`).
+2025-07-23 18:47:13 - werkzeug - INFO - 127.0.0.1 - - [23/Jul/2025 18:47:13] "POST /webhook HTTP/1.1" 200 -
+2025-07-23 18:47:14 - werkzeug - INFO - 127.0.0.1 - - [23/Jul/2025 18:47:14] "POST /webhook HTTP/1.1" 200 -
+2025-07-23 18:47:14 - werkzeug - INFO - 127.0.0.1 - - [23/Jul/2025 18:47:14] "POST /webhook HTTP/1.1" 200 -
+2025-07-23 18:47:14 - webhook - INFO - Processing message for tenant: `my_initial_client_id` (WA ID: 254715849926)
+2025-07-23 18:47:14 - webhook - WARNING - Rate limit exceeded for 254715849926. Ignoring message.
+2025-07-23 18:47:14 - werkzeug - INFO - 127.0.0.1 - - [23/Jul/2025 18:47:14] "POST /webhook HTTP/1.1" 200 -
+2025-07-23 18:47:14 - ai_utils - INFO - Generative AI response for tenant 'my_initial_client_id': I'm sorry, I don't have enough information to answ...
+2025-07-23 18:47:15 - whatsapp_api_utils - INFO - Message sent to 254715849926: I'm sorry, I don't have enough information to answ...
+2025-07-23 18:47:15 - db.conversations_crud - INFO - Message added to DB from user (Tenant: my_initial_client_id): 'Qq...'
+2025-07-23 18:47:15 - webhook - INFO - Processed and responded to 254715849926 (Tenant: `my_initial_client_id`).
+2025-07-23 18:47:15 - werkzeug - INFO - 127.0.0.1 - - [23/Jul/2025 18:47:15] "POST /webhook HTTP/1.1" 200 -
+2025-07-23 18:47:16 - werkzeug - INFO - 127.0.0.1 - - [23/Jul/2025 18:47:16] "POST /webhook HTTP/1.1" 200 -
+2025-07-23 18:47:17 - werkzeug - INFO - 127.0.0.1 - - [23/Jul/2025 18:47:17] "POST /webhook HTTP/1.1" 200 -
+2025-07-23 18:47:22 - webhook - INFO - Processing message for tenant: `my_initial_client_id` (WA ID: 254715849926)
+2025-07-23 18:47:22 - webhook - INFO - Received text message from 254715849926 (Tenant: `my_initial_client_id`): 'F'
+2025-07-23 18:47:23 - ai_utils - INFO - No relevant FAQs found above threshold (0.75) for query 'F...' for tenant 'my_initial_client_id'. Max similarity: 0.60.
+2025-07-23 18:47:23 - ai_utils - INFO - No relevant FAQ found for user query for tenant 'my_initial_client_id'. Proceeding with generative AI.
+2025-07-23 18:47:23 - webhook - INFO - Processing message for tenant: `my_initial_client_id` (WA ID: 254715849926)
+2025-07-23 18:47:23 - webhook - WARNING - Rate limit exceeded for 254715849926. Ignoring message.
+2025-07-23 18:47:23 - werkzeug - INFO - 127.0.0.1 - - [23/Jul/2025 18:47:23] "POST /webhook HTTP/1.1" 200 -
+2025-07-23 18:47:24 - webhook - INFO - Processing message for tenant: `my_initial_client_id` (WA ID: 254715849926)
+2025-07-23 18:47:24 - webhook - WARNING - Rate limit exceeded for 254715849926. Ignoring message.
+2025-07-23 18:47:24 - werkzeug - INFO - 127.0.0.1 - - [23/Jul/2025 18:47:24] "POST /webhook HTTP/1.1" 200 -
+2025-07-23 18:47:27 - ai_utils - INFO - Generative AI response for tenant 'my_initial_client_id': I'm sorry, but based on our conversation history, ...
+2025-07-23 18:47:28 - whatsapp_api_utils - INFO - Message sent to 254715849926: I'm sorry, but based on our conversation history, ...
+2025-07-23 18:47:28 - db.conversations_crud - INFO - Message added to DB from user (Tenant: my_initial_client_id): 'F...'
+2025-07-23 18:47:28 - webhook - INFO - Processed and responded to 254715849926 (Tenant: `my_initial_client_id`).
+2025-07-23 18:47:28 - werkzeug - INFO - 127.0.0.1 - - [23/Jul/2025 18:47:28] "POST /webhook HTTP/1.1" 200 -
+2025-07-23 18:47:29 - werkzeug - INFO - 127.0.0.1 - - [23/Jul/2025 18:47:29] "POST /webhook HTTP/1.1" 200 -
+2025-07-23 18:47:30 - werkzeug - INFO - 127.0.0.1 - - [23/Jul/2025 18:47:30] "POST /webhook HTTP/1.1" 200 -
+2025-07-23 18:48:05 - webhook - INFO - Processing message for tenant: `my_initial_client_id` (WA ID: 254715849926)
+2025-07-23 18:48:05 - webhook - INFO - Received text message from 254715849926 (Tenant: `my_initial_client_id`): 'Hdj'
+2025-07-23 18:48:06 - ai_utils - INFO - No relevant FAQs found above threshold (0.75) for query 'Hdj...' for tenant 'my_initial_client_id'. Max similarity: 0.56.
+2025-07-23 18:48:06 - ai_utils - INFO - No relevant FAQ found for user query for tenant 'my_initial_client_id'. Proceeding with generative AI.
+2025-07-23 18:48:07 - ai_utils - INFO - Generative AI response for tenant 'my_initial_client_id': I'm sorry, but based on our conversation history, ...
+2025-07-23 18:48:08 - whatsapp_api_utils - INFO - Message sent to 254715849926: I'm sorry, but based on our conversation history, ...
+2025-07-23 18:48:08 - db.conversations_crud - INFO - Message added to DB from user (Tenant: my_initial_client_id): 'Hdj...'
+2025-07-23 18:48:08 - webhook - INFO - Processed and responded to 254715849926 (Tenant: `my_initial_client_id`).
+2025-07-23 18:48:08 - werkzeug - INFO - 127.0.0.1 - - [23/Jul/2025 18:48:08] "POST /webhook HTTP/1.1" 200 -
+2025-07-23 18:48:09 - werkzeug - INFO - 127.0.0.1 - - [23/Jul/2025 18:48:09] "POST /webhook HTTP/1.1" 200 -
+2025-07-23 18:48:09 - werkzeug - INFO - 127.0.0.1 - - [23/Jul/2025 18:48:09] "POST /webhook HTTP/1.1" 200 -
+2025-07-23 18:48:16 - db.db_connection - INFO - Checked/Created 'tenants' table.
+2025-07-23 18:48:16 - db.db_connection - INFO - Checked/Created 'users' table with role and password support.
+2025-07-23 18:48:16 - db.db_connection - INFO - Checked/Created 'conversations' table.
+2025-07-23 18:48:16 - db.db_connection - INFO - Checked/Created 'faqs' table.
+2025-07-23 18:48:16 - db.db_connection - INFO - FAQs table ensured and migrated if necessary.
+2025-07-23 18:48:16 - __main__ - INFO - Database initialization complete.
+2025-07-23 18:48:16 - firebase_admin_utils - INFO - Firebase Admin SDK initialized using service account file.
+2025-07-23 18:48:16 - __main__ - INFO - Firebase Admin SDK initialized successfully.
+2025-07-23 18:48:16 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://192.168.100.208:5000
+2025-07-23 18:48:16 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2025-07-23 18:48:20 - webhook - INFO - Processing message for tenant: `my_initial_client_id` (WA ID: 254715849926)
+2025-07-23 18:48:20 - webhook - INFO - Received text message from 254715849926 (Tenant: `my_initial_client_id`): 'Hello'
+2025-07-23 18:48:21 - ai_utils - INFO - No relevant FAQs found above threshold (0.75) for query 'Hello...' for tenant 'my_initial_client_id'. Max similarity: 0.70.
+2025-07-23 18:48:21 - ai_utils - INFO - No relevant FAQ found for user query for tenant 'my_initial_client_id'. Proceeding with generative AI.
+2025-07-23 18:48:22 - ai_utils - INFO - Generative AI response for tenant 'my_initial_client_id': Hello!  How can I help you today?
+...
+2025-07-23 18:48:23 - whatsapp_api_utils - INFO - Message sent to 254715849926: Hello!  How can I help you today?
+...
+2025-07-23 18:48:23 - db.conversations_crud - INFO - Message added to DB from user (Tenant: my_initial_client_id): 'Hello...'
+2025-07-23 18:48:23 - webhook - INFO - Processed and responded to 254715849926 (Tenant: `my_initial_client_id`).
+2025-07-23 18:48:23 - werkzeug - INFO - 127.0.0.1 - - [23/Jul/2025 18:48:23] "POST /webhook HTTP/1.1" 200 -
+2025-07-23 18:48:24 - werkzeug - INFO - 127.0.0.1 - - [23/Jul/2025 18:48:24] "POST /webhook HTTP/1.1" 200 -
+2025-07-23 18:48:25 - werkzeug - INFO - 127.0.0.1 - - [23/Jul/2025 18:48:25] "POST /webhook HTTP/1.1" 200 -
+2025-07-23 18:48:29 - webhook - INFO - Processing message for tenant: `my_initial_client_id` (WA ID: 254715849926)
+2025-07-23 18:48:29 - webhook - INFO - Received text message from 254715849926 (Tenant: `my_initial_client_id`): 'How do I return things?'
+2025-07-23 18:48:29 - ai_utils - INFO - Found relevant FAQ (Q='What is the company's return policy?...') with similarity 0.84 for tenant 'my_initial_client_id'.
+2025-07-23 18:48:29 - ai_utils - INFO - Responded with FAQ for tenant 'my_initial_client_id'. Q: 'What is the company's return policy?...', A: 'Returns within 30 days....'
+2025-07-23 18:48:30 - whatsapp_api_utils - INFO - Message sent to 254715849926: Returns within 30 days....
+2025-07-23 18:48:30 - db.conversations_crud - INFO - Message added to DB from user (Tenant: my_initial_client_id): 'How do I return things?...'
+2025-07-23 18:48:30 - webhook - INFO - Processed and responded to 254715849926 (Tenant: `my_initial_client_id`).
+2025-07-23 18:48:30 - werkzeug - INFO - 127.0.0.1 - - [23/Jul/2025 18:48:30] "POST /webhook HTTP/1.1" 200 -
+2025-07-23 18:48:31 - werkzeug - INFO - 127.0.0.1 - - [23/Jul/2025 18:48:31] "POST /webhook HTTP/1.1" 200 -
+2025-07-23 18:48:32 - werkzeug - INFO - 127.0.0.1 - - [23/Jul/2025 18:48:32] "POST /webhook HTTP/1.1" 200 -
+2025-07-23 18:48:38 - webhook - INFO - Processing message for tenant: `my_initial_client_id` (WA ID: 254715849926)
+2025-07-23 18:48:38 - webhook - INFO - Received text message from 254715849926 (Tenant: `my_initial_client_id`): 'Where do I get help?'
+2025-07-23 18:48:39 - ai_utils - INFO - Found relevant FAQ (Q='How do I contact support?...') with similarity 0.78 for tenant 'my_initial_client_id'.
+2025-07-23 18:48:39 - ai_utils - INFO - Responded with FAQ for tenant 'my_initial_client_id'. Q: 'How do I contact support?...', A: 'Email support@example.com....'
+2025-07-23 18:48:40 - whatsapp_api_utils - INFO - Message sent to 254715849926: Email support@example.com....
+2025-07-23 18:48:40 - db.conversations_crud - INFO - Message added to DB from user (Tenant: my_initial_client_id): 'Where do I get help?...'
+2025-07-23 18:48:40 - webhook - INFO - Processed and responded to 254715849926 (Tenant: `my_initial_client_id`).
+2025-07-23 18:48:40 - werkzeug - INFO - 127.0.0.1 - - [23/Jul/2025 18:48:40] "POST /webhook HTTP/1.1" 200 -
+2025-07-23 18:48:41 - werkzeug - INFO - 127.0.0.1 - - [23/Jul/2025 18:48:41] "POST /webhook HTTP/1.1" 200 -
+2025-07-23 18:48:41 - werkzeug - INFO - 127.0.0.1 - - [23/Jul/2025 18:48:41] "POST /webhook HTTP/1.1" 200 -
+2025-07-23 18:50:27 - werkzeug - INFO - 127.0.0.1 - - [23/Jul/2025 18:50:27] "[32mGET / HTTP/1.1[0m" 302 -
+2025-07-23 18:50:27 - werkzeug - INFO - 127.0.0.1 - - [23/Jul/2025 18:50:27] "GET /login?next=/ HTTP/1.1" 200 -
+2025-07-23 18:50:27 - werkzeug - INFO - 127.0.0.1 - - [23/Jul/2025 18:50:27] "GET /static/css/main.css HTTP/1.1" 200 -
+2025-07-23 18:50:27 - werkzeug - INFO - 127.0.0.1 - - [23/Jul/2025 18:50:27] "GET /static/js/firebase-init.js HTTP/1.1" 200 -
+2025-07-23 18:50:27 - werkzeug - INFO - 127.0.0.1 - - [23/Jul/2025 18:50:27] "[33mGET /favicon.ico HTTP/1.1[0m" 404 -
+2025-07-23 18:50:29 - auth - INFO - Firebase ID token verified for UID: yShNWVV7KCaouEvKixzCIiPfO512, Email: framuigai@gmail.com
+2025-07-23 18:50:29 - auth - INFO - New Firebase user 'framuigai@gmail.com' detected. Adding to local DB.
+2025-07-23 18:50:29 - db.users_crud - INFO - User 'framuigai@gmail.com' added successfully.
+2025-07-23 18:50:29 - werkzeug - INFO - 127.0.0.1 - - [23/Jul/2025 18:50:29] "POST /api/login HTTP/1.1" 200 -
+2025-07-23 18:50:29 - admin_routes - INFO - User framuigai@gmail.com accessed dashboard.
+2025-07-23 18:50:29 - werkzeug - INFO - 127.0.0.1 - - [23/Jul/2025 18:50:29] "GET / HTTP/1.1" 200 -
+2025-07-23 18:50:29 - werkzeug - INFO - 127.0.0.1 - - [23/Jul/2025 18:50:29] "[36mGET /static/css/main.css HTTP/1.1[0m" 304 -
+2025-07-23 18:50:29 - werkzeug - INFO - 127.0.0.1 - - [23/Jul/2025 18:50:29] "GET /static/js/dashboard.js HTTP/1.1" 200 -
+2025-07-23 18:50:29 - werkzeug - INFO - 127.0.0.1 - - [23/Jul/2025 18:50:29] "[36mGET /static/js/firebase-init.js HTTP/1.1[0m" 304 -
+2025-07-23 18:50:30 - werkzeug - INFO - 127.0.0.1 - - [23/Jul/2025 18:50:30] "[33mGET /static/favicon.ico HTTP/1.1[0m" 404 -
+2025-07-23 18:50:35 - werkzeug - INFO - 127.0.0.1 - - [23/Jul/2025 18:50:35] "GET /manage_faqs HTTP/1.1" 200 -
+2025-07-23 18:50:35 - werkzeug - INFO - 127.0.0.1 - - [23/Jul/2025 18:50:35] "[36mGET /static/css/main.css HTTP/1.1[0m" 304 -
+2025-07-23 18:50:35 - werkzeug - INFO - 127.0.0.1 - - [23/Jul/2025 18:50:35] "[36mGET /static/js/dashboard.js HTTP/1.1[0m" 304 -
+2025-07-23 18:50:35 - werkzeug - INFO - 127.0.0.1 - - [23/Jul/2025 18:50:35] "[36mGET /static/js/firebase-init.js HTTP/1.1[0m" 304 -
+2025-07-23 18:50:35 - werkzeug - INFO - 127.0.0.1 - - [23/Jul/2025 18:50:35] "GET /api/faqs HTTP/1.1" 200 -
+2025-07-23 18:50:37 - admin_routes - ERROR - Error fetching conversations: 'dict object' has no attribute 'last_timestamp'
+Traceback (most recent call last):
+  File "C:\Users\Admin\PycharmProjects\whatsappbot\admin_routes.py", line 226, in all_conversations
+    return render_template('all_conversations.html', user_email=current_user.email,
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Admin\.conda\envs\whatsappbot\Lib\site-packages\flask\templating.py", line 150, in render_template
+    return _render(app, template, context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Admin\.conda\envs\whatsappbot\Lib\site-packages\flask\templating.py", line 131, in _render
+    rv = template.render(context)
+         ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Admin\.conda\envs\whatsappbot\Lib\site-packages\jinja2\environment.py", line 1295, in render
+    self.environment.handle_exception()
+  File "C:\Users\Admin\.conda\envs\whatsappbot\Lib\site-packages\jinja2\environment.py", line 942, in handle_exception
+    raise rewrite_traceback_stack(source=source)
+  File "C:\Users\Admin\PycharmProjects\whatsappbot\templates\all_conversations.html", line 1, in top-level template code
+    {% extends "base.html" %}
+  File "C:\Users\Admin\PycharmProjects\whatsappbot\templates\base.html", line 65, in top-level template code
+    <main>{% block body_content %}{% endblock %}</main>
+    ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Admin\PycharmProjects\whatsappbot\templates\all_conversations.html", line 29, in block 'body_content'
+    <td>{{ moment(conv.last_timestamp).format('LLL') }}</td>
+    ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Admin\.conda\envs\whatsappbot\Lib\site-packages\flask_moment\__init__.py", line 220, in format
+    return self._render("format", format=(fmt or ''), refresh=refresh)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Admin\.conda\envs\whatsappbot\Lib\site-packages\flask_moment\__init__.py", line 194, in _render
+    t = self._timestamp_as_iso_8601(self.timestamp)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Admin\.conda\envs\whatsappbot\Lib\site-packages\flask_moment\__init__.py", line 190, in _timestamp_as_iso_8601
+    return timestamp.strftime('%Y-%m-%dT%H:%M:%S' + tz)
+           ^^^^^^^^^^^^^^^^^^
+jinja2.exceptions.UndefinedError: 'dict object' has no attribute 'last_timestamp'
+2025-07-23 18:50:37 - werkzeug - INFO - 127.0.0.1 - - [23/Jul/2025 18:50:37] "GET /all-conversations HTTP/1.1" 200 -
+2025-07-23 18:50:37 - werkzeug - INFO - 127.0.0.1 - - [23/Jul/2025 18:50:37] "[36mGET /static/css/main.css HTTP/1.1[0m" 304 -
+2025-07-23 18:50:37 - werkzeug - INFO - 127.0.0.1 - - [23/Jul/2025 18:50:37] "[36mGET /static/js/firebase-init.js HTTP/1.1[0m" 304 -
+2025-07-23 18:50:38 - werkzeug - INFO - 127.0.0.1 - - [23/Jul/2025 18:50:38] "GET /view_reports HTTP/1.1" 200 -
+2025-07-23 18:50:39 - werkzeug - INFO - 127.0.0.1 - - [23/Jul/2025 18:50:39] "[36mGET /static/css/main.css HTTP/1.1[0m" 304 -
+2025-07-23 18:50:39 - werkzeug - INFO - 127.0.0.1 - - [23/Jul/2025 18:50:39] "[36mGET /static/js/dashboard.js HTTP/1.1[0m" 304 -
+2025-07-23 18:50:39 - werkzeug - INFO - 127.0.0.1 - - [23/Jul/2025 18:50:39] "[36mGET /static/js/firebase-init.js HTTP/1.1[0m" 304 -
+2025-07-23 18:50:39 - api_routes - INFO - Monthly report generated for tenant_id: None, Data points: 1
+2025-07-23 18:50:39 - werkzeug - INFO - 127.0.0.1 - - [23/Jul/2025 18:50:39] "GET /api/reports/monthly HTTP/1.1" 200 -
+2025-07-23 18:50:42 - admin_routes - ERROR - Error fetching conversations: 'dict object' has no attribute 'last_timestamp'
+Traceback (most recent call last):
+  File "C:\Users\Admin\PycharmProjects\whatsappbot\admin_routes.py", line 226, in all_conversations
+    return render_template('all_conversations.html', user_email=current_user.email,
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Admin\.conda\envs\whatsappbot\Lib\site-packages\flask\templating.py", line 150, in render_template
+    return _render(app, template, context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Admin\.conda\envs\whatsappbot\Lib\site-packages\flask\templating.py", line 131, in _render
+    rv = template.render(context)
+         ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Admin\.conda\envs\whatsappbot\Lib\site-packages\jinja2\environment.py", line 1295, in render
+    self.environment.handle_exception()
+  File "C:\Users\Admin\.conda\envs\whatsappbot\Lib\site-packages\jinja2\environment.py", line 942, in handle_exception
+    raise rewrite_traceback_stack(source=source)
+  File "C:\Users\Admin\PycharmProjects\whatsappbot\templates\all_conversations.html", line 1, in top-level template code
+    {% extends "base.html" %}
+  File "C:\Users\Admin\PycharmProjects\whatsappbot\templates\base.html", line 65, in top-level template code
+    <main>{% block body_content %}{% endblock %}</main>
+    ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Admin\PycharmProjects\whatsappbot\templates\all_conversations.html", line 29, in block 'body_content'
+    <td>{{ moment(conv.last_timestamp).format('LLL') }}</td>
+    ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Admin\.conda\envs\whatsappbot\Lib\site-packages\flask_moment\__init__.py", line 220, in format
+    return self._render("format", format=(fmt or ''), refresh=refresh)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Admin\.conda\envs\whatsappbot\Lib\site-packages\flask_moment\__init__.py", line 194, in _render
+    t = self._timestamp_as_iso_8601(self.timestamp)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Admin\.conda\envs\whatsappbot\Lib\site-packages\flask_moment\__init__.py", line 190, in _timestamp_as_iso_8601
+    return timestamp.strftime('%Y-%m-%dT%H:%M:%S' + tz)
+           ^^^^^^^^^^^^^^^^^^
+jinja2.exceptions.UndefinedError: 'dict object' has no attribute 'last_timestamp'
+2025-07-23 18:50:42 - werkzeug - INFO - 127.0.0.1 - - [23/Jul/2025 18:50:42] "GET /all-conversations HTTP/1.1" 200 -
+2025-07-23 18:50:42 - werkzeug - INFO - 127.0.0.1 - - [23/Jul/2025 18:50:42] "[36mGET /static/css/main.css HTTP/1.1[0m" 304 -
+2025-07-23 18:50:42 - werkzeug - INFO - 127.0.0.1 - - [23/Jul/2025 18:50:42] "[36mGET /static/js/firebase-init.js HTTP/1.1[0m" 304 -
+2025-07-23 18:50:45 - werkzeug - INFO - 127.0.0.1 - - [23/Jul/2025 18:50:45] "[36mGET /static/css/main.css HTTP/1.1[0m" 304 -
+2025-07-23 18:50:45 - werkzeug - INFO - 127.0.0.1 - - [23/Jul/2025 18:50:45] "[33mGET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1[0m" 404 -
+2025-07-23 18:50:49 - auth - INFO - User framuigai@gmail.com logged out.
+2025-07-23 18:50:49 - werkzeug - INFO - 127.0.0.1 - - [23/Jul/2025 18:50:49] "[32mGET /logout HTTP/1.1[0m" 302 -
+2025-07-23 18:50:49 - werkzeug - INFO - 127.0.0.1 - - [23/Jul/2025 18:50:49] "GET /login HTTP/1.1" 200 -
+2025-07-23 18:50:49 - werkzeug - INFO - 127.0.0.1 - - [23/Jul/2025 18:50:49] "[36mGET /static/css/main.css HTTP/1.1[0m" 304 -
+2025-07-23 18:50:49 - werkzeug - INFO - 127.0.0.1 - - [23/Jul/2025 18:50:49] "[36mGET /static/js/firebase-init.js HTTP/1.1[0m" 304 -
+2025-07-23 18:50:58 - auth - INFO - Firebase ID token verified for UID: yShNWVV7KCaouEvKixzCIiPfO512, Email: framuigai@gmail.com
+2025-07-23 18:50:58 - auth - INFO - Firebase ID token verified for UID: yShNWVV7KCaouEvKixzCIiPfO512, Email: framuigai@gmail.com
+2025-07-23 18:50:58 - auth - INFO - Existing user 'framuigai@gmail.com' found. Logging in.
+2025-07-23 18:50:58 - werkzeug - INFO - 127.0.0.1 - - [23/Jul/2025 18:50:58] "POST /api/login HTTP/1.1" 200 -
+2025-07-23 18:50:58 - auth - INFO - Existing user 'framuigai@gmail.com' found. Logging in.
+2025-07-23 18:50:58 - werkzeug - INFO - 127.0.0.1 - - [23/Jul/2025 18:50:58] "POST /api/login HTTP/1.1" 200 -
+2025-07-23 18:50:58 - admin_routes - INFO - User framuigai@gmail.com accessed dashboard.
+2025-07-23 18:50:58 - werkzeug - INFO - 127.0.0.1 - - [23/Jul/2025 18:50:58] "GET / HTTP/1.1" 200 -
+2025-07-23 18:50:58 - admin_routes - INFO - User framuigai@gmail.com accessed dashboard.
+2025-07-23 18:50:58 - werkzeug - INFO - 127.0.0.1 - - [23/Jul/2025 18:50:58] "GET / HTTP/1.1" 200 -
+2025-07-23 18:50:58 - werkzeug - INFO - 127.0.0.1 - - [23/Jul/2025 18:50:58] "[36mGET /static/css/main.css HTTP/1.1[0m" 304 -
+2025-07-23 18:50:58 - werkzeug - INFO - 127.0.0.1 - - [23/Jul/2025 18:50:58] "[36mGET /static/js/dashboard.js HTTP/1.1[0m" 304 -
+2025-07-23 18:50:58 - werkzeug - INFO - 127.0.0.1 - - [23/Jul/2025 18:50:58] "[36mGET /static/js/firebase-init.js HTTP/1.1[0m" 304 -
+2025-07-23 18:51:00 - werkzeug - INFO - 127.0.0.1 - - [23/Jul/2025 18:51:00] "GET /manage_faqs HTTP/1.1" 200 -
+2025-07-23 18:51:00 - werkzeug - INFO - 127.0.0.1 - - [23/Jul/2025 18:51:00] "[36mGET /static/css/main.css HTTP/1.1[0m" 304 -
+2025-07-23 18:51:00 - werkzeug - INFO - 127.0.0.1 - - [23/Jul/2025 18:51:00] "[36mGET /static/js/dashboard.js HTTP/1.1[0m" 304 -
+2025-07-23 18:51:00 - werkzeug - INFO - 127.0.0.1 - - [23/Jul/2025 18:51:00] "[36mGET /static/js/firebase-init.js HTTP/1.1[0m" 304 -
+2025-07-23 18:51:00 - werkzeug - INFO - 127.0.0.1 - - [23/Jul/2025 18:51:00] "GET /api/faqs HTTP/1.1" 200 -
+2025-07-23 18:51:23 - db.faqs_crud - INFO - FAQ added/updated: Q='Where is the company location?...' for tenant 'None'
+2025-07-23 18:51:23 - werkzeug - INFO - 127.0.0.1 - - [23/Jul/2025 18:51:23] "[32mPOST /manage_faqs HTTP/1.1[0m" 302 -
+2025-07-23 18:51:23 - werkzeug - INFO - 127.0.0.1 - - [23/Jul/2025 18:51:23] "GET /manage_faqs HTTP/1.1" 200 -
+2025-07-23 18:51:23 - werkzeug - INFO - 127.0.0.1 - - [23/Jul/2025 18:51:23] "[36mGET /static/css/main.css HTTP/1.1[0m" 304 -
+2025-07-23 18:51:23 - werkzeug - INFO - 127.0.0.1 - - [23/Jul/2025 18:51:23] "[36mGET /static/js/dashboard.js HTTP/1.1[0m" 304 -
+2025-07-23 18:51:23 - werkzeug - INFO - 127.0.0.1 - - [23/Jul/2025 18:51:23] "[36mGET /static/js/firebase-init.js HTTP/1.1[0m" 304 -
+2025-07-23 18:51:23 - werkzeug - INFO - 127.0.0.1 - - [23/Jul/2025 18:51:23] "GET /api/faqs HTTP/1.1" 200 -
+2025-07-23 18:51:35 - webhook - INFO - Processing message for tenant: `my_initial_client_id` (WA ID: 254715849926)
+2025-07-23 18:51:35 - webhook - INFO - Received text message from 254715849926 (Tenant: `my_initial_client_id`): 'Location?'
+2025-07-23 18:51:35 - ai_utils - INFO - No relevant FAQs found above threshold (0.75) for query 'Location?...' for tenant 'my_initial_client_id'. Max similarity: 0.70.
+2025-07-23 18:51:35 - ai_utils - INFO - No relevant FAQ found for user query for tenant 'my_initial_client_id'. Proceeding with generative AI.
+2025-07-23 18:51:36 - ai_utils - INFO - Generative AI response for tenant 'my_initial_client_id': I'm sorry, but based on our conversation history, ...
+2025-07-23 18:51:37 - whatsapp_api_utils - INFO - Message sent to 254715849926: I'm sorry, but based on our conversation history, ...
+2025-07-23 18:51:37 - db.conversations_crud - INFO - Message added to DB from user (Tenant: my_initial_client_id): 'Location?...'
+2025-07-23 18:51:37 - webhook - INFO - Processed and responded to 254715849926 (Tenant: `my_initial_client_id`).
+2025-07-23 18:51:37 - werkzeug - INFO - 127.0.0.1 - - [23/Jul/2025 18:51:37] "POST /webhook HTTP/1.1" 200 -
+2025-07-23 18:51:38 - werkzeug - INFO - 127.0.0.1 - - [23/Jul/2025 18:51:38] "POST /webhook HTTP/1.1" 200 -
+2025-07-23 18:51:39 - werkzeug - INFO - 127.0.0.1 - - [23/Jul/2025 18:51:39] "POST /webhook HTTP/1.1" 200 -

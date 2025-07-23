@@ -10,9 +10,13 @@ logger = logging.getLogger(__name__)
 logger.setLevel(log_level_map.get(LOGGING_LEVEL, logging.INFO))
 
 def add_message(wa_id, message_text, sender, tenant_id, response_text=None):
+    """
+    Inserts a new message into the conversations table.
+    ✅ Uses 'wa_id' (consistent with updated schema in db_connection.py).
+    """
     conn = get_db_connection()
     cursor = conn.cursor()
-    timestamp = int(time.time())
+    timestamp = int(time.time())  # Store Unix timestamp
     try:
         cursor.execute(
             "INSERT INTO conversations (wa_id, timestamp, message_text, sender, response_text, tenant_id) VALUES (?, ?, ?, ?, ?, ?)",
@@ -27,7 +31,6 @@ def add_message(wa_id, message_text, sender, tenant_id, response_text=None):
     finally:
         conn.close()
 
-# Renamed from get_conversation_history for clarity and consistency with admin_routes.py
 def get_conversation_history_by_whatsapp_id(wa_id, limit=10, tenant_id=None):
     conn = get_db_connection()
     cursor = conn.cursor()
@@ -51,7 +54,7 @@ def get_conversation_history_by_whatsapp_id(wa_id, limit=10, tenant_id=None):
         logger.error(f"Error getting conversation history for {wa_id}: {e}", exc_info=True)
     finally:
         conn.close()
-    return conversations[::-1] # Return in chronological order
+    return conversations[::-1]
 
 
 def get_all_conversations(tenant_id=None):
@@ -63,8 +66,6 @@ def get_all_conversations(tenant_id=None):
     cursor = conn.cursor()
     unique_conversations = []
     try:
-        # Subquery to get the latest message for each wa_id
-        # MODIFIED: Select tenant_id as well
         query = """
             SELECT
                 c.wa_id,
@@ -91,8 +92,6 @@ def get_all_conversations(tenant_id=None):
             ) AS latest_messages
             ON c.wa_id = latest_messages.wa_id AND c.timestamp = latest_messages.max_timestamp
         """
-        # Ensure that if tenant_id is specified in the outer query, it's also applied here.
-        # This join condition effectively handles the tenant_id filtering as well.
         if tenant_id:
             query += " WHERE c.tenant_id = ?"
             params.append(tenant_id)

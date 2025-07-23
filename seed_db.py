@@ -26,6 +26,9 @@ from ai_utils import generate_embedding
 logger.setLevel(log_level_map.get(LOGGING_LEVEL, logging.INFO))
 
 def create_all_tables():
+    """
+    ✅ Calls updated create_conversations_table() with correct schema (wa_id).
+    """
     create_conversations_table()
     create_faqs_table()
     create_tenants_table()

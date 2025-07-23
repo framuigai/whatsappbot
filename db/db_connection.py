@@ -78,7 +78,12 @@ def create_users_table():
 
 
 def create_conversations_table():
-    """Creates the conversations table."""
+    """
+    Creates the conversations table.
+    ✅ FIX: Use 'wa_id' (NOT whatsapp_id) to match CRUD operations.
+    ✅ Ensure timestamp is INTEGER for Unix time.
+    ✅ Ensure 'sender' column exists to track who sent the message.
+    """
     conn = get_db_connection()
     if conn:
         try:
@@ -86,13 +91,13 @@ def create_conversations_table():
             cursor.execute('''
                 CREATE TABLE IF NOT EXISTS conversations (
                     id INTEGER PRIMARY KEY AUTOINCREMENT,
-                    whatsapp_id TEXT NOT NULL,
-                    tenant_id TEXT NOT NULL,  -- ADDED: Foreign Key to tenants table
+                    wa_id TEXT NOT NULL,  -- FIXED: Changed from whatsapp_id to wa_id
+                    tenant_id TEXT NOT NULL,
                     message_text TEXT NOT NULL,
                     response_text TEXT,
-                    from_user BOOLEAN NOT NULL,
-                    timestamp DATETIME DEFAULT CURRENT_TIMESTAMP,
-                    FOREIGN KEY (tenant_id) REFERENCES tenants(tenant_id) -- ADDED: Foreign Key
+                    sender TEXT NOT NULL,  -- ADDED to match add_message() in CRUD
+                    timestamp INTEGER NOT NULL, -- Use Unix timestamp
+                    FOREIGN KEY (tenant_id) REFERENCES tenants(tenant_id)
                 );
             ''')
             conn.commit()
@@ -147,7 +152,7 @@ def create_faqs_table():
 
 def init_db():
     """Initializes all necessary database tables."""
-    create_tenants_table()  # MODIFIED: Call renamed function first as users/conversations/faqs depend on it
-    create_users_table()  # ADDED: Call new users table creation
+    create_tenants_table()
+    create_users_table()
     create_conversations_table()
     create_faqs_table()
