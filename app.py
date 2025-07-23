@@ -3,16 +3,18 @@ import sys
 import logging
 import google.generativeai as genai
 from flask import Flask, redirect, url_for, render_template
-from flask_login import LoginManager, current_user
-# ADD THIS IMPORT
+from flask_login import LoginManager, current_user, login_required, logout_user
 from flask_moment import Moment # Import Flask-Moment
+
 
 from config import (
     LOGGING_LEVEL, log_level_map, SECRET_KEY, SESSION_COOKIE_SECURE,
     REMEMBER_COOKIE_SECURE, SESSION_COOKIE_HTTPONLY, REMEMBER_COOKIE_HTTPONLY,
     GEMINI_API_KEY, GEMINI_MODEL_NAME, GEMINI_EMBEDDING_MODEL,
     DATABASE_NAME, WHATSAPP_PHONE_NUMBER_ID,
-    FLASK_DEBUG, HOST, PORT
+    FLASK_DEBUG, HOST, PORT,
+    FIREBASE_API_KEY, FIREBASE_AUTH_DOMAIN, FIREBASE_PROJECT_ID,
+    FIREBASE_STORAGE_BUCKET, FIREBASE_MESSAGING_SENDER_ID, FIREBASE_APP_ID
 )
 
 # Import blueprints and utility functions
@@ -63,6 +65,18 @@ app.register_blueprint(admin_bp)
 # --- Gemini API Configuration ---
 genai.configure(api_key=GEMINI_API_KEY)
 
+@app.context_processor
+def inject_firebase_config():
+    """Inject Firebase configuration into all templates."""
+    return {
+        'FIREBASE_API_KEY': FIREBASE_API_KEY,
+        'FIREBASE_AUTH_DOMAIN': FIREBASE_AUTH_DOMAIN,
+        'FIREBASE_PROJECT_ID': FIREBASE_PROJECT_ID,
+        'FIREBASE_STORAGE_BUCKET': FIREBASE_STORAGE_BUCKET,
+        'FIREBASE_MESSAGING_SENDER_ID': FIREBASE_MESSAGING_SENDER_ID,
+        'FIREBASE_APP_ID': FIREBASE_APP_ID
+    }
+
 @app.route('/')
 def home():
     """Redirects to the login page or dashboard based on authentication status."""
@@ -82,6 +96,9 @@ def login_page():
 with app.app_context():
     init_db()
     logger.info("Database initialization complete.")
+
+
+
 
 if __name__ == "__main__":
     logging.getLogger('whatsapp_api_utils').setLevel(log_level_map.get(LOGGING_LEVEL, logging.INFO))

@@ -1,0 +1,93 @@
+{% extends "base.html" %}
+{% block title %}Manage Users{% endblock %}
+{% block body_content %}
+<div class="container mt-4">
+    <h2>User Management</h2>
+    <hr>
+
+    <h4>Add New User</h4>
+    <form method="POST" action="{{ url_for('admin_routes.manage_users') }}" class="mb-4">
+        <input type="hidden" name="action" value="add">
+        <div class="mb-3">
+            <label class="form-label">Email:</label>
+            <input type="email" name="email" class="form-control" required>
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Password:</label>
+            <input type="password" name="password" class="form-control" required>
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Role:</label>
+            <select name="role" class="form-select" required>
+                <option value="client">Client</option>
+                <option value="admin">Admin</option>
+            </select>
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Tenant:</label>
+            <select name="tenant_id" class="form-select">
+                <option value="">None (For Super Admin)</option>
+                {% for tenant in tenants %}
+                <option value="{{ tenant['tenant_id'] }}">{{ tenant['tenant_name'] }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <button type="submit" class="btn btn-primary">Add User</button>
+    </form>
+
+    <hr>
+    <h4>Existing Users</h4>
+    <table class="table table-bordered table-hover align-middle">
+        <thead class="table-dark">
+            <tr>
+                <th>ID</th>
+                <th>Email</th>
+                <th>Role</th>
+                <th>Tenant</th>
+                <th style="width: 40%">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for user in users %}
+            <tr>
+                <td>{{ user['id'] }}</td>
+                <td>{{ user['email'] }}</td>
+                <td>{{ user['role'] }}</td>
+                <td>{{ user['tenant_id'] or 'None' }}</td>
+                <td>
+                    <form method="POST" action="{{ url_for('admin_routes.manage_users') }}" class="d-inline-block me-2">
+                        <input type="hidden" name="action" value="update">
+                        <input type="hidden" name="user_id" value="{{ user['id'] }}">
+
+                        <input type="text" name="email" placeholder="New Email" class="form-control d-inline-block mb-1" style="width: 150px;">
+                        <input type="password" name="password" placeholder="New Password" class="form-control d-inline-block mb-1" style="width: 150px;">
+
+                        <select name="role" class="form-select d-inline-block mb-1" style="width: 130px;">
+                            <option value="client" {{ 'selected' if user['role'] == 'client' else '' }}>Client</option>
+                            <option value="admin" {{ 'selected' if user['role'] == 'admin' else '' }}>Admin</option>
+                        </select>
+
+                        <select name="tenant_id" class="form-select d-inline-block mb-1" style="width: 150px;">
+                            <option value="">None</option>
+                            {% for tenant in tenants %}
+                            <option value="{{ tenant['tenant_id'] }}" {{ 'selected' if tenant['tenant_id'] == (user['tenant_id'] or '') else '' }}>
+                                {{ tenant['tenant_name'] }}
+                            </option>
+                            {% endfor %}
+                        </select>
+
+                        <button type="submit" class="btn btn-warning btn-sm">Update</button>
+                    </form>
+
+                    <form method="POST" action="{{ url_for('admin_routes.manage_users') }}" class="d-inline-block">
+                        <input type="hidden" name="action" value="delete">
+                        <input type="hidden" name="user_id" value="{{ user['id'] }}">
+                        <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                    </form>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

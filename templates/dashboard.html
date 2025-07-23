@@ -1,38 +1,15 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Dashboard</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+{% extends "base.html" %}
+{% block title %}Dashboard{% endblock %}
+{% block body_content %}
+<div class="container">
+    <h1>Dashboard</h1>
+    <p>Welcome, {{ user_email }}!</p>
+    <p>Total conversations: {{ total_conversations }}</p>
 
-    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
-    <script>
-        // This 'firebaseConfig' variable is populated by Flask's Jinja2 templating engine.
-        // It uses the dictionary passed from the Flask route, converted to JSON.
-        // You might pass this from your Flask dashboard route if you need Firebase
-        // to be initialized directly on this page without relying on login.html's init.
-        // If it's always initialized via login.html, you might not strictly need this here,
-        // but it's safer for the script to be self-contained.
-        // For simplicity, ensure your dashboard route passes this config too.
-        const firebaseConfig = {{ firebase_config | tojson }};
-    </script>
-</head>
-<body>
-    <div class="container">
-        <h1>Admin Dashboard</h1>
-        <p>Welcome, {{ user_email }}!</p>
-        <p>Total conversations: {{ total_conversations }}</p>
-        <nav>
-            <a href="{{ url_for('admin_routes.dashboard') }}">Dashboard</a> |
-            <a href="{{ url_for('admin_routes.manage_clients') }}">Manage Clients</a> |
-            <a href="{{ url_for('admin_routes.view_reports') }}">View Reports</a> |
-            <a href="#" id="logout-button">Logout</a> {# Ensure this has the ID and href="#" #}
-        </nav>
-        <p>Dashboard content will be displayed here.</p>
-    </div>
-
-    <script src="{{ url_for('static', filename='js/firebase-init.js') }}"></script>
-</body>
-</html>
+    {% if user_role == 'admin' %}
+        <p>You have full access to all tenants.</p>
+    {% else %}
+        <p>You can view data only for your tenant.</p>
+    {% endif %}
+</div>
+{% endblock %}
