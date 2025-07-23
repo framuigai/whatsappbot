@@ -21,6 +21,7 @@ from config import (
 from auth import auth_bp, load_user
 from webhook import webhook_bp
 from admin_routes import admin_bp
+from api_routes import api_bp
 
 # --- START MODIFICATION FOR DB REFACTORING ---
 from db.db_connection import init_db
@@ -61,6 +62,7 @@ login_manager.user_loader(load_user)
 app.register_blueprint(auth_bp)
 app.register_blueprint(webhook_bp)
 app.register_blueprint(admin_bp)
+app.register_blueprint(api_bp)
 
 # --- Gemini API Configuration ---
 genai.configure(api_key=GEMINI_API_KEY)

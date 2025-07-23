@@ -6,18 +6,7 @@
     <p>Welcome, {{ user_email }}!</p>
 
     <h2>Client List</h2>
-    {% if tenants %}
-        <ul>
-            {% for tenant in tenants %}
-                <li>
-                    <strong>Name:</strong> {{ tenant.tenant_name }} <br>
-                    <strong>Internal ID:</strong> {{ tenant.tenant_id }} <br>
-                    <strong>WhatsApp Phone ID:</strong> {{ tenant.whatsapp_phone_number_id }}
-                </li>
-            {% endfor %}
-        </ul>
-    {% else %}
-        <p>No clients configured yet. Add them using the form below.</p>
-    {% endif %}
+    <div id="client-list">Loading clients...</div>
 </div>
+<script src="{{ url_for('static', filename='js/dashboard.js') }}"></script>
 {% endblock %}

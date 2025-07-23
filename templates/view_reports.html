@@ -6,14 +6,13 @@
     <p>Welcome, {{ user_email }}!</p>
 
     <h2>Monthly Statistics</h2>
-    {% if monthly_labels %}
+    <div id="report-container">
         <canvas id="monthlyChart"></canvas>
-        <script>
-            const monthlyLabels = {{ monthly_labels | safe }};
-            const monthlyData = {{ monthly_data | safe }};
-        </script>
-    {% else %}
-        <p>No monthly statistics available.</p>
-    {% endif %}
+        <div class="loading-spinner">Loading chart...</div>
+    </div>
 </div>
+
+<!-- Include Chart.js and dashboard.js -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="{{ url_for('static', filename='js/dashboard.js') }}"></script>
 {% endblock %}

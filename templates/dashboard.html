@@ -4,7 +4,7 @@
 <div class="container">
     <h1>Dashboard</h1>
     <p>Welcome, {{ user_email }}!</p>
-    <p>Total conversations: {{ total_conversations }}</p>
+    <p id="conversation-summary">Loading conversation stats...</p>
 
     {% if user_role == 'admin' %}
         <p>You have full access to all tenants.</p>
@@ -12,4 +12,5 @@
         <p>You can view data only for your tenant.</p>
     {% endif %}
 </div>
+<script src="{{ url_for('static', filename='js/dashboard.js') }}"></script>
 {% endblock %}

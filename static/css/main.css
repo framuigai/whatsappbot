@@ -44,3 +44,15 @@ p {
 .button:hover {
     background-color: #218838;
 }
+
+.loading-spinner {
+    text-align: center;
+    padding: 10px;
+    font-weight: bold;
+    color: #007bff;
+}
+
+.error-message {
+    color: red;
+    font-weight: bold;
+}
