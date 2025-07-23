@@ -1,12 +1,11 @@
 # admin_routes.py
 import logging
 import json
-from flask import Blueprint, render_template, url_for, flash, redirect, request, jsonify
+from flask import Blueprint, render_template, url_for, flash, redirect, request, jsonify, abort
 from flask_login import login_required, current_user
-# Import FIREBASE_CONFIG from config
+from flask_moment import Moment
 from config import LOGGING_LEVEL, log_level_map, FIREBASE_CONFIG
 
-# --- START MODIFICATION FOR DB REFACTORING ---
 from db.conversations_crud import (
     get_conversation_count,
     get_all_conversations,
@@ -21,16 +20,15 @@ from db.faqs_crud import (
     update_faq,
     delete_faq_by_id
 )
+# ✅ Updated import
 from db.tenants_crud import (
-    get_all_tenants_config,
-    get_tenant_config_by_whatsapp_id,
-    add_tenant_config,
-    update_tenant_config,
-    delete_tenant_config
+    get_all_tenants,
+    get_tenant_by_id,
+    add_tenant,
+    update_tenant,
+    delete_tenant
 )
-from ai_utils import generate_embedding  # Needed for adding/updating FAQs with embeddings
-
-# --- END MODIFICATION FOR DB REFACTORING ---
+from ai_utils import generate_embedding
 
 admin_bp = Blueprint('admin_routes', __name__, template_folder='../templates', static_folder='../static')
 logger = logging.getLogger(__name__)
@@ -40,26 +38,19 @@ logger.setLevel(log_level_map.get(LOGGING_LEVEL, logging.INFO))
 @admin_bp.route('/')
 @login_required
 def dashboard():
-    """Admin dashboard page."""
     try:
-        # Get total conversations for the current tenant
-        # Use current_user.tenant_id if available, otherwise None for overall count
         tenant_id = current_user.tenant_id if hasattr(current_user, 'tenant_id') else None
         total_conversations = get_conversation_count(tenant_id)
-        logger.info(
-            f"User {current_user.email} accessed dashboard. Total conversations (Tenant: {tenant_id}): {total_conversations}")
-
-        # Render the dashboard template, passing necessary data
+        logger.info(f"User {current_user.email} accessed dashboard.")
         return render_template(
             'dashboard.html',
             user_email=current_user.email,
             total_conversations=total_conversations,
-            firebase_config=FIREBASE_CONFIG  # Pass the Firebase config here
+            firebase_config=FIREBASE_CONFIG
         )
     except Exception as e:
         logger.error(f"Error fetching dashboard data: {e}", exc_info=True)
         flash("Error loading dashboard data.", "danger")
-        # Ensure firebase_config is always passed, even on error paths
         return render_template('dashboard.html', user_email=current_user.email, total_conversations=0,
                                firebase_config=FIREBASE_CONFIG)
 
@@ -67,7 +58,10 @@ def dashboard():
 @admin_bp.route('/manage_clients', methods=['GET', 'POST'])
 @login_required
 def manage_clients():
-    """Admin page to manage client (tenant) configurations."""
+    if current_user.role != 'admin':
+        flash("You do not have permission to manage clients.", "warning")
+        return redirect(url_for('admin_routes.dashboard'))
+
     if request.method == 'POST':
         action = request.form.get('action')
         tenant_id = request.form.get('tenant_id')
@@ -81,44 +75,40 @@ def manage_clients():
             if not new_tenant_id or not whatsapp_number_id or not whatsapp_access_token:
                 flash("All fields are required for adding a tenant.", "danger")
             else:
-                if add_tenant_config(new_tenant_id, whatsapp_number_id, whatsapp_access_token, ai_system_instruction):
+                if add_tenant(new_tenant_id, new_tenant_id, whatsapp_number_id, whatsapp_access_token,
+                              ai_system_instruction):
                     flash(f"Tenant '{new_tenant_id}' added successfully!", "success")
                 else:
-                    flash(f"Failed to add tenant '{new_tenant_id}'. It might already exist.", "danger")
+                    flash(f"Failed to add tenant '{new_tenant_id}'.", "danger")
 
         elif action == 'update':
-            whatsapp_number_id = request.form['whatsapp_number_id']
             whatsapp_access_token = request.form['whatsapp_access_token']
             ai_system_instruction = request.form.get('ai_system_instruction', '')
 
-            if not tenant_id or not whatsapp_number_id or not whatsapp_access_token:
+            if not tenant_id or not whatsapp_access_token:
                 flash("All fields are required for updating a tenant.", "danger")
             else:
-                if update_tenant_config(tenant_id, whatsapp_number_id, whatsapp_access_token, ai_system_instruction):
+                if update_tenant(tenant_id, whatsapp_api_token=whatsapp_access_token,
+                                 ai_system_instruction=ai_system_instruction):
                     flash(f"Tenant '{tenant_id}' updated successfully!", "success")
                 else:
                     flash(f"Failed to update tenant '{tenant_id}'.", "danger")
 
         elif action == 'delete':
-            if not tenant_id:
-                flash("Tenant ID is required for deletion.", "danger")
+            if delete_tenant(tenant_id):
+                flash(f"Tenant '{tenant_id}' deleted successfully!", "success")
             else:
-                if delete_tenant_config(tenant_id):
-                    flash(f"Tenant '{tenant_id}' deleted successfully!", "success")
-                else:
-                    flash(f"Failed to delete tenant '{tenant_id}'.", "danger")
+                flash(f"Failed to delete tenant '{tenant_id}'.", "danger")
 
         return redirect(url_for('admin_routes.manage_clients'))
 
-    # GET request
     try:
-        tenants = get_all_tenants_config()
+        tenants = get_all_tenants()
         return render_template('manage_clients.html', user_email=current_user.email, tenants=tenants)
     except Exception as e:
         logger.error(f"Error fetching tenant configurations: {e}", exc_info=True)
         flash("Error loading tenant configurations.", "danger")
         return render_template('manage_clients.html', user_email=current_user.email, tenants=[])
-
 
 @admin_bp.route('/view_reports')
 @login_required
@@ -159,6 +149,7 @@ def view_reports():
 def manage_faqs():
     """Admin page to manage FAQs."""
     tenant_id = current_user.tenant_id if hasattr(current_user, 'tenant_id') else None
+    # All users can manage FAQs for their own tenant, so no role check is strictly necessary here.
 
     if request.method == 'POST':
         action = request.form.get('action')
@@ -230,26 +221,38 @@ def manage_faqs():
 @login_required
 def view_conversation(wa_id):
     """View a specific conversation by WhatsApp ID."""
+    tenant_id = current_user.tenant_id if hasattr(current_user, 'tenant_id') else None
+    if not tenant_id:
+        flash("Tenant ID not found for current user.", "danger")
+        return redirect(url_for('admin_routes.all_conversations'))
+
     try:
-        conversations = get_conversation_history_by_whatsapp_id(wa_id)
+        # MODIFIED: Pass tenant_id to the function to scope the search
+        conversations = get_conversation_history_by_whatsapp_id(wa_id, tenant_id)
         if not conversations:
-            flash(f"No conversation history found for WhatsApp ID: {wa_id}", "info")
-            return redirect(url_for('admin_routes.dashboard'))  # Or redirect to a list of conversations
+            flash(f"No conversation history found for WhatsApp ID: {wa_id} within your tenant.", "info")
+            # Redirect to all conversations list instead of dashboard for better UX
+            return redirect(url_for('admin_routes.all_conversations'))
         return render_template('view_conversation.html', user_email=current_user.email, wa_id=wa_id,
                                conversations=conversations)
     except Exception as e:
         logger.error(f"Error fetching conversation history for {wa_id}: {e}", exc_info=True)
         flash(f"Error loading conversation history for {wa_id}.", "danger")
-        return redirect(url_for('admin_routes.dashboard'))
+        return redirect(url_for('admin_routes.all_conversations')) # Redirect to list on error
 
 
 @admin_bp.route('/all-conversations')
 @login_required
 def all_conversations():
     """View a list of all unique WhatsApp conversations."""
+    tenant_id = current_user.tenant_id if hasattr(current_user, 'tenant_id') else None
+    if not tenant_id:
+        flash("Tenant ID not found for current user.", "danger")
+        return redirect(url_for('admin_routes.dashboard'))
+
     try:
-        # This function should return unique WA IDs and maybe their last message/timestamp
-        unique_conversations = get_all_conversations()
+        # MODIFIED: Pass tenant_id to the function to scope the search
+        unique_conversations = get_all_conversations(tenant_id)
         return render_template('all_conversations.html', user_email=current_user.email,
                                conversations=unique_conversations)
     except Exception as e:

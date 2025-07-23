@@ -4897,3 +4897,69 @@ requests.exceptions.HTTPError: 401 Client Error: Unauthorized for url: https://g
 2025-07-18 16:08:51 - werkzeug - INFO -  * Detected change in 'C:\\Users\\Admin\\PycharmProjects\\whatsappbot\\db\\faqs_crud.py', reloading
 2025-07-18 16:08:51 - werkzeug - INFO -  * Detected change in 'C:\\Users\\Admin\\PycharmProjects\\whatsappbot\\firebase_admin_utils.py', reloading
 2025-07-18 16:08:51 - werkzeug - INFO -  * Detected change in 'C:\\Users\\Admin\\PycharmProjects\\whatsappbot\\webhook.py', reloading
+2025-07-23 12:52:42 - db.db_connection - INFO - Checked/Created 'tenants' table.
+2025-07-23 12:52:42 - db.db_connection - INFO - Checked/Created 'users' table.
+2025-07-23 12:52:42 - db.db_connection - INFO - Checked/Created 'conversations' table.
+2025-07-23 12:52:42 - db.db_connection - INFO - Checked/Created 'faqs' table.
+2025-07-23 12:52:42 - db.db_connection - INFO - FAQs table ensured and migrated if necessary.
+2025-07-23 12:52:42 - __main__ - INFO - Database initialization complete.
+2025-07-23 12:52:42 - firebase_admin_utils - CRITICAL - Firebase service account file not found at: C:/Users/Admin/PycharmProjects/whatsappbot/whatsappbot-a2a71-firebase-adminsdk-fbsvc-f970e98571.json. Ensure FIREBASE_SERVICE_ACCOUNT_PATH is correct or file exists.
+2025-07-23 12:52:42 - firebase_admin_utils - CRITICAL - Error initializing Firebase Admin SDK: Firebase service account file not found at: C:/Users/Admin/PycharmProjects/whatsappbot/whatsappbot-a2a71-firebase-adminsdk-fbsvc-f970e98571.json
+Traceback (most recent call last):
+  File "C:\Users\Admin\PycharmProjects\whatsappbot\firebase_admin_utils.py", line 34, in init_firebase_admin
+    raise FileNotFoundError(f"Firebase service account file not found at: {service_account_path}")
+FileNotFoundError: Firebase service account file not found at: C:/Users/Admin/PycharmProjects/whatsappbot/whatsappbot-a2a71-firebase-adminsdk-fbsvc-f970e98571.json
+2025-07-23 12:52:42 - __main__ - CRITICAL - Failed to initialize Firebase Admin SDK: Firebase service account file not found at: C:/Users/Admin/PycharmProjects/whatsappbot/whatsappbot-a2a71-firebase-adminsdk-fbsvc-f970e98571.json
+Traceback (most recent call last):
+  File "C:\Users\Admin\PycharmProjects\whatsappbot\app.py", line 99, in <module>
+    firebase_admin_utils.init_firebase_admin()
+  File "C:\Users\Admin\PycharmProjects\whatsappbot\firebase_admin_utils.py", line 34, in init_firebase_admin
+    raise FileNotFoundError(f"Firebase service account file not found at: {service_account_path}")
+FileNotFoundError: Firebase service account file not found at: C:/Users/Admin/PycharmProjects/whatsappbot/whatsappbot-a2a71-firebase-adminsdk-fbsvc-f970e98571.json
+2025-07-23 12:53:12 - db.db_connection - INFO - Checked/Created 'tenants' table.
+2025-07-23 12:53:12 - db.db_connection - INFO - Checked/Created 'users' table.
+2025-07-23 12:53:12 - db.db_connection - INFO - Checked/Created 'conversations' table.
+2025-07-23 12:53:12 - db.db_connection - INFO - Checked/Created 'faqs' table.
+2025-07-23 12:53:12 - db.db_connection - INFO - FAQs table ensured and migrated if necessary.
+2025-07-23 12:53:12 - __main__ - INFO - Database initialization complete.
+2025-07-23 12:53:12 - firebase_admin_utils - INFO - Firebase Admin SDK initialized using service account file.
+2025-07-23 12:53:12 - __main__ - INFO - Firebase Admin SDK initialized successfully.
+2025-07-23 12:53:12 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://192.168.100.26:5000
+2025-07-23 12:53:12 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2025-07-23 12:53:35 - werkzeug - INFO - 127.0.0.1 - - [23/Jul/2025 12:53:35] "[32mGET / HTTP/1.1[0m" 302 -
+2025-07-23 12:53:36 - werkzeug - INFO - 127.0.0.1 - - [23/Jul/2025 12:53:36] "GET /login?next=/ HTTP/1.1" 200 -
+2025-07-23 12:53:37 - werkzeug - INFO - 127.0.0.1 - - [23/Jul/2025 12:53:37] "GET /static/js/firebase-init.js HTTP/1.1" 200 -
+2025-07-23 12:53:37 - werkzeug - INFO - 127.0.0.1 - - [23/Jul/2025 12:53:37] "GET /static/css/main.css HTTP/1.1" 200 -
+2025-07-23 12:53:38 - werkzeug - INFO - 127.0.0.1 - - [23/Jul/2025 12:53:38] "[33mGET /favicon.ico HTTP/1.1[0m" 404 -
+2025-07-23 12:53:43 - webhook - INFO - WEBHOOK_VERIFIED
+2025-07-23 12:53:43 - werkzeug - INFO - 127.0.0.1 - - [23/Jul/2025 12:53:43] "GET /webhook?hub.mode=subscribe&hub.challenge=1568038042&hub.verify_token=thisisthesecretverifytokenforfrans0 HTTP/1.1" 200 -
+2025-07-23 12:54:07 - webhook - INFO - Processing message for tenant: `my_initial_client_id` (WA ID: 254715849926)
+2025-07-23 12:54:07 - webhook - INFO - Received text message from 254715849926 (Tenant: `my_initial_client_id`): 'hello'
+2025-07-23 12:54:07 - db.tenants_crud - WARNING - No tenant configuration found for WhatsApp Phone ID '254715849926'.
+2025-07-23 12:54:08 - ai_utils - INFO - No relevant FAQs found above threshold (0.75) for query 'hello...' for tenant 'my_initial_client_id'. Max similarity: 0.65.
+2025-07-23 12:54:08 - ai_utils - INFO - No relevant FAQ found for user query for tenant 'my_initial_client_id'. Proceeding with generative AI.
+2025-07-23 12:54:10 - ai_utils - INFO - Generative AI response for tenant 'my_initial_client_id': Hello!  I'm here to help.  Based on our previous c...
+2025-07-23 12:54:12 - whatsapp_api_utils - INFO - Message sent to 254715849926: Hello!  I'm here to help.  Based on our previous c...
+2025-07-23 12:54:12 - db.conversations_crud - INFO - Message added to DB from user (Tenant: my_initial_client_id): 'hello...'
+2025-07-23 12:54:12 - webhook - INFO - Processed and responded to 254715849926 (Tenant: `my_initial_client_id`).
+2025-07-23 12:54:12 - werkzeug - INFO - 127.0.0.1 - - [23/Jul/2025 12:54:12] "POST /webhook HTTP/1.1" 200 -
+2025-07-23 12:54:13 - werkzeug - INFO - 127.0.0.1 - - [23/Jul/2025 12:54:13] "POST /webhook HTTP/1.1" 200 -
+2025-07-23 12:54:14 - werkzeug - INFO - 127.0.0.1 - - [23/Jul/2025 12:54:14] "POST /webhook HTTP/1.1" 200 -
+2025-07-23 12:54:14 - werkzeug - INFO - 127.0.0.1 - - [23/Jul/2025 12:54:14] "POST /webhook HTTP/1.1" 200 -
+2025-07-23 12:54:16 - werkzeug - INFO - 127.0.0.1 - - [23/Jul/2025 12:54:16] "POST /webhook HTTP/1.1" 200 -
+2025-07-23 12:54:28 - webhook - INFO - Processing message for tenant: `my_initial_client_id` (WA ID: 254715849926)
+2025-07-23 12:54:28 - webhook - INFO - Received text message from 254715849926 (Tenant: `my_initial_client_id`): 'do you have contact info?'
+2025-07-23 12:54:28 - db.tenants_crud - WARNING - No tenant configuration found for WhatsApp Phone ID '254715849926'.
+2025-07-23 12:54:29 - ai_utils - INFO - No relevant FAQs found above threshold (0.75) for query 'do you have contact info?...' for tenant 'my_initial_client_id'. Max similarity: 0.72.
+2025-07-23 12:54:29 - ai_utils - INFO - No relevant FAQ found for user query for tenant 'my_initial_client_id'. Proceeding with generative AI.
+2025-07-23 12:54:30 - ai_utils - INFO - Generative AI response for tenant 'my_initial_client_id': I apologize, but based on our conversation history...
+2025-07-23 12:54:31 - whatsapp_api_utils - INFO - Message sent to 254715849926: I apologize, but based on our conversation history...
+2025-07-23 12:54:31 - db.conversations_crud - INFO - Message added to DB from user (Tenant: my_initial_client_id): 'do you have contact info?...'
+2025-07-23 12:54:31 - webhook - INFO - Processed and responded to 254715849926 (Tenant: `my_initial_client_id`).
+2025-07-23 12:54:31 - werkzeug - INFO - 127.0.0.1 - - [23/Jul/2025 12:54:31] "POST /webhook HTTP/1.1" 200 -
+2025-07-23 12:54:32 - werkzeug - INFO - 127.0.0.1 - - [23/Jul/2025 12:54:32] "POST /webhook HTTP/1.1" 200 -
+2025-07-23 12:54:33 - werkzeug - INFO - 127.0.0.1 - - [23/Jul/2025 12:54:33] "POST /webhook HTTP/1.1" 200 -
+2025-07-23 12:54:33 - werkzeug - INFO - 127.0.0.1 - - [23/Jul/2025 12:54:33] "POST /webhook HTTP/1.1" 200 -
