@@ -7646,3 +7646,163 @@ sqlite3.OperationalError: no such column: t.name
 2025-07-25 15:08:35 - werkzeug - INFO - 127.0.0.1 - - [25/Jul/2025 15:08:35] "GET /manage_faqs HTTP/1.1" 200 -
 2025-07-25 15:08:35 - werkzeug - INFO - 127.0.0.1 - - [25/Jul/2025 15:08:35] "[36mGET /static/css/main.css HTTP/1.1[0m" 304 -
 2025-07-25 15:08:35 - werkzeug - INFO - 127.0.0.1 - - [25/Jul/2025 15:08:35] "[36mGET /static/js/firebase-init.js HTTP/1.1[0m" 304 -
+2025-07-25 15:23:45 - db.db_connection - INFO - Checked/Created 'tenants' table.
+2025-07-25 15:23:45 - db.db_connection - INFO - Checked/Created 'users' table with role and password support.
+2025-07-25 15:23:45 - db.db_connection - INFO - Checked/Created 'conversations' table.
+2025-07-25 15:23:45 - db.db_connection - INFO - Checked/Created 'faqs' table.
+2025-07-25 15:23:45 - db.db_connection - INFO - FAQs table ensured and migrated if necessary.
+2025-07-25 15:23:45 - __main__ - INFO - Database initialization complete.
+2025-07-25 15:23:45 - firebase_admin_utils - INFO - Firebase Admin SDK initialized using service account file.
+2025-07-25 15:23:45 - __main__ - INFO - Firebase Admin SDK initialized successfully.
+2025-07-25 15:23:45 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://192.168.100.26:5000
+2025-07-25 15:23:45 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2025-07-25 15:23:57 - werkzeug - INFO - 127.0.0.1 - - [25/Jul/2025 15:23:57] "[32mGET / HTTP/1.1[0m" 302 -
+2025-07-25 15:23:57 - werkzeug - INFO - 127.0.0.1 - - [25/Jul/2025 15:23:57] "GET /login?next=/ HTTP/1.1" 200 -
+2025-07-25 15:23:57 - werkzeug - INFO - 127.0.0.1 - - [25/Jul/2025 15:23:57] "GET /static/css/main.css HTTP/1.1" 200 -
+2025-07-25 15:23:57 - werkzeug - INFO - 127.0.0.1 - - [25/Jul/2025 15:23:57] "GET /static/js/firebase-init.js HTTP/1.1" 200 -
+2025-07-25 15:23:58 - werkzeug - INFO - 127.0.0.1 - - [25/Jul/2025 15:23:58] "[33mGET /favicon.ico HTTP/1.1[0m" 404 -
+2025-07-25 15:24:06 - auth - INFO - Firebase ID token verified for UID: yShNWVV7KCaouEvKixzCIiPfO512, Email: framuigai@gmail.com
+2025-07-25 15:24:06 - auth - INFO - Firebase ID token verified for UID: yShNWVV7KCaouEvKixzCIiPfO512, Email: framuigai@gmail.com
+2025-07-25 15:24:06 - auth - INFO - Existing user 'framuigai@gmail.com' found. Logging in.
+2025-07-25 15:24:06 - werkzeug - INFO - 127.0.0.1 - - [25/Jul/2025 15:24:06] "POST /api/login HTTP/1.1" 200 -
+2025-07-25 15:24:06 - auth - INFO - Existing user 'framuigai@gmail.com' found. Logging in.
+2025-07-25 15:24:06 - werkzeug - INFO - 127.0.0.1 - - [25/Jul/2025 15:24:06] "POST /api/login HTTP/1.1" 200 -
+2025-07-25 15:24:06 - admin_routes - INFO - User framuigai@gmail.com accessed dashboard.
+2025-07-25 15:24:06 - werkzeug - INFO - 127.0.0.1 - - [25/Jul/2025 15:24:06] "GET / HTTP/1.1" 200 -
+2025-07-25 15:24:06 - werkzeug - INFO - 127.0.0.1 - - [25/Jul/2025 15:24:06] "GET /static/js/dashboard.js HTTP/1.1" 200 -
+2025-07-25 15:24:06 - werkzeug - INFO - 127.0.0.1 - - [25/Jul/2025 15:24:06] "[36mGET /static/css/main.css HTTP/1.1[0m" 304 -
+2025-07-25 15:24:06 - werkzeug - INFO - 127.0.0.1 - - [25/Jul/2025 15:24:06] "[36mGET /static/js/firebase-init.js HTTP/1.1[0m" 304 -
+2025-07-25 15:24:07 - werkzeug - INFO - 127.0.0.1 - - [25/Jul/2025 15:24:07] "[33mGET /static/favicon.ico HTTP/1.1[0m" 404 -
+2025-07-25 15:24:11 - werkzeug - INFO - 127.0.0.1 - - [25/Jul/2025 15:24:11] "GET /manage_faqs HTTP/1.1" 200 -
+2025-07-25 15:24:11 - werkzeug - INFO - 127.0.0.1 - - [25/Jul/2025 15:24:11] "[36mGET /static/css/main.css HTTP/1.1[0m" 304 -
+2025-07-25 15:24:11 - werkzeug - INFO - 127.0.0.1 - - [25/Jul/2025 15:24:11] "[36mGET /static/js/firebase-init.js HTTP/1.1[0m" 304 -
+2025-07-25 15:24:14 - werkzeug - INFO - 127.0.0.1 - - [25/Jul/2025 15:24:14] "GET /all-conversations HTTP/1.1" 200 -
+2025-07-25 15:24:14 - werkzeug - INFO - 127.0.0.1 - - [25/Jul/2025 15:24:14] "[36mGET /static/css/main.css HTTP/1.1[0m" 304 -
+2025-07-25 15:24:14 - werkzeug - INFO - 127.0.0.1 - - [25/Jul/2025 15:24:14] "[36mGET /static/js/firebase-init.js HTTP/1.1[0m" 304 -
+2025-07-25 15:24:24 - werkzeug - INFO - 127.0.0.1 - - [25/Jul/2025 15:24:24] "GET /view_reports HTTP/1.1" 200 -
+2025-07-25 15:24:24 - werkzeug - INFO - 127.0.0.1 - - [25/Jul/2025 15:24:24] "[36mGET /static/css/main.css HTTP/1.1[0m" 304 -
+2025-07-25 15:24:24 - werkzeug - INFO - 127.0.0.1 - - [25/Jul/2025 15:24:24] "[36mGET /static/js/firebase-init.js HTTP/1.1[0m" 304 -
+2025-07-25 15:24:30 - werkzeug - INFO - 127.0.0.1 - - [25/Jul/2025 15:24:30] "GET /manage_faqs HTTP/1.1" 200 -
+2025-07-25 15:24:30 - werkzeug - INFO - 127.0.0.1 - - [25/Jul/2025 15:24:30] "[36mGET /static/css/main.css HTTP/1.1[0m" 304 -
+2025-07-25 15:24:30 - werkzeug - INFO - 127.0.0.1 - - [25/Jul/2025 15:24:30] "[36mGET /static/js/firebase-init.js HTTP/1.1[0m" 304 -
+2025-07-25 15:47:17 - werkzeug - INFO - 127.0.0.1 - - [25/Jul/2025 15:47:17] "[32mGET / HTTP/1.1[0m" 302 -
+2025-07-25 15:47:17 - werkzeug - INFO - 127.0.0.1 - - [25/Jul/2025 15:47:17] "GET /login?next=/ HTTP/1.1" 200 -
+2025-07-25 15:47:17 - werkzeug - INFO - 127.0.0.1 - - [25/Jul/2025 15:47:17] "GET /static/js/firebase-init.js HTTP/1.1" 200 -
+2025-07-25 15:47:17 - werkzeug - INFO - 127.0.0.1 - - [25/Jul/2025 15:47:17] "GET /static/css/main.css HTTP/1.1" 200 -
+2025-07-25 15:47:18 - werkzeug - INFO - 127.0.0.1 - - [25/Jul/2025 15:47:18] "[33mGET /favicon.ico HTTP/1.1[0m" 404 -
+2025-07-25 15:47:38 - auth - INFO - Firebase ID token verified for UID: yShNWVV7KCaouEvKixzCIiPfO512, Email: framuigai@gmail.com
+2025-07-25 15:47:38 - auth - INFO - Firebase ID token verified for UID: yShNWVV7KCaouEvKixzCIiPfO512, Email: framuigai@gmail.com
+2025-07-25 15:47:38 - auth - INFO - Existing user 'framuigai@gmail.com' found. Logging in.
+2025-07-25 15:47:38 - werkzeug - INFO - 127.0.0.1 - - [25/Jul/2025 15:47:38] "POST /api/login HTTP/1.1" 200 -
+2025-07-25 15:47:38 - auth - INFO - Existing user 'framuigai@gmail.com' found. Logging in.
+2025-07-25 15:47:38 - werkzeug - INFO - 127.0.0.1 - - [25/Jul/2025 15:47:38] "POST /api/login HTTP/1.1" 200 -
+2025-07-25 15:47:38 - admin_routes - INFO - User framuigai@gmail.com accessed dashboard.
+2025-07-25 15:47:38 - werkzeug - INFO - 127.0.0.1 - - [25/Jul/2025 15:47:38] "GET / HTTP/1.1" 200 -
+2025-07-25 15:47:39 - werkzeug - INFO - 127.0.0.1 - - [25/Jul/2025 15:47:39] "[36mGET /static/css/main.css HTTP/1.1[0m" 304 -
+2025-07-25 15:47:39 - werkzeug - INFO - 127.0.0.1 - - [25/Jul/2025 15:47:39] "GET /static/js/dashboard.js HTTP/1.1" 200 -
+2025-07-25 15:47:39 - werkzeug - INFO - 127.0.0.1 - - [25/Jul/2025 15:47:39] "[36mGET /static/js/firebase-init.js HTTP/1.1[0m" 304 -
+2025-07-25 15:47:39 - werkzeug - INFO - 127.0.0.1 - - [25/Jul/2025 15:47:39] "[33mGET /static/favicon.ico HTTP/1.1[0m" 404 -
+2025-07-25 15:48:00 - werkzeug - INFO - 127.0.0.1 - - [25/Jul/2025 15:48:00] "GET /manage_faqs HTTP/1.1" 200 -
+2025-07-25 15:48:00 - werkzeug - INFO - 127.0.0.1 - - [25/Jul/2025 15:48:00] "[36mGET /static/css/main.css HTTP/1.1[0m" 304 -
+2025-07-25 15:48:00 - werkzeug - INFO - 127.0.0.1 - - [25/Jul/2025 15:48:00] "[36mGET /static/js/firebase-init.js HTTP/1.1[0m" 304 -
+2025-07-25 15:48:01 - werkzeug - INFO - 127.0.0.1 - - [25/Jul/2025 15:48:01] "GET /all-conversations HTTP/1.1" 200 -
+2025-07-25 15:48:01 - werkzeug - INFO - 127.0.0.1 - - [25/Jul/2025 15:48:01] "[36mGET /static/css/main.css HTTP/1.1[0m" 304 -
+2025-07-25 15:48:01 - werkzeug - INFO - 127.0.0.1 - - [25/Jul/2025 15:48:01] "[36mGET /static/js/firebase-init.js HTTP/1.1[0m" 304 -
+2025-07-25 15:48:03 - werkzeug - INFO - 127.0.0.1 - - [25/Jul/2025 15:48:03] "GET /view_reports HTTP/1.1" 200 -
+2025-07-25 15:48:03 - werkzeug - INFO - 127.0.0.1 - - [25/Jul/2025 15:48:03] "[36mGET /static/css/main.css HTTP/1.1[0m" 304 -
+2025-07-25 15:48:03 - werkzeug - INFO - 127.0.0.1 - - [25/Jul/2025 15:48:03] "[36mGET /static/js/firebase-init.js HTTP/1.1[0m" 304 -
+2025-07-25 15:48:08 - db.conversations_crud - ERROR - Error getting conversation history for 254715849926: datatype mismatch
+Traceback (most recent call last):
+  File "C:\Users\Admin\PycharmProjects\whatsappbot\db\conversations_crud.py", line 46, in get_conversation_history_by_whatsapp_id
+    cursor.execute(query, tuple(params))
+sqlite3.IntegrityError: datatype mismatch
+2025-07-25 15:48:08 - werkzeug - INFO - 127.0.0.1 - - [25/Jul/2025 15:48:08] "[32mGET /view_conversation/254715849926 HTTP/1.1[0m" 302 -
+2025-07-25 15:48:08 - werkzeug - INFO - 127.0.0.1 - - [25/Jul/2025 15:48:08] "GET /all-conversations HTTP/1.1" 200 -
+2025-07-25 15:48:08 - werkzeug - INFO - 127.0.0.1 - - [25/Jul/2025 15:48:08] "[36mGET /static/css/main.css HTTP/1.1[0m" 304 -
+2025-07-25 15:48:08 - werkzeug - INFO - 127.0.0.1 - - [25/Jul/2025 15:48:08] "[36mGET /static/js/firebase-init.js HTTP/1.1[0m" 304 -
+2025-07-25 18:34:56 - db.db_connection - INFO - Checked/Created 'tenants' table.
+2025-07-25 18:34:56 - db.db_connection - INFO - Checked/Created 'users' table with role and password support.
+2025-07-25 18:34:56 - db.db_connection - INFO - Checked/Created 'conversations' table.
+2025-07-25 18:34:56 - db.db_connection - INFO - Checked/Created 'faqs' table.
+2025-07-25 18:34:56 - db.db_connection - INFO - FAQs table ensured and migrated if necessary.
+2025-07-25 18:34:56 - __main__ - INFO - Database initialization complete.
+2025-07-25 18:34:56 - firebase_admin_utils - INFO - Firebase Admin SDK initialized using service account file.
+2025-07-25 18:34:56 - __main__ - INFO - Firebase Admin SDK initialized successfully.
+2025-07-25 18:34:56 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://10.211.166.19:5000
+2025-07-25 18:34:56 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2025-07-25 18:35:04 - webhook - INFO - Processing message for tenant: `my_initial_client_id` (WA ID: 254120006501)
+2025-07-25 18:35:04 - webhook - INFO - Received text message from 254120006501 (Tenant: `my_initial_client_id`): 'Hey?'
+2025-07-25 18:35:06 - ai_utils - INFO - No relevant FAQs above threshold (0.75) for query 'Hey?...'. Max similarity: 0.64.
+2025-07-25 18:35:06 - ai_utils - INFO - No relevant FAQ found for user query for tenant 'my_initial_client_id'. Proceeding with generative AI.
+2025-07-25 18:35:07 - ai_utils - INFO - Generative AI response for tenant 'my_initial_client_id': Hi there! How can I help you today?
+...
+2025-07-25 18:35:07 - whatsapp_api_utils - ERROR - HTTP error sending message to 254120006501: 401 Client Error: Unauthorized for url: https://graph.facebook.com/v19.0/736065142913405/messages - {"error":{"message":"Error validating access token: Session has expired on Friday, 25-Jul-25 07:00:00 PDT. The current time is Friday, 25-Jul-25 08:35:06 PDT.","type":"OAuthException","code":190,"error_subcode":463,"fbtrace_id":"AqB-G9srGHltHMTOtV-L5_W"}}
+Traceback (most recent call last):
+  File "C:\Users\Admin\PycharmProjects\whatsappbot\whatsapp_api_utils.py", line 38, in send_whatsapp_message
+    response.raise_for_status()  # Raise HTTPError for bad responses (4xx or 5xx)
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Admin\.conda\envs\whatsappbot\Lib\site-packages\requests\models.py", line 1026, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 401 Client Error: Unauthorized for url: https://graph.facebook.com/v19.0/736065142913405/messages
+2025-07-25 18:35:07 - db.conversations_crud - INFO - Message added to DB from user (Tenant: my_initial_client_id): 'Hey?...'
+2025-07-25 18:35:07 - webhook - INFO - Processed and responded to 254120006501 (Tenant: `my_initial_client_id`).
+2025-07-25 18:35:07 - werkzeug - INFO - 127.0.0.1 - - [25/Jul/2025 18:35:07] "POST /webhook HTTP/1.1" 200 -
+2025-07-25 18:35:13 - webhook - INFO - Processing message for tenant: `my_initial_client_id` (WA ID: 254120006501)
+2025-07-25 18:35:13 - webhook - INFO - Received text message from 254120006501 (Tenant: `my_initial_client_id`): 'Hey'
+2025-07-25 18:35:13 - ai_utils - INFO - No relevant FAQs above threshold (0.75) for query 'Hey...'. Max similarity: 0.67.
+2025-07-25 18:35:13 - ai_utils - INFO - No relevant FAQ found for user query for tenant 'my_initial_client_id'. Proceeding with generative AI.
+2025-07-25 18:35:16 - ai_utils - INFO - Generative AI response for tenant 'my_initial_client_id': Hello! How can I help you today?
+...
+2025-07-25 18:35:17 - whatsapp_api_utils - ERROR - HTTP error sending message to 254120006501: 401 Client Error: Unauthorized for url: https://graph.facebook.com/v19.0/736065142913405/messages - {"error":{"message":"Error validating access token: Session has expired on Friday, 25-Jul-25 07:00:00 PDT. The current time is Friday, 25-Jul-25 08:35:16 PDT.","type":"OAuthException","code":190,"error_subcode":463,"fbtrace_id":"A5b8cBMYCrYDFi37_3rXM2v"}}
+Traceback (most recent call last):
+  File "C:\Users\Admin\PycharmProjects\whatsappbot\whatsapp_api_utils.py", line 38, in send_whatsapp_message
+    response.raise_for_status()  # Raise HTTPError for bad responses (4xx or 5xx)
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Admin\.conda\envs\whatsappbot\Lib\site-packages\requests\models.py", line 1026, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 401 Client Error: Unauthorized for url: https://graph.facebook.com/v19.0/736065142913405/messages
+2025-07-25 18:35:17 - db.conversations_crud - INFO - Message added to DB from user (Tenant: my_initial_client_id): 'Hey...'
+2025-07-25 18:35:17 - webhook - INFO - Processed and responded to 254120006501 (Tenant: `my_initial_client_id`).
+2025-07-25 18:35:17 - werkzeug - INFO - 127.0.0.1 - - [25/Jul/2025 18:35:17] "POST /webhook HTTP/1.1" 200 -
+2025-07-25 18:36:00 - db.db_connection - INFO - Checked/Created 'tenants' table.
+2025-07-25 18:36:00 - db.db_connection - INFO - Checked/Created 'users' table with role and password support.
+2025-07-25 18:36:00 - db.db_connection - INFO - Checked/Created 'conversations' table.
+2025-07-25 18:36:00 - db.db_connection - INFO - Checked/Created 'faqs' table.
+2025-07-25 18:36:00 - db.db_connection - INFO - FAQs table ensured and migrated if necessary.
+2025-07-25 18:36:00 - __main__ - INFO - Database initialization complete.
+2025-07-25 18:36:00 - firebase_admin_utils - INFO - Firebase Admin SDK initialized using service account file.
+2025-07-25 18:36:00 - __main__ - INFO - Firebase Admin SDK initialized successfully.
+2025-07-25 18:36:00 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://10.211.166.19:5000
+2025-07-25 18:36:00 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2025-07-25 18:36:16 - webhook - INFO - Processing message for tenant: `my_initial_client_id` (WA ID: 254120006501)
+2025-07-25 18:36:16 - webhook - INFO - Received text message from 254120006501 (Tenant: `my_initial_client_id`): 'Hey?'
+2025-07-25 18:36:17 - ai_utils - INFO - No relevant FAQs above threshold (0.75) for query 'Hey?...'. Max similarity: 0.64.
+2025-07-25 18:36:17 - ai_utils - INFO - No relevant FAQ found for user query for tenant 'my_initial_client_id'. Proceeding with generative AI.
+2025-07-25 18:36:23 - ai_utils - INFO - Generative AI response for tenant 'my_initial_client_id': Hi there!  How can I help you today?
+...
+2025-07-25 18:36:25 - whatsapp_api_utils - INFO - Message sent to 254120006501: Hi there!  How can I help you today?
+...
+2025-07-25 18:36:25 - db.conversations_crud - INFO - Message added to DB from user (Tenant: my_initial_client_id): 'Hey?...'
+2025-07-25 18:36:25 - webhook - INFO - Processed and responded to 254120006501 (Tenant: `my_initial_client_id`).
+2025-07-25 18:36:25 - werkzeug - INFO - 127.0.0.1 - - [25/Jul/2025 18:36:25] "POST /webhook HTTP/1.1" 200 -
+2025-07-25 18:36:26 - werkzeug - INFO - 127.0.0.1 - - [25/Jul/2025 18:36:26] "POST /webhook HTTP/1.1" 200 -
+2025-07-25 18:36:27 - werkzeug - INFO - 127.0.0.1 - - [25/Jul/2025 18:36:27] "POST /webhook HTTP/1.1" 200 -
+2025-07-25 18:36:37 - webhook - INFO - Processing message for tenant: `my_initial_client_id` (WA ID: 254120006501)
+2025-07-25 18:36:37 - webhook - INFO - Received text message from 254120006501 (Tenant: `my_initial_client_id`): 'Refund policy?'
+2025-07-25 18:36:37 - ai_utils - INFO - Found relevant FAQ (Q='What is the company's return policy?...') with similarity 0.86 for tenant 'my_initial_client_id'.
+2025-07-25 18:36:37 - ai_utils - INFO - Responded with FAQ for tenant 'my_initial_client_id'. Q: 'What is the company's return policy?...', A: 'Returns within 30 days....'
+2025-07-25 18:36:38 - whatsapp_api_utils - INFO - Message sent to 254120006501: Returns within 30 days....
+2025-07-25 18:36:38 - db.conversations_crud - INFO - Message added to DB from user (Tenant: my_initial_client_id): 'Refund policy?...'
+2025-07-25 18:36:38 - webhook - INFO - Processed and responded to 254120006501 (Tenant: `my_initial_client_id`).
+2025-07-25 18:36:38 - werkzeug - INFO - 127.0.0.1 - - [25/Jul/2025 18:36:38] "POST /webhook HTTP/1.1" 200 -
+2025-07-25 18:36:39 - werkzeug - INFO - 127.0.0.1 - - [25/Jul/2025 18:36:39] "POST /webhook HTTP/1.1" 200 -
+2025-07-25 18:36:40 - werkzeug - INFO - 127.0.0.1 - - [25/Jul/2025 18:36:40] "POST /webhook HTTP/1.1" 200 -
