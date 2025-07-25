@@ -81,23 +81,15 @@ except Exception as e:
     text_model = None # Ensure models are None if initialization fails
 
 def generate_embedding(text):
-    """
-    Generates an embedding for the given text using the Gemini embedding model.
-    These embeddings are numerical representations of text, useful for
-    finding semantic similarity between different pieces of text (e.g., user queries and FAQs).
-    """
-    if not GEMINI_EMBEDDING_MODEL: # Check if the model name is configured
+    if not GEMINI_EMBEDDING_MODEL:
         logger.error("Embedding model not configured. Cannot generate embedding.")
         return None
     try:
-        # `genai.embed_content` is the correct method to generate embeddings with Gemini's embedding model.
-        # 'task_type' is important for optimizing the embedding for its intended use (e.g., retrieval).
         response = genai.embed_content(
             model=GEMINI_EMBEDDING_MODEL,
             content=text,
-            task_type="RETRIEVAL_QUERY" # Or "RETRIEVAL_DOCUMENT" for documents in your FAQ database
+            task_type="RETRIEVAL_QUERY"
         )
-        # The actual embedding vector is typically found in the 'embedding' field of the response.
         return response['embedding']
     except Exception as e:
         logger.error(f"Error generating embedding for text: '{text[:50]}...'. Error: {e}", exc_info=True)
@@ -105,60 +97,52 @@ def generate_embedding(text):
 
 def find_relevant_faq(user_query, tenant_id):
     """
-    Finds the most relevant FAQ based on the user's query for a specific tenant
-    using embedding similarity (cosine similarity).
-    Returns the FAQ object if a relevant one is found above a certain threshold, otherwise None.
+    Finds most relevant FAQ for tenant using cosine similarity.
+    Includes fallback to global FAQs if tenant-specific FAQs are empty.
     """
-    # Ensure embedding model is available before proceeding.
     if not GEMINI_EMBEDDING_MODEL:
         logger.warning("Embedding model not initialized. Cannot find relevant FAQs.")
         return None, 0.0
 
     user_query_embedding = generate_embedding(user_query)
     if user_query_embedding is None:
-        logger.error("Failed to generate embedding for user query. Cannot find relevant FAQ.")
+        logger.error("Failed to generate embedding for user query.")
         return None, 0.0
 
-    # Retrieve all FAQs for the given tenant from the database.
-    all_faqs = get_all_faqs(tenant_id)
-    if not all_faqs:
-        logger.info(f"No FAQs found for tenant '{tenant_id}'.")
+    # Step 1: Fetch tenant-specific FAQs
+    faqs = get_all_faqs(tenant_id)
+    if not faqs:
+        logger.warning(f"No FAQs found for tenant '{tenant_id}'. Trying global FAQs (tenant_id=None).")
+        faqs = get_all_faqs(None)
+
+    if not faqs:
+        logger.info("No FAQs available at all.")
         return None, 0.0
 
-    max_similarity = -1 # Initialize with a low value to find the maximum similarity
+    max_similarity = -1
     relevant_faq = None
+    user_query_embedding_np = np.array(user_query_embedding)
 
-    for faq in all_faqs:
+    for faq in faqs:
         faq_embedding = faq.get('embedding')
         if faq_embedding:
             try:
-                # Convert list embeddings from JSON (stored in DB) to NumPy arrays for calculation.
                 faq_embedding_np = np.array(faq_embedding)
-                user_query_embedding_np = np.array(user_query_embedding)
-
-                # Calculate cosine similarity: (A . B) / (||A|| * ||B||)
                 dot_product = np.dot(user_query_embedding_np, faq_embedding_np)
                 norm_user = np.linalg.norm(user_query_embedding_np)
                 norm_faq = np.linalg.norm(faq_embedding_np)
-
-                if norm_user == 0 or norm_faq == 0:
-                    similarity = 0 # Avoid division by zero if an embedding is all zeros
-                else:
-                    similarity = dot_product / (norm_user * norm_faq)
-
-                # Keep track of the FAQ with the highest similarity.
+                similarity = dot_product / (norm_user * norm_faq) if norm_user and norm_faq else 0
                 if similarity > max_similarity:
                     max_similarity = similarity
                     relevant_faq = faq
             except Exception as e:
                 logger.error(f"Error calculating similarity for FAQ ID {faq.get('id')}: {e}", exc_info=True)
 
-    # Return the relevant FAQ only if its similarity is above the predefined threshold.
     if relevant_faq and max_similarity >= FAQ_SIMILARITY_THRESHOLD:
         logger.info(f"Found relevant FAQ (Q='{relevant_faq['question'][:50]}...') with similarity {max_similarity:.2f} for tenant '{tenant_id}'.")
         return relevant_faq, max_similarity
     else:
-        logger.info(f"No relevant FAQs found above threshold ({FAQ_SIMILARITY_THRESHOLD}) for query '{user_query[:50]}...' for tenant '{tenant_id}'. Max similarity: {max_similarity:.2f}.")
+        logger.info(f"No relevant FAQs above threshold ({FAQ_SIMILARITY_THRESHOLD}) for query '{user_query[:50]}...'. Max similarity: {max_similarity:.2f}.")
         return None, max_similarity
 
 
@@ -167,6 +151,7 @@ def generate_ai_reply(user_query, wa_id, tenant_id):
     Generates an AI reply based on the user's query and conversation history.
     Prioritizes answers from the FAQ database if a relevant FAQ is found.
     If no relevant FAQ, it uses the Generative AI model to produce a response.
+    Includes fallback for global FAQs if tenant-specific FAQs are missing.
     """
     response_text = "I'm sorry, I couldn't process your request at the moment. Please try again later."
     faq_matched = False
@@ -179,20 +164,22 @@ def generate_ai_reply(user_query, wa_id, tenant_id):
         tenant_config = get_tenant_config_by_whatsapp_id(wa_id)
         if tenant_config:
             logger.info(f"Processing message for tenant: `{tenant_config.get('tenant_id')}` (WA ID: {wa_id})")
-            # Ensure consistency by updating tenant_id if it's found in the config.
             tenant_id = tenant_config.get('tenant_id', tenant_id)
 
-        # 1. Attempt to find a relevant FAQ in the database.
+        # 1. Attempt to find a relevant FAQ in the database (with fallback to global FAQs).
         relevant_faq, similarity = find_relevant_faq(user_query, tenant_id)
 
         if relevant_faq:
             faq_matched = True
             faq_question = relevant_faq['question']
             faq_answer = relevant_faq['answer']
-            response_text = faq_answer # If FAQ matches, use its answer directly.
-            logger.info(f"Responded with FAQ for tenant '{tenant_id}'. Q: '{faq_question[:50]}...', A: '{faq_answer[:50]}...'")
+            response_text = faq_answer  # If FAQ matches, use its answer directly.
+            logger.info(
+                f"Responded with FAQ for tenant '{tenant_id}'. Q: '{faq_question[:50]}...', A: '{faq_answer[:50]}...'")
         else:
-            logger.info(f"No relevant FAQ found for user query for tenant '{tenant_id}'. Proceeding with generative AI.")
+            logger.info(
+                f"No relevant FAQ found for user query for tenant '{tenant_id}'. Proceeding with generative AI.")
+
             # 2. If no relevant FAQ is found, use the Generative AI model.
             if text_model:
                 # Fetch recent conversation history for context.
@@ -202,36 +189,32 @@ def generate_ai_reply(user_query, wa_id, tenant_id):
                 for msg in conversation_history:
                     history_string += f"{msg['sender'].capitalize()}: {msg['message_text']}\n"
 
-                # Define a system instruction (persona/guidelines for the AI)
-                # This can be customized per tenant for specific business needs.
-                system_instruction = ""
-                if tenant_config and tenant_config.get('tenant_name') == "my_initial_client_id": # Example tenant customization
+                # Define system instruction (persona/guidelines for the AI)
+                system_instruction = (
+                    "You are a helpful and friendly AI assistant for a business. "
+                    "Answer questions based on the provided conversation history. "
+                    "If you don't have enough information, politely state that you cannot answer and suggest contacting support. "
+                    "Maintain a professional and polite tone. Do not invent information."
+                )
+
+                # Optional: customize system instruction for specific tenants
+                if tenant_config and tenant_config.get('tenant_name') == "my_initial_client_id":
                     system_instruction = (
                         "You are a helpful and friendly AI assistant for 'My Initial Client Inc.'. "
-                        "Answer questions based on the provided conversation history and common business knowledge. "
-                        "If you don't have enough information, politely state that you cannot answer and suggest visiting their website or contacting their dedicated support. "
-                        "Maintain a professional and polite tone. Do not invent information."
-                    )
-                else:
-                    system_instruction = (
-                        "You are a helpful and friendly AI assistant for a business. "
-                        "Answer questions based on the provided conversation history. "
-                        "If you don't have enough information from the conversation history to answer a question, you must state that you cannot answer the question and suggest contacting support. "
-                        "Maintain a professional and polite tone. Do not invent information."
+                        "Answer questions based on conversation history and common business knowledge. "
+                        "If you don't have enough information, say so politely and suggest contacting support. "
+                        "Maintain professionalism and avoid inventing details."
                     )
 
-                # Construct the prompt for the Generative AI model, including history and user query.
+                # Construct prompt for the AI model
                 prompt = (
                     f"Conversation History:\n{history_string}\n\n"
                     f"User: {user_query}\n\n"
-                    f"{'':<0}" # This line can be used for additional FAQ context if integrated differently
                     "AI:"
                 )
                 logger.debug(f"Sending prompt to Gemini:\n{prompt}")
 
-                # Make the generative content request to the Gemini text model.
-                # Crucially, safety_settings are applied here to control content generation.
-                # The corrected HarmCategory members are used: HARM_CATEGORY_HARASSMENT, etc.
+                # Generate AI response using Gemini
                 response = text_model.generate_content(
                     contents=[{"role": "user", "parts": [{"text": system_instruction}, {"text": prompt}]}],
                     safety_settings={
@@ -251,7 +234,6 @@ def generate_ai_reply(user_query, wa_id, tenant_id):
         logger.error(f"Error in generate_ai_reply: {e}", exc_info=True)
         response_text = "I encountered an error while trying to respond. Please try again."
 
-    # Return a dictionary containing the AI's response and metadata about the reply.
     return {
         "response": response_text,
         "faq_matched": faq_matched,
@@ -326,3 +308,52 @@ def get_faqs_for_tenant(tenant_id):
     Retrieves all FAQs for a specific tenant from the database.
     """
     return get_all_faqs(tenant_id)
+
+def get_most_relevant_faq(user_query: str, tenant_id: str):
+    """
+    Fetch FAQs dynamically from the DB for the given tenant, compute similarity using embeddings,
+    and return the most relevant FAQ if above the similarity threshold.
+    """
+    try:
+        # ✅ Generate embedding for the user query
+        user_embedding = generate_embedding(user_query)
+        if user_embedding is None:
+            logger.warning("Failed to generate embedding for user query.")
+            return None
+
+        # ✅ Fetch FAQs dynamically from DB
+        faqs = get_all_faqs(tenant_id)
+        if not faqs:
+            logger.info(f"No FAQs found for tenant {tenant_id}.")
+            return None
+
+        best_match = None
+        max_similarity = 0.0
+
+        for faq in faqs:
+            try:
+                faq_embedding = np.array(faq.get('embedding', []), dtype=float)
+                similarity = cosine_similarity(user_embedding, faq_embedding)
+                if similarity > max_similarity:
+                    max_similarity = similarity
+                    best_match = faq
+            except Exception as e:
+                logger.error(f"Error processing FAQ embedding: {e}", exc_info=True)
+
+        if best_match and max_similarity >= FAQ_SIMILARITY_THRESHOLD:
+            logger.info(f"Found relevant FAQ (Q='{best_match['question'][:30]}...') with similarity {max_similarity:.2f} for tenant '{tenant_id}'.")
+            return best_match
+        else:
+            logger.info(f"No relevant FAQs found above threshold ({FAQ_SIMILARITY_THRESHOLD}) for query '{user_query[:20]}...'. Max similarity: {max_similarity:.2f}.")
+            return None
+
+    except Exception as e:
+        logger.error(f"Error in get_most_relevant_faq: {e}", exc_info=True)
+        return None
+
+def cosine_similarity(vec1, vec2):
+    """Compute cosine similarity between two vectors."""
+    dot_product = np.dot(vec1, vec2)
+    norm1 = np.linalg.norm(vec1)
+    norm2 = np.linalg.norm(vec2)
+    return dot_product / (norm1 * norm2)

@@ -8,26 +8,31 @@ from config import LOGGING_LEVEL, log_level_map
 logger = logging.getLogger(__name__)
 logger.setLevel(log_level_map.get(LOGGING_LEVEL, logging.INFO))
 
+
 def add_faq(question, answer, embedding, tenant_id):
+    if not tenant_id:
+        logger.error("Cannot add FAQ without tenant_id. Operation aborted.")
+        return None
     conn = get_db_connection()
     cursor = conn.cursor()
     try:
         embedding_json = json.dumps(embedding)
         cursor.execute(
-            "INSERT OR REPLACE INTO faqs (question, answer, embedding, tenant_id) VALUES (?, ?, ?, ?)",
+            "INSERT INTO faqs (question, answer, embedding, tenant_id) VALUES (?, ?, ?, ?)",
             (question, answer, embedding_json, tenant_id)
         )
         conn.commit()
-        logger.info(f"FAQ added/updated: Q='{question[:50]}...' for tenant '{tenant_id}'")
+        logger.info(f"FAQ added: Q='{question[:50]}...' for tenant '{tenant_id}'")
         return cursor.lastrowid
-    except sqlite3.IntegrityError:
-        logger.warning(f"FAQ with question '{question[:50]}...' already exists for tenant '{tenant_id}'. Skipping insertion.")
+    except sqlite3.IntegrityError as e:
+        logger.warning(f"FAQ with question '{question[:50]}...' may already exist for tenant '{tenant_id}'. Error: {e}")
         return None
     except sqlite3.Error as e:
         logger.error(f"Error adding FAQ: {e}", exc_info=True)
         return None
     finally:
         conn.close()
+
 
 def get_all_faqs(tenant_id=None):
     conn = get_db_connection()
@@ -56,8 +61,11 @@ def get_all_faqs(tenant_id=None):
         conn.close()
     return faqs
 
-# NEW FUNCTION: Get FAQ by ID
+
 def get_faq_by_id(faq_id, tenant_id=None):
+    if not faq_id:
+        logger.error("FAQ ID is required to fetch FAQ.")
+        return None
     conn = get_db_connection()
     cursor = conn.cursor()
     faq_item = None
@@ -84,8 +92,11 @@ def get_faq_by_id(faq_id, tenant_id=None):
         conn.close()
     return faq_item
 
-# NEW FUNCTION: Update FAQ
+
 def update_faq(faq_id, question, answer, embedding, tenant_id):
+    if not tenant_id:
+        logger.error("Cannot update FAQ without tenant_id. Operation aborted.")
+        return False
     conn = get_db_connection()
     cursor = conn.cursor()
     try:
@@ -107,23 +118,23 @@ def update_faq(faq_id, question, answer, embedding, tenant_id):
     finally:
         conn.close()
 
-# RENAMED AND MODIFIED FUNCTION: Delete FAQ by ID
+
 def delete_faq_by_id(faq_id, tenant_id=None):
+    if not tenant_id:
+        logger.error("Cannot delete FAQ without tenant_id. Operation aborted.")
+        return False
     conn = get_db_connection()
     cursor = conn.cursor()
-    query = "DELETE FROM faqs WHERE id = ?"
-    params = [faq_id]
-    if tenant_id:
-        query += " AND tenant_id = ?"
-        params.append(tenant_id)
+    query = "DELETE FROM faqs WHERE id = ? AND tenant_id = ?"
+    params = [faq_id, tenant_id]
     try:
         cursor.execute(query, tuple(params))
         conn.commit()
         if cursor.rowcount > 0:
-            logger.info(f"FAQ with ID {faq_id} deleted successfully for tenant '{tenant_id if tenant_id else 'N/A'}'.")
+            logger.info(f"FAQ with ID {faq_id} deleted successfully for tenant '{tenant_id}'.")
             return True
         else:
-            logger.warning(f"No FAQ found with ID {faq_id} for deletion for tenant '{tenant_id if tenant_id else 'N/A'}'.")
+            logger.warning(f"No FAQ found with ID {faq_id} for deletion for tenant '{tenant_id}'.")
             return False
     except sqlite3.Error as e:
         logger.error(f"Error deleting FAQ: {e}", exc_info=True)

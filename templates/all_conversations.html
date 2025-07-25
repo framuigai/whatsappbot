@@ -1,23 +1,19 @@
 {% extends "base.html" %}
 {% block title %}All Conversations{% endblock %}
 {% block body_content %}
-<h2>All Conversations</h2>
-
-{% if messages %}
-    <ul class="flashes">
-        {% for category, message in messages %}
-            <li class="{{ category }}">{{ message }}</li>
-        {% endfor %}
-    </ul>
-{% endif %}
+<h2 class="page-title">📱 All Conversations</h2>
 
 {% if conversations %}
     <table class="data-table">
         <thead>
             <tr>
                 <th>WhatsApp ID</th>
-                <th>Last Message (Snippet)</th>
-                <th>Last Activity</th>
+                <th>Last Message</th>
+                <th>AI Response</th>
+                {% if user_role == 'admin' %}
+                    <th>Tenant</th>
+                {% endif %}
+                <th>Timestamp</th>
                 <th>Actions</th>
             </tr>
         </thead>
@@ -26,7 +22,17 @@
                 <tr>
                     <td>{{ conv.wa_id }}</td>
                     <td>{{ conv.last_message_text }}</td>
-                    <td>{{ moment(conv.last_timestamp).format('LLL') }}</td>
+                    <td>{{ conv.ai_response if conv.ai_response else "N/A" }}</td>
+                    {% if user_role == 'admin' %}
+                        <td>{{ conv.tenant_name }}</td>
+                    {% endif %}
+                    <td>
+                        {% if conv.last_timestamp %}
+                            {{ moment(conv.last_timestamp).format('LLL') }}
+                        {% else %}
+                            N/A
+                        {% endif %}
+                    </td>
                     <td>
                         <a href="{{ url_for('admin_routes.view_conversation', wa_id=conv.wa_id) }}" class="button-small">View History</a>
                     </td>

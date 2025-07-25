@@ -1,18 +1,62 @@
 {% extends "base.html" %}
-{% block title %}View Reports{% endblock %}
+{% block title %}Reports{% endblock %}
 {% block body_content %}
-<div class="container">
-    <h1>View Reports</h1>
-    <p>Welcome, {{ user_email }}!</p>
+<h2 class="page-title">Conversation Reports</h2>
 
-    <h2>Monthly Statistics</h2>
-    <div id="report-container">
-        <canvas id="monthlyChart"></canvas>
-        <div class="loading-spinner">Loading chart...</div>
-    </div>
+<div class="report-section">
+    <h3>📅 Monthly Report</h3>
+    {% if monthly_data_raw %}
+        <table class="data-table">
+            <thead><tr><th>Month</th><th>Conversations</th></tr></thead>
+            <tbody>
+                {% for row in monthly_data_raw %}
+                    <tr><td>{{ row.month }}</td><td>{{ row.count }}</td></tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p>No monthly data available.</p>
+    {% endif %}
 </div>
 
-<!-- Include Chart.js and dashboard.js -->
+<div class="report-section">
+    <h3>📆 Daily Report</h3>
+    {% if daily_data_raw %}
+        <table class="data-table">
+            <thead><tr><th>Date</th><th>Conversations</th></tr></thead>
+            <tbody>
+                {% for row in daily_data_raw %}
+                    <tr><td>{{ row.date }}</td><td>{{ row.count }}</td></tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p>No daily data available.</p>
+    {% endif %}
+</div>
+
+<div class="chart-container">
+    <canvas id="monthlyChart"></canvas>
+    <canvas id="dailyChart"></canvas>
+</div>
+
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-<script src="{{ url_for('static', filename='js/dashboard.js') }}"></script>
+<script>
+    const monthlyLabels = {{ monthly_labels|safe }};
+    const monthlyData = {{ monthly_data|safe }};
+    const dailyLabels = {{ daily_labels|safe }};
+    const dailyData = {{ daily_data|safe }};
+
+    const ctx1 = document.getElementById('monthlyChart').getContext('2d');
+    new Chart(ctx1, {
+        type: 'bar',
+        data: { labels: monthlyLabels, datasets: [{ label: 'Monthly Conversations', data: monthlyData }] }
+    });
+
+    const ctx2 = document.getElementById('dailyChart').getContext('2d');
+    new Chart(ctx2, {
+        type: 'line',
+        data: { labels: dailyLabels, datasets: [{ label: 'Daily Conversations', data: dailyData }] }
+    });
+</script>
 {% endblock %}

@@ -24,7 +24,6 @@ logger.setLevel(log_level_map.get(LOGGING_LEVEL, logging.INFO))
 @login_required
 def dashboard():
     try:
-        # ✅ Tenant filtering: Admin sees all, client sees their tenant only
         tenant_id = None if current_user.role == 'admin' else getattr(current_user, 'tenant_id', None)
         total_conversations = get_conversation_count(tenant_id)
 
@@ -34,7 +33,7 @@ def dashboard():
             user_email=current_user.email,
             total_conversations=total_conversations,
             firebase_config=FIREBASE_CONFIG,
-            user_role=current_user.role  # ✅ Added for dynamic UI
+            user_role=current_user.role
         )
     except Exception as e:
         logger.error(f"Error fetching dashboard data: {e}", exc_info=True)
@@ -104,104 +103,10 @@ def manage_clients():
         return render_template('manage_clients.html', user_email=current_user.email, tenants=[])
 
 
-@admin_bp.route('/view_reports')
-@login_required
-def view_reports():
-    """Admin page to view various reports."""
-    try:
-        # ✅ Tenant filtering for reports
-        tenant_id = None if current_user.role == 'admin' else getattr(current_user, 'tenant_id', None)
-        monthly_counts = get_monthly_conversation_counts(tenant_id)
-        daily_counts = get_daily_conversation_counts(tenant_id)
-
-        monthly_labels = [m['month'] for m in monthly_counts]
-        monthly_data = [m['count'] for m in monthly_counts]
-        daily_labels = [d['date'] for d in daily_counts]
-        daily_data = [d['count'] for d in daily_counts]
-
-        return render_template(
-            'view_reports.html',
-            user_email=current_user.email,
-            monthly_labels=json.dumps(monthly_labels),
-            monthly_data=json.dumps(monthly_data),
-            daily_labels=json.dumps(daily_labels),
-            daily_data=json.dumps(daily_data),
-            user_role=current_user.role  # ✅ Added
-        )
-    except Exception as e:
-        logger.error(f"Error fetching report data: {e}", exc_info=True)
-        flash("Error loading reports.", "danger")
-        return render_template('view_reports.html', user_email=current_user.email,
-                               monthly_labels="[]", monthly_data="[]",
-                               daily_labels="[]", daily_data="[]",
-                               user_role=current_user.role)
-
-
-@admin_bp.route('/manage_faqs', methods=['GET', 'POST'])
-@login_required
-def manage_faqs():
-    """Manage FAQs for the user's tenant."""
-    tenant_id = getattr(current_user, 'tenant_id', None)
-
-    if request.method == 'POST':
-        action = request.form.get('action')
-        faq_id = request.form.get('faq_id')
-        question = request.form.get('question')
-        answer = request.form.get('answer')
-
-        if action == 'add':
-            if not question or not answer:
-                flash("Question and Answer are required.", "danger")
-            else:
-                embedding = generate_embedding(question)
-                if embedding is None:
-                    flash("Failed to generate embedding. Try again.", "danger")
-                else:
-                    if add_faq(question, answer, embedding, tenant_id):
-                        flash("FAQ added successfully!", "success")
-                    else:
-                        flash("Failed to add FAQ.", "danger")
-
-        elif action == 'update':
-            if not faq_id or not question or not answer:
-                flash("FAQ ID, Question, and Answer are required.", "danger")
-            else:
-                existing_faq = get_faq_by_id(faq_id, tenant_id)
-                embedding = None
-                if existing_faq and existing_faq.get('question') != question:
-                    embedding = generate_embedding(question)
-                    if embedding is None:
-                        flash("Failed to update FAQ embedding.", "danger")
-                        return redirect(url_for('admin_routes.manage_faqs'))
-                else:
-                    embedding = json.loads(existing_faq.get('embedding')) if existing_faq else None
-
-                if update_faq(faq_id, question, answer, embedding, tenant_id):
-                    flash("FAQ updated successfully!", "success")
-                else:
-                    flash(f"Failed to update FAQ ID {faq_id}.", "danger")
-
-        elif action == 'delete':
-            if delete_faq_by_id(faq_id, tenant_id):
-                flash(f"FAQ ID {faq_id} deleted successfully!", "success")
-            else:
-                flash(f"Failed to delete FAQ ID {faq_id}.", "danger")
-
-        return redirect(url_for('admin_routes.manage_faqs'))
-
-    try:
-        faqs = get_all_faqs(tenant_id)
-        return render_template('manage_faqs.html', user_email=current_user.email, faqs=faqs)
-    except Exception as e:
-        logger.error(f"Error fetching FAQs: {e}", exc_info=True)
-        flash("Error loading FAQs.", "danger")
-        return render_template('manage_faqs.html', user_email=current_user.email, faqs=[])
-
 
 @admin_bp.route('/view_conversation/<wa_id>')
 @login_required
 def view_conversation(wa_id):
-    """View a specific conversation by WhatsApp ID."""
     tenant_id = getattr(current_user, 'tenant_id', None)
     try:
         conversations = get_conversation_history_by_whatsapp_id(wa_id, tenant_id)
@@ -216,25 +121,10 @@ def view_conversation(wa_id):
         return redirect(url_for('admin_routes.all_conversations'))
 
 
-@admin_bp.route('/all-conversations')
-@login_required
-def all_conversations():
-    """View a list of all unique WhatsApp conversations."""
-    tenant_id = getattr(current_user, 'tenant_id', None)
-    try:
-        unique_conversations = get_all_conversations(tenant_id)
-        return render_template('all_conversations.html', user_email=current_user.email,
-                               conversations=unique_conversations)
-    except Exception as e:
-        logger.error(f"Error fetching conversations: {e}", exc_info=True)
-        flash("Error loading conversations.", "danger")
-        return render_template('all_conversations.html', user_email=current_user.email, conversations=[])
-
 
 @admin_bp.route('/manage_users', methods=['GET', 'POST'])
 @login_required
 def manage_users():
-    # ✅ Admin-only
     if current_user.role != 'admin':
         flash("You do not have permission to manage users.", "danger")
         logger.warning(f"Unauthorized manage_users access by {current_user.email}")
@@ -283,3 +173,161 @@ def manage_users():
     users = get_all_users()
     tenants = get_all_tenants()
     return render_template('manage_users.html', user_email=current_user.email, users=users, tenants=tenants)
+
+
+
+@admin_bp.route('/manage_faqs', methods=['GET', 'POST'])
+@login_required
+def manage_faqs():
+    """Manage FAQs for the user's tenant or multiple tenants if admin."""
+    try:
+        tenant_id = getattr(current_user, 'tenant_id', None)
+
+        if request.method == 'POST':
+            action = request.form.get('action')
+            faq_id = request.form.get('faq_id')
+            question = request.form.get('question')
+            answer = request.form.get('answer')
+
+            # ✅ Admin must provide tenant_id from form
+            if current_user.role == 'admin':
+                tenant_id = request.form.get('tenant_id')
+                if not tenant_id:
+                    flash("Tenant selection is required for this action.", "danger")
+                    logger.error("Admin attempted FAQ action without tenant_id.")
+                    return redirect(url_for('admin_routes.manage_faqs'))
+
+            # ✅ Validate tenant_id presence for non-admin users
+            if not tenant_id:
+                flash("Tenant information missing. Cannot proceed.", "danger")
+                logger.error("FAQ action attempted without tenant_id.")
+                return redirect(url_for('admin_routes.manage_faqs'))
+
+            if action == 'add':
+                if not question or not answer:
+                    flash("Question and Answer are required.", "danger")
+                else:
+                    embedding = generate_embedding(question)
+                    if embedding is None:
+                        flash("Failed to generate embedding. Try again.", "danger")
+                    else:
+                        if add_faq(question, answer, embedding, tenant_id):
+                            flash("FAQ added successfully!", "success")
+                            logger.info(f"FAQ added for tenant_id={tenant_id}")
+                        else:
+                            flash("Failed to add FAQ.", "danger")
+
+            elif action == 'update':
+                if not faq_id or not question or not answer:
+                    flash("FAQ ID, Question, and Answer are required.", "danger")
+                else:
+                    existing_faq = get_faq_by_id(faq_id, tenant_id)
+                    if not existing_faq:
+                        flash("FAQ not found.", "danger")
+                    else:
+                        # ✅ Regenerate embedding only if question changed
+                        if existing_faq.get('question') != question:
+                            embedding = generate_embedding(question)
+                            if embedding is None:
+                                flash("Failed to update FAQ embedding.", "danger")
+                                return redirect(url_for('admin_routes.manage_faqs'))
+                        else:
+                            embedding = json.loads(existing_faq.get('embedding', 'null'))
+
+                        if update_faq(faq_id, question, answer, embedding, tenant_id):
+                            flash("FAQ updated successfully!", "success")
+                        else:
+                            flash(f"Failed to update FAQ ID {faq_id}.", "danger")
+
+            elif action == 'delete':
+                if not faq_id:
+                    flash("FAQ ID is required to delete.", "danger")
+                elif delete_faq_by_id(faq_id, tenant_id):
+                    flash(f"FAQ ID {faq_id} deleted successfully!", "success")
+                else:
+                    flash(f"Failed to delete FAQ ID {faq_id}.", "danger")
+
+            return redirect(url_for('admin_routes.manage_faqs'))
+
+        # ✅ GET request: fetch FAQs and tenant list for admin
+        tenants = []
+        if current_user.role == 'admin':
+            tenants = get_all_tenants()
+
+        faqs = get_all_faqs(tenant_id)
+        return render_template('manage_faqs.html',
+                               user_email=current_user.email,
+                               faqs=faqs,
+                               tenants=tenants,
+                               user_role=current_user.role)
+
+    except Exception as e:
+        logger.error(f"Error in manage_faqs: {e}", exc_info=True)
+        flash("Error loading FAQs.", "danger")
+        return render_template('manage_faqs.html', user_email=current_user.email, faqs=[])
+
+
+from datetime import datetime
+
+@admin_bp.route('/all-conversations')
+@login_required
+def all_conversations():
+    """Display all conversations for the tenant or all if admin."""
+    try:
+        # ✅ Admin sees all conversations; others filtered by tenant_id
+        tenant_id = None if current_user.role == 'admin' else getattr(current_user, 'tenant_id', None)
+
+        unique_conversations = get_all_conversations(tenant_id)
+
+        return render_template(
+            'all_conversations.html',
+            user_email=current_user.email,
+            conversations=unique_conversations,
+            user_role=current_user.role
+        )
+
+    except Exception as e:
+        logger.error(f"Error fetching conversations: {e}", exc_info=True)
+        flash("Error loading conversations. Please try again later.", "danger")
+        return render_template(
+            'all_conversations.html',
+            user_email=current_user.email,
+            conversations=[],
+            user_role=current_user.role
+        )
+
+
+@admin_bp.route('/view_reports')
+@login_required
+def view_reports():
+    """Admin page to view reports with proper tenant context."""
+    try:
+        tenant_id = None if current_user.role == 'admin' else getattr(current_user, 'tenant_id', None)
+
+        monthly_counts = get_monthly_conversation_counts(tenant_id)
+        daily_counts = get_daily_conversation_counts(tenant_id)
+
+        monthly_labels = [m['month'] for m in monthly_counts]
+        monthly_data = [m['count'] for m in monthly_counts]
+        daily_labels = [d['date'] for d in daily_counts]
+        daily_data = [d['count'] for d in daily_counts]
+
+        return render_template(
+            'view_reports.html',
+            user_email=current_user.email,
+            monthly_labels=json.dumps(monthly_labels),
+            monthly_data=json.dumps(monthly_data),
+            daily_labels=json.dumps(daily_labels),
+            daily_data=json.dumps(daily_data),
+            monthly_data_raw=monthly_counts,
+            daily_data_raw=daily_counts,
+            user_role=current_user.role
+        )
+    except Exception as e:
+        logger.error(f"Error fetching report data: {e}", exc_info=True)
+        flash("Error loading reports.", "danger")
+        return render_template('view_reports.html', user_email=current_user.email,
+                               monthly_labels="[]", monthly_data="[]",
+                               daily_labels="[]", daily_data="[]",
+                               monthly_data_raw=[], daily_data_raw=[],
+                               user_role=current_user.role)
