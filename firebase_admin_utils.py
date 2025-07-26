@@ -69,3 +69,33 @@ def verify_id_token(id_token):
     except Exception as e:
         logger.error(f"Unexpected error verifying Firebase ID token: {e}", exc_info=True)
         raise Exception("Failed to verify ID token due to an unexpected error")
+
+def create_user_in_firebase(email, password):
+    try:
+        user = auth.create_user(email=email, password=password)
+        return user.uid
+    except Exception as e:
+        print(f"Error creating Firebase user: {e}")
+        return None
+
+def update_user_in_firebase(uid, email=None, password=None):
+    try:
+        update_data = {}
+        if email:
+            update_data['email'] = email
+        if password:
+            update_data['password'] = password
+        if update_data:
+            auth.update_user(uid, **update_data)
+        return True
+    except Exception as e:
+        print(f"Error updating Firebase user: {e}")
+        return False
+
+def delete_user_in_firebase(uid):
+    try:
+        auth.delete_user(uid)
+        return True
+    except Exception as e:
+        print(f"Error deleting Firebase user: {e}")
+        return False

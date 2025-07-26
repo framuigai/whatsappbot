@@ -7806,3 +7806,597 @@ requests.exceptions.HTTPError: 401 Client Error: Unauthorized for url: https://g
 2025-07-25 18:36:38 - werkzeug - INFO - 127.0.0.1 - - [25/Jul/2025 18:36:38] "POST /webhook HTTP/1.1" 200 -
 2025-07-25 18:36:39 - werkzeug - INFO - 127.0.0.1 - - [25/Jul/2025 18:36:39] "POST /webhook HTTP/1.1" 200 -
 2025-07-25 18:36:40 - werkzeug - INFO - 127.0.0.1 - - [25/Jul/2025 18:36:40] "POST /webhook HTTP/1.1" 200 -
+2025-07-25 18:44:49 - db.db_connection - INFO - Checked/Created 'tenants' table.
+2025-07-25 18:44:49 - db.db_connection - INFO - Checked/Created 'users' table with role and password support.
+2025-07-25 18:44:49 - db.db_connection - INFO - Checked/Created 'conversations' table.
+2025-07-25 18:44:49 - db.db_connection - INFO - Checked/Created 'faqs' table.
+2025-07-25 18:44:49 - db.db_connection - INFO - FAQs table ensured and migrated if necessary.
+2025-07-25 18:44:49 - __main__ - INFO - Database initialization complete.
+2025-07-25 18:44:49 - firebase_admin_utils - INFO - Firebase Admin SDK initialized using service account file.
+2025-07-25 18:44:49 - __main__ - INFO - Firebase Admin SDK initialized successfully.
+2025-07-25 18:44:49 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://10.211.166.19:5000
+2025-07-25 18:44:49 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2025-07-25 18:45:08 - werkzeug - INFO - 127.0.0.1 - - [25/Jul/2025 18:45:08] "[32mGET / HTTP/1.1[0m" 302 -
+2025-07-25 18:45:08 - werkzeug - INFO - 127.0.0.1 - - [25/Jul/2025 18:45:08] "GET /login?next=/ HTTP/1.1" 200 -
+2025-07-25 18:45:08 - werkzeug - INFO - 127.0.0.1 - - [25/Jul/2025 18:45:08] "GET /static/css/main.css HTTP/1.1" 200 -
+2025-07-25 18:45:08 - werkzeug - INFO - 127.0.0.1 - - [25/Jul/2025 18:45:08] "[36mGET /static/js/firebase-init.js HTTP/1.1[0m" 304 -
+2025-07-25 18:45:10 - werkzeug - INFO - 127.0.0.1 - - [25/Jul/2025 18:45:10] "[33mGET /favicon.ico HTTP/1.1[0m" 404 -
+2025-07-25 18:57:41 - webhook - INFO - Processing message for tenant: `tenant_one` (WA ID: 254715849926)
+2025-07-25 18:57:41 - webhook - INFO - Received text message from 254715849926 (Tenant: `tenant_one`): 'hey?'
+2025-07-25 18:57:42 - ai_utils - INFO - No relevant FAQs above threshold (0.75) for query 'hey?...'. Max similarity: 0.61.
+2025-07-25 18:57:42 - ai_utils - INFO - No relevant FAQ found for user query for tenant 'tenant_one'. Proceeding with generative AI.
+2025-07-25 18:57:43 - ai_utils - INFO - Generative AI response for tenant 'tenant_one': Hi there! How can I help you today?
+...
+2025-07-25 18:57:44 - whatsapp_api_utils - INFO - Message sent to 254715849926: Hi there! How can I help you today?
+...
+2025-07-25 18:57:44 - db.conversations_crud - INFO - Message added to DB from user (Tenant: tenant_one): 'hey?...'
+2025-07-25 18:57:44 - webhook - INFO - Processed and responded to 254715849926 (Tenant: `tenant_one`).
+2025-07-25 18:57:44 - werkzeug - INFO - 127.0.0.1 - - [25/Jul/2025 18:57:44] "POST /webhook HTTP/1.1" 200 -
+2025-07-25 18:57:46 - werkzeug - INFO - 127.0.0.1 - - [25/Jul/2025 18:57:46] "POST /webhook HTTP/1.1" 200 -
+2025-07-25 18:57:46 - werkzeug - INFO - 127.0.0.1 - - [25/Jul/2025 18:57:46] "POST /webhook HTTP/1.1" 200 -
+2025-07-25 18:57:47 - werkzeug - INFO - 127.0.0.1 - - [25/Jul/2025 18:57:47] "POST /webhook HTTP/1.1" 200 -
+2025-07-25 18:59:02 - webhook - INFO - Processing message for tenant: `tenant_one` (WA ID: 254715849926)
+2025-07-25 18:59:02 - webhook - INFO - Received text message from 254715849926 (Tenant: `tenant_one`): 'what are the return hours?'
+2025-07-25 18:59:02 - ai_utils - INFO - Found relevant FAQ (Q='What is the company's return policy?...') with similarity 0.82 for tenant 'tenant_one'.
+2025-07-25 18:59:02 - ai_utils - INFO - Responded with FAQ for tenant 'tenant_one'. Q: 'What is the company's return policy?...', A: 'You can return items within 30 days....'
+2025-07-25 18:59:04 - whatsapp_api_utils - INFO - Message sent to 254715849926: You can return items within 30 days....
+2025-07-25 18:59:04 - db.conversations_crud - INFO - Message added to DB from user (Tenant: tenant_one): 'what are the return hours?...'
+2025-07-25 18:59:04 - webhook - INFO - Processed and responded to 254715849926 (Tenant: `tenant_one`).
+2025-07-25 18:59:04 - werkzeug - INFO - 127.0.0.1 - - [25/Jul/2025 18:59:04] "POST /webhook HTTP/1.1" 200 -
+2025-07-25 18:59:05 - werkzeug - INFO - 127.0.0.1 - - [25/Jul/2025 18:59:05] "POST /webhook HTTP/1.1" 200 -
+2025-07-25 18:59:05 - werkzeug - INFO - 127.0.0.1 - - [25/Jul/2025 18:59:05] "POST /webhook HTTP/1.1" 200 -
+2025-07-25 18:59:23 - werkzeug - INFO - 127.0.0.1 - - [25/Jul/2025 18:59:23] "POST /webhook HTTP/1.1" 200 -
+2025-07-25 18:59:25 - webhook - INFO - Processing message for tenant: `tenant_one` (WA ID: 254715849926)
+2025-07-25 18:59:25 - webhook - INFO - Received text message from 254715849926 (Tenant: `tenant_one`): 'operating hours?'
+2025-07-25 18:59:26 - ai_utils - INFO - Found relevant FAQ (Q='What are your business hours?...') with similarity 0.87 for tenant 'tenant_one'.
+2025-07-25 18:59:26 - ai_utils - INFO - Responded with FAQ for tenant 'tenant_one'. Q: 'What are your business hours?...', A: 'We operate from 9 AM to 6 PM, Monday to Friday....'
+2025-07-25 18:59:27 - whatsapp_api_utils - INFO - Message sent to 254715849926: We operate from 9 AM to 6 PM, Monday to Friday....
+2025-07-25 18:59:27 - db.conversations_crud - INFO - Message added to DB from user (Tenant: tenant_one): 'operating hours?...'
+2025-07-25 18:59:27 - webhook - INFO - Processed and responded to 254715849926 (Tenant: `tenant_one`).
+2025-07-25 18:59:27 - werkzeug - INFO - 127.0.0.1 - - [25/Jul/2025 18:59:27] "POST /webhook HTTP/1.1" 200 -
+2025-07-25 18:59:29 - werkzeug - INFO - 127.0.0.1 - - [25/Jul/2025 18:59:29] "POST /webhook HTTP/1.1" 200 -
+2025-07-25 18:59:29 - werkzeug - INFO - 127.0.0.1 - - [25/Jul/2025 18:59:29] "POST /webhook HTTP/1.1" 200 -
+2025-07-25 18:59:37 - webhook - INFO - Processing message for tenant: `tenant_one` (WA ID: 254715849926)
+2025-07-25 18:59:37 - webhook - INFO - Received text message from 254715849926 (Tenant: `tenant_one`): 'fuck asians'
+2025-07-25 18:59:37 - ai_utils - INFO - No relevant FAQs above threshold (0.75) for query 'fuck asians...'. Max similarity: 0.50.
+2025-07-25 18:59:37 - ai_utils - INFO - No relevant FAQ found for user query for tenant 'tenant_one'. Proceeding with generative AI.
+2025-07-25 18:59:39 - ai_utils - INFO - Generative AI response for tenant 'tenant_one': I'm sorry, but I need more information to answer y...
+2025-07-25 18:59:40 - werkzeug - INFO - 127.0.0.1 - - [25/Jul/2025 18:59:40] "POST /webhook HTTP/1.1" 200 -
+2025-07-25 18:59:40 - whatsapp_api_utils - INFO - Message sent to 254715849926: I'm sorry, but I need more information to answer y...
+2025-07-25 18:59:40 - db.conversations_crud - INFO - Message added to DB from user (Tenant: tenant_one): 'fuck asians...'
+2025-07-25 18:59:40 - webhook - INFO - Processed and responded to 254715849926 (Tenant: `tenant_one`).
+2025-07-25 18:59:40 - werkzeug - INFO - 127.0.0.1 - - [25/Jul/2025 18:59:40] "POST /webhook HTTP/1.1" 200 -
+2025-07-25 18:59:41 - werkzeug - INFO - 127.0.0.1 - - [25/Jul/2025 18:59:41] "POST /webhook HTTP/1.1" 200 -
+2025-07-25 18:59:42 - werkzeug - INFO - 127.0.0.1 - - [25/Jul/2025 18:59:42] "POST /webhook HTTP/1.1" 200 -
+2025-07-25 18:59:42 - werkzeug - INFO - 127.0.0.1 - - [25/Jul/2025 18:59:42] "POST /webhook HTTP/1.1" 200 -
+2025-07-25 18:59:59 - webhook - INFO - Processing message for tenant: `tenant_one` (WA ID: 254715849926)
+2025-07-25 18:59:59 - webhook - INFO - Received text message from 254715849926 (Tenant: `tenant_one`): 'supprt'
+2025-07-25 18:59:59 - ai_utils - INFO - No relevant FAQs above threshold (0.75) for query 'supprt...'. Max similarity: 0.74.
+2025-07-25 18:59:59 - ai_utils - INFO - No relevant FAQ found for user query for tenant 'tenant_one'. Proceeding with generative AI.
+2025-07-25 18:59:59 - webhook - INFO - Processing message for tenant: `tenant_one` (WA ID: 254120006501)
+2025-07-25 18:59:59 - webhook - INFO - Received text message from 254120006501 (Tenant: `tenant_one`): 'Hey'
+2025-07-25 19:00:00 - ai_utils - INFO - No relevant FAQs above threshold (0.75) for query 'Hey...'. Max similarity: 0.66.
+2025-07-25 19:00:00 - ai_utils - INFO - No relevant FAQ found for user query for tenant 'tenant_one'. Proceeding with generative AI.
+2025-07-25 19:00:01 - ai_utils - INFO - Generative AI response for tenant 'tenant_one': I apologize, but I cannot answer your question abo...
+2025-07-25 19:00:01 - ai_utils - INFO - Generative AI response for tenant 'tenant_one': Hey there! How can I help you today?
+...
+2025-07-25 19:00:02 - whatsapp_api_utils - INFO - Message sent to 254715849926: I apologize, but I cannot answer your question abo...
+2025-07-25 19:00:02 - db.conversations_crud - INFO - Message added to DB from user (Tenant: tenant_one): 'supprt...'
+2025-07-25 19:00:02 - webhook - INFO - Processed and responded to 254715849926 (Tenant: `tenant_one`).
+2025-07-25 19:00:02 - werkzeug - INFO - 127.0.0.1 - - [25/Jul/2025 19:00:02] "POST /webhook HTTP/1.1" 200 -
+2025-07-25 19:00:02 - whatsapp_api_utils - INFO - Message sent to 254120006501: Hey there! How can I help you today?
+...
+2025-07-25 19:00:02 - db.conversations_crud - INFO - Message added to DB from user (Tenant: tenant_one): 'Hey...'
+2025-07-25 19:00:02 - webhook - INFO - Processed and responded to 254120006501 (Tenant: `tenant_one`).
+2025-07-25 19:00:02 - werkzeug - INFO - 127.0.0.1 - - [25/Jul/2025 19:00:02] "POST /webhook HTTP/1.1" 200 -
+2025-07-25 19:00:03 - werkzeug - INFO - 127.0.0.1 - - [25/Jul/2025 19:00:03] "POST /webhook HTTP/1.1" 200 -
+2025-07-25 19:00:03 - werkzeug - INFO - 127.0.0.1 - - [25/Jul/2025 19:00:03] "POST /webhook HTTP/1.1" 200 -
+2025-07-25 19:00:03 - werkzeug - INFO - 127.0.0.1 - - [25/Jul/2025 19:00:03] "POST /webhook HTTP/1.1" 200 -
+2025-07-25 19:00:04 - werkzeug - INFO - 127.0.0.1 - - [25/Jul/2025 19:00:04] "POST /webhook HTTP/1.1" 200 -
+2025-07-25 19:00:08 - werkzeug - INFO - 127.0.0.1 - - [25/Jul/2025 19:00:08] "POST /webhook HTTP/1.1" 200 -
+2025-07-25 19:00:16 - webhook - INFO - Processing message for tenant: `tenant_one` (WA ID: 254120006501)
+2025-07-25 19:00:16 - webhook - INFO - Received text message from 254120006501 (Tenant: `tenant_one`): 'Customer support'
+2025-07-25 19:00:16 - ai_utils - INFO - Found relevant FAQ (Q='How do I contact support?...') with similarity 0.79 for tenant 'tenant_one'.
+2025-07-25 19:00:16 - ai_utils - INFO - Responded with FAQ for tenant 'tenant_one'. Q: 'How do I contact support?...', A: 'Please email support@example.com....'
+2025-07-25 19:00:18 - whatsapp_api_utils - INFO - Message sent to 254120006501: Please email support@example.com....
+2025-07-25 19:00:18 - db.conversations_crud - INFO - Message added to DB from user (Tenant: tenant_one): 'Customer support...'
+2025-07-25 19:00:18 - webhook - INFO - Processed and responded to 254120006501 (Tenant: `tenant_one`).
+2025-07-25 19:00:18 - werkzeug - INFO - 127.0.0.1 - - [25/Jul/2025 19:00:18] "POST /webhook HTTP/1.1" 200 -
+2025-07-25 19:00:19 - werkzeug - INFO - 127.0.0.1 - - [25/Jul/2025 19:00:19] "POST /webhook HTTP/1.1" 200 -
+2025-07-25 19:00:19 - werkzeug - INFO - 127.0.0.1 - - [25/Jul/2025 19:00:19] "POST /webhook HTTP/1.1" 200 -
+2025-07-25 19:01:36 - werkzeug - INFO - 127.0.0.1 - - [25/Jul/2025 19:01:36] "[32mGET / HTTP/1.1[0m" 302 -
+2025-07-25 19:01:36 - werkzeug - INFO - 127.0.0.1 - - [25/Jul/2025 19:01:36] "GET /login?next=/ HTTP/1.1" 200 -
+2025-07-25 19:01:36 - werkzeug - INFO - 127.0.0.1 - - [25/Jul/2025 19:01:36] "GET /static/css/main.css HTTP/1.1" 200 -
+2025-07-25 19:01:36 - werkzeug - INFO - 127.0.0.1 - - [25/Jul/2025 19:01:36] "GET /static/js/firebase-init.js HTTP/1.1" 200 -
+2025-07-25 19:01:37 - werkzeug - INFO - 127.0.0.1 - - [25/Jul/2025 19:01:37] "[33mGET /favicon.ico HTTP/1.1[0m" 404 -
+2025-07-25 19:03:49 - auth - INFO - Firebase ID token verified for UID: jbTE1abJKaZC3XqeG2bTWRxzkHq2, Email: admin@example.com
+2025-07-25 19:03:49 - auth - INFO - Firebase ID token verified for UID: jbTE1abJKaZC3XqeG2bTWRxzkHq2, Email: admin@example.com
+2025-07-25 19:03:49 - auth - INFO - Existing user 'admin@example.com' found. Logging in.
+2025-07-25 19:03:49 - werkzeug - INFO - 127.0.0.1 - - [25/Jul/2025 19:03:49] "POST /api/login HTTP/1.1" 200 -
+2025-07-25 19:03:49 - auth - INFO - Existing user 'admin@example.com' found. Logging in.
+2025-07-25 19:03:49 - werkzeug - INFO - 127.0.0.1 - - [25/Jul/2025 19:03:49] "POST /api/login HTTP/1.1" 200 -
+2025-07-25 19:03:49 - werkzeug - INFO - 127.0.0.1 - - [25/Jul/2025 19:03:49] "[32mGET / HTTP/1.1[0m" 302 -
+2025-07-25 19:03:49 - werkzeug - INFO - 127.0.0.1 - - [25/Jul/2025 19:03:49] "[32mGET / HTTP/1.1[0m" 302 -
+2025-07-25 19:03:49 - werkzeug - INFO - 127.0.0.1 - - [25/Jul/2025 19:03:49] "GET /login?next=/ HTTP/1.1" 200 -
+2025-07-25 19:03:49 - werkzeug - INFO - 127.0.0.1 - - [25/Jul/2025 19:03:49] "[36mGET /static/css/main.css HTTP/1.1[0m" 304 -
+2025-07-25 19:03:49 - werkzeug - INFO - 127.0.0.1 - - [25/Jul/2025 19:03:49] "[36mGET /static/js/firebase-init.js HTTP/1.1[0m" 304 -
+2025-07-25 19:03:50 - auth - INFO - Firebase ID token verified for UID: jbTE1abJKaZC3XqeG2bTWRxzkHq2, Email: admin@example.com
+2025-07-25 19:03:50 - auth - INFO - Existing user 'admin@example.com' found. Logging in.
+2025-07-25 19:03:50 - werkzeug - INFO - 127.0.0.1 - - [25/Jul/2025 19:03:50] "POST /api/login HTTP/1.1" 200 -
+2025-07-25 19:03:50 - werkzeug - INFO - 127.0.0.1 - - [25/Jul/2025 19:03:50] "[32mGET / HTTP/1.1[0m" 302 -
+2025-07-25 19:03:50 - werkzeug - INFO - 127.0.0.1 - - [25/Jul/2025 19:03:50] "GET /login?next=/ HTTP/1.1" 200 -
+2025-07-25 19:03:50 - werkzeug - INFO - 127.0.0.1 - - [25/Jul/2025 19:03:50] "[36mGET /static/css/main.css HTTP/1.1[0m" 304 -
+2025-07-25 19:03:50 - werkzeug - INFO - 127.0.0.1 - - [25/Jul/2025 19:03:50] "[36mGET /static/js/firebase-init.js HTTP/1.1[0m" 304 -
+2025-07-25 19:03:50 - auth - INFO - Firebase ID token verified for UID: jbTE1abJKaZC3XqeG2bTWRxzkHq2, Email: admin@example.com
+2025-07-25 19:03:50 - auth - INFO - Existing user 'admin@example.com' found. Logging in.
+2025-07-25 19:03:50 - werkzeug - INFO - 127.0.0.1 - - [25/Jul/2025 19:03:50] "POST /api/login HTTP/1.1" 200 -
+2025-07-25 19:03:50 - werkzeug - INFO - 127.0.0.1 - - [25/Jul/2025 19:03:50] "[32mGET / HTTP/1.1[0m" 302 -
+2025-07-25 19:03:50 - werkzeug - INFO - 127.0.0.1 - - [25/Jul/2025 19:03:50] "GET /login?next=/ HTTP/1.1" 200 -
+2025-07-25 19:03:50 - werkzeug - INFO - 127.0.0.1 - - [25/Jul/2025 19:03:50] "[36mGET /static/css/main.css HTTP/1.1[0m" 304 -
+2025-07-25 19:03:50 - werkzeug - INFO - 127.0.0.1 - - [25/Jul/2025 19:03:50] "[36mGET /static/js/firebase-init.js HTTP/1.1[0m" 304 -
+2025-07-25 19:03:50 - auth - INFO - Firebase ID token verified for UID: jbTE1abJKaZC3XqeG2bTWRxzkHq2, Email: admin@example.com
+2025-07-25 19:03:50 - auth - INFO - Existing user 'admin@example.com' found. Logging in.
+2025-07-25 19:03:50 - werkzeug - INFO - 127.0.0.1 - - [25/Jul/2025 19:03:50] "POST /api/login HTTP/1.1" 200 -
+2025-07-25 19:03:50 - werkzeug - INFO - 127.0.0.1 - - [25/Jul/2025 19:03:50] "[32mGET / HTTP/1.1[0m" 302 -
+2025-07-25 19:03:50 - werkzeug - INFO - 127.0.0.1 - - [25/Jul/2025 19:03:50] "GET /login?next=/ HTTP/1.1" 200 -
+2025-07-25 19:03:50 - werkzeug - INFO - 127.0.0.1 - - [25/Jul/2025 19:03:50] "[36mGET /static/css/main.css HTTP/1.1[0m" 304 -
+2025-07-25 19:03:50 - werkzeug - INFO - 127.0.0.1 - - [25/Jul/2025 19:03:50] "[36mGET /static/js/firebase-init.js HTTP/1.1[0m" 304 -
+2025-07-25 19:03:51 - auth - INFO - Firebase ID token verified for UID: jbTE1abJKaZC3XqeG2bTWRxzkHq2, Email: admin@example.com
+2025-07-25 19:03:51 - auth - INFO - Existing user 'admin@example.com' found. Logging in.
+2025-07-25 19:03:51 - werkzeug - INFO - 127.0.0.1 - - [25/Jul/2025 19:03:51] "POST /api/login HTTP/1.1" 200 -
+2025-07-25 19:03:51 - werkzeug - INFO - 127.0.0.1 - - [25/Jul/2025 19:03:51] "[32mGET / HTTP/1.1[0m" 302 -
+2025-07-25 19:03:51 - werkzeug - INFO - 127.0.0.1 - - [25/Jul/2025 19:03:51] "GET /login?next=/ HTTP/1.1" 200 -
+2025-07-25 19:03:51 - werkzeug - INFO - 127.0.0.1 - - [25/Jul/2025 19:03:51] "[36mGET /static/css/main.css HTTP/1.1[0m" 304 -
+2025-07-25 19:03:51 - werkzeug - INFO - 127.0.0.1 - - [25/Jul/2025 19:03:51] "[36mGET /static/js/firebase-init.js HTTP/1.1[0m" 304 -
+2025-07-25 19:03:51 - auth - INFO - Firebase ID token verified for UID: jbTE1abJKaZC3XqeG2bTWRxzkHq2, Email: admin@example.com
+2025-07-25 19:03:51 - auth - INFO - Existing user 'admin@example.com' found. Logging in.
+2025-07-25 19:03:51 - werkzeug - INFO - 127.0.0.1 - - [25/Jul/2025 19:03:51] "POST /api/login HTTP/1.1" 200 -
+2025-07-25 19:03:51 - werkzeug - INFO - 127.0.0.1 - - [25/Jul/2025 19:03:51] "[32mGET / HTTP/1.1[0m" 302 -
+2025-07-25 19:03:51 - werkzeug - INFO - 127.0.0.1 - - [25/Jul/2025 19:03:51] "GET /login?next=/ HTTP/1.1" 200 -
+2025-07-25 19:03:51 - werkzeug - INFO - 127.0.0.1 - - [25/Jul/2025 19:03:51] "[36mGET /static/css/main.css HTTP/1.1[0m" 304 -
+2025-07-25 19:03:51 - werkzeug - INFO - 127.0.0.1 - - [25/Jul/2025 19:03:51] "[36mGET /static/js/firebase-init.js HTTP/1.1[0m" 304 -
+2025-07-25 19:03:51 - auth - INFO - Firebase ID token verified for UID: jbTE1abJKaZC3XqeG2bTWRxzkHq2, Email: admin@example.com
+2025-07-25 19:03:51 - auth - INFO - Existing user 'admin@example.com' found. Logging in.
+2025-07-25 19:03:51 - werkzeug - INFO - 127.0.0.1 - - [25/Jul/2025 19:03:51] "POST /api/login HTTP/1.1" 200 -
+2025-07-25 19:03:51 - werkzeug - INFO - 127.0.0.1 - - [25/Jul/2025 19:03:51] "[32mGET / HTTP/1.1[0m" 302 -
+2025-07-25 19:03:52 - werkzeug - INFO - 127.0.0.1 - - [25/Jul/2025 19:03:52] "GET /login?next=/ HTTP/1.1" 200 -
+2025-07-25 19:03:52 - werkzeug - INFO - 127.0.0.1 - - [25/Jul/2025 19:03:52] "[36mGET /static/css/main.css HTTP/1.1[0m" 304 -
+2025-07-25 19:03:52 - werkzeug - INFO - 127.0.0.1 - - [25/Jul/2025 19:03:52] "[36mGET /static/js/firebase-init.js HTTP/1.1[0m" 304 -
+2025-07-25 19:03:52 - auth - INFO - Firebase ID token verified for UID: jbTE1abJKaZC3XqeG2bTWRxzkHq2, Email: admin@example.com
+2025-07-25 19:03:52 - auth - INFO - Existing user 'admin@example.com' found. Logging in.
+2025-07-25 19:03:52 - werkzeug - INFO - 127.0.0.1 - - [25/Jul/2025 19:03:52] "POST /api/login HTTP/1.1" 200 -
+2025-07-25 19:03:52 - werkzeug - INFO - 127.0.0.1 - - [25/Jul/2025 19:03:52] "[32mGET / HTTP/1.1[0m" 302 -
+2025-07-25 19:03:52 - werkzeug - INFO - 127.0.0.1 - - [25/Jul/2025 19:03:52] "GET /login?next=/ HTTP/1.1" 200 -
+2025-07-25 19:03:52 - werkzeug - INFO - 127.0.0.1 - - [25/Jul/2025 19:03:52] "[36mGET /static/css/main.css HTTP/1.1[0m" 304 -
+2025-07-25 19:03:52 - werkzeug - INFO - 127.0.0.1 - - [25/Jul/2025 19:03:52] "[36mGET /static/js/firebase-init.js HTTP/1.1[0m" 304 -
+2025-07-25 19:03:52 - auth - INFO - Firebase ID token verified for UID: jbTE1abJKaZC3XqeG2bTWRxzkHq2, Email: admin@example.com
+2025-07-25 19:03:52 - auth - INFO - Existing user 'admin@example.com' found. Logging in.
+2025-07-25 19:03:52 - werkzeug - INFO - 127.0.0.1 - - [25/Jul/2025 19:03:52] "POST /api/login HTTP/1.1" 200 -
+2025-07-25 19:03:52 - werkzeug - INFO - 127.0.0.1 - - [25/Jul/2025 19:03:52] "[32mGET / HTTP/1.1[0m" 302 -
+2025-07-25 19:03:52 - werkzeug - INFO - 127.0.0.1 - - [25/Jul/2025 19:03:52] "GET /login?next=/ HTTP/1.1" 200 -
+2025-07-25 19:03:52 - werkzeug - INFO - 127.0.0.1 - - [25/Jul/2025 19:03:52] "[36mGET /static/css/main.css HTTP/1.1[0m" 304 -
+2025-07-25 19:03:52 - werkzeug - INFO - 127.0.0.1 - - [25/Jul/2025 19:03:52] "[36mGET /static/js/firebase-init.js HTTP/1.1[0m" 304 -
+2025-07-25 19:03:53 - auth - INFO - Firebase ID token verified for UID: jbTE1abJKaZC3XqeG2bTWRxzkHq2, Email: admin@example.com
+2025-07-25 19:03:53 - auth - INFO - Existing user 'admin@example.com' found. Logging in.
+2025-07-25 19:03:53 - werkzeug - INFO - 127.0.0.1 - - [25/Jul/2025 19:03:53] "POST /api/login HTTP/1.1" 200 -
+2025-07-25 19:03:53 - werkzeug - INFO - 127.0.0.1 - - [25/Jul/2025 19:03:53] "[32mGET / HTTP/1.1[0m" 302 -
+2025-07-25 19:03:53 - werkzeug - INFO - 127.0.0.1 - - [25/Jul/2025 19:03:53] "GET /login?next=/ HTTP/1.1" 200 -
+2025-07-25 19:03:53 - werkzeug - INFO - 127.0.0.1 - - [25/Jul/2025 19:03:53] "[36mGET /static/css/main.css HTTP/1.1[0m" 304 -
+2025-07-25 19:03:53 - werkzeug - INFO - 127.0.0.1 - - [25/Jul/2025 19:03:53] "[36mGET /static/js/firebase-init.js HTTP/1.1[0m" 304 -
+2025-07-25 19:03:53 - auth - INFO - Firebase ID token verified for UID: jbTE1abJKaZC3XqeG2bTWRxzkHq2, Email: admin@example.com
+2025-07-25 19:03:53 - auth - INFO - Existing user 'admin@example.com' found. Logging in.
+2025-07-25 19:03:53 - werkzeug - INFO - 127.0.0.1 - - [25/Jul/2025 19:03:53] "POST /api/login HTTP/1.1" 200 -
+2025-07-25 19:03:53 - werkzeug - INFO - 127.0.0.1 - - [25/Jul/2025 19:03:53] "[32mGET / HTTP/1.1[0m" 302 -
+2025-07-25 19:03:53 - werkzeug - INFO - 127.0.0.1 - - [25/Jul/2025 19:03:53] "GET /login?next=/ HTTP/1.1" 200 -
+2025-07-25 19:03:53 - werkzeug - INFO - 127.0.0.1 - - [25/Jul/2025 19:03:53] "[36mGET /static/css/main.css HTTP/1.1[0m" 304 -
+2025-07-25 19:03:53 - werkzeug - INFO - 127.0.0.1 - - [25/Jul/2025 19:03:53] "[36mGET /static/js/firebase-init.js HTTP/1.1[0m" 304 -
+2025-07-25 19:03:54 - auth - INFO - Firebase ID token verified for UID: jbTE1abJKaZC3XqeG2bTWRxzkHq2, Email: admin@example.com
+2025-07-25 19:03:54 - auth - INFO - Existing user 'admin@example.com' found. Logging in.
+2025-07-25 19:03:54 - werkzeug - INFO - 127.0.0.1 - - [25/Jul/2025 19:03:54] "POST /api/login HTTP/1.1" 200 -
+2025-07-25 19:03:54 - werkzeug - INFO - 127.0.0.1 - - [25/Jul/2025 19:03:54] "[32mGET / HTTP/1.1[0m" 302 -
+2025-07-25 19:03:54 - werkzeug - INFO - 127.0.0.1 - - [25/Jul/2025 19:03:54] "GET /login?next=/ HTTP/1.1" 200 -
+2025-07-25 19:03:54 - werkzeug - INFO - 127.0.0.1 - - [25/Jul/2025 19:03:54] "[36mGET /static/js/firebase-init.js HTTP/1.1[0m" 304 -
+2025-07-25 19:03:54 - werkzeug - INFO - 127.0.0.1 - - [25/Jul/2025 19:03:54] "[36mGET /static/css/main.css HTTP/1.1[0m" 304 -
+2025-07-25 19:03:54 - auth - INFO - Firebase ID token verified for UID: jbTE1abJKaZC3XqeG2bTWRxzkHq2, Email: admin@example.com
+2025-07-25 19:03:54 - auth - INFO - Existing user 'admin@example.com' found. Logging in.
+2025-07-25 19:03:54 - werkzeug - INFO - 127.0.0.1 - - [25/Jul/2025 19:03:54] "POST /api/login HTTP/1.1" 200 -
+2025-07-25 19:03:54 - werkzeug - INFO - 127.0.0.1 - - [25/Jul/2025 19:03:54] "[32mGET / HTTP/1.1[0m" 302 -
+2025-07-25 19:03:54 - werkzeug - INFO - 127.0.0.1 - - [25/Jul/2025 19:03:54] "GET /login?next=/ HTTP/1.1" 200 -
+2025-07-25 19:03:54 - werkzeug - INFO - 127.0.0.1 - - [25/Jul/2025 19:03:54] "[36mGET /static/css/main.css HTTP/1.1[0m" 304 -
+2025-07-25 19:03:54 - werkzeug - INFO - 127.0.0.1 - - [25/Jul/2025 19:03:54] "[36mGET /static/js/firebase-init.js HTTP/1.1[0m" 304 -
+2025-07-25 19:03:54 - auth - INFO - Firebase ID token verified for UID: jbTE1abJKaZC3XqeG2bTWRxzkHq2, Email: admin@example.com
+2025-07-25 19:03:54 - auth - INFO - Existing user 'admin@example.com' found. Logging in.
+2025-07-25 19:03:54 - werkzeug - INFO - 127.0.0.1 - - [25/Jul/2025 19:03:54] "POST /api/login HTTP/1.1" 200 -
+2025-07-25 19:03:54 - werkzeug - INFO - 127.0.0.1 - - [25/Jul/2025 19:03:54] "[32mGET / HTTP/1.1[0m" 302 -
+2025-07-25 19:03:54 - werkzeug - INFO - 127.0.0.1 - - [25/Jul/2025 19:03:54] "GET /login?next=/ HTTP/1.1" 200 -
+2025-07-25 19:03:54 - werkzeug - INFO - 127.0.0.1 - - [25/Jul/2025 19:03:54] "[36mGET /static/css/main.css HTTP/1.1[0m" 304 -
+2025-07-25 19:03:54 - werkzeug - INFO - 127.0.0.1 - - [25/Jul/2025 19:03:54] "[36mGET /static/js/firebase-init.js HTTP/1.1[0m" 304 -
+2025-07-25 19:03:55 - auth - INFO - Firebase ID token verified for UID: jbTE1abJKaZC3XqeG2bTWRxzkHq2, Email: admin@example.com
+2025-07-25 19:03:55 - auth - INFO - Existing user 'admin@example.com' found. Logging in.
+2025-07-25 19:03:55 - werkzeug - INFO - 127.0.0.1 - - [25/Jul/2025 19:03:55] "POST /api/login HTTP/1.1" 200 -
+2025-07-25 19:03:55 - werkzeug - INFO - 127.0.0.1 - - [25/Jul/2025 19:03:55] "[32mGET / HTTP/1.1[0m" 302 -
+2025-07-25 19:03:55 - werkzeug - INFO - 127.0.0.1 - - [25/Jul/2025 19:03:55] "GET /login?next=/ HTTP/1.1" 200 -
+2025-07-25 19:03:55 - werkzeug - INFO - 127.0.0.1 - - [25/Jul/2025 19:03:55] "[36mGET /static/css/main.css HTTP/1.1[0m" 304 -
+2025-07-25 19:03:55 - werkzeug - INFO - 127.0.0.1 - - [25/Jul/2025 19:03:55] "[36mGET /static/js/firebase-init.js HTTP/1.1[0m" 304 -
+2025-07-25 19:03:55 - auth - INFO - Firebase ID token verified for UID: jbTE1abJKaZC3XqeG2bTWRxzkHq2, Email: admin@example.com
+2025-07-25 19:03:55 - auth - INFO - Existing user 'admin@example.com' found. Logging in.
+2025-07-25 19:03:55 - werkzeug - INFO - 127.0.0.1 - - [25/Jul/2025 19:03:55] "POST /api/login HTTP/1.1" 200 -
+2025-07-25 19:03:55 - werkzeug - INFO - 127.0.0.1 - - [25/Jul/2025 19:03:55] "[32mGET / HTTP/1.1[0m" 302 -
+2025-07-25 19:03:55 - werkzeug - INFO - 127.0.0.1 - - [25/Jul/2025 19:03:55] "GET /login?next=/ HTTP/1.1" 200 -
+2025-07-25 19:03:55 - werkzeug - INFO - 127.0.0.1 - - [25/Jul/2025 19:03:55] "[36mGET /static/css/main.css HTTP/1.1[0m" 304 -
+2025-07-25 19:03:55 - werkzeug - INFO - 127.0.0.1 - - [25/Jul/2025 19:03:55] "[36mGET /static/js/firebase-init.js HTTP/1.1[0m" 304 -
+2025-07-25 19:03:55 - auth - INFO - Firebase ID token verified for UID: jbTE1abJKaZC3XqeG2bTWRxzkHq2, Email: admin@example.com
+2025-07-25 19:03:55 - auth - INFO - Existing user 'admin@example.com' found. Logging in.
+2025-07-25 19:03:55 - werkzeug - INFO - 127.0.0.1 - - [25/Jul/2025 19:03:55] "POST /api/login HTTP/1.1" 200 -
+2025-07-25 19:03:55 - werkzeug - INFO - 127.0.0.1 - - [25/Jul/2025 19:03:55] "[32mGET / HTTP/1.1[0m" 302 -
+2025-07-25 19:03:55 - werkzeug - INFO - 127.0.0.1 - - [25/Jul/2025 19:03:55] "GET /login?next=/ HTTP/1.1" 200 -
+2025-07-25 19:03:55 - werkzeug - INFO - 127.0.0.1 - - [25/Jul/2025 19:03:55] "[36mGET /static/js/firebase-init.js HTTP/1.1[0m" 304 -
+2025-07-25 19:03:55 - werkzeug - INFO - 127.0.0.1 - - [25/Jul/2025 19:03:55] "[36mGET /static/css/main.css HTTP/1.1[0m" 304 -
+2025-07-25 19:03:56 - auth - INFO - Firebase ID token verified for UID: jbTE1abJKaZC3XqeG2bTWRxzkHq2, Email: admin@example.com
+2025-07-25 19:03:56 - auth - INFO - Existing user 'admin@example.com' found. Logging in.
+2025-07-25 19:03:56 - werkzeug - INFO - 127.0.0.1 - - [25/Jul/2025 19:03:56] "POST /api/login HTTP/1.1" 200 -
+2025-07-25 19:03:56 - werkzeug - INFO - 127.0.0.1 - - [25/Jul/2025 19:03:56] "[32mGET / HTTP/1.1[0m" 302 -
+2025-07-25 19:03:56 - werkzeug - INFO - 127.0.0.1 - - [25/Jul/2025 19:03:56] "GET /login?next=/ HTTP/1.1" 200 -
+2025-07-25 19:03:56 - werkzeug - INFO - 127.0.0.1 - - [25/Jul/2025 19:03:56] "[36mGET /static/css/main.css HTTP/1.1[0m" 304 -
+2025-07-25 19:03:56 - werkzeug - INFO - 127.0.0.1 - - [25/Jul/2025 19:03:56] "[36mGET /static/js/firebase-init.js HTTP/1.1[0m" 304 -
+2025-07-25 19:03:56 - auth - INFO - Firebase ID token verified for UID: jbTE1abJKaZC3XqeG2bTWRxzkHq2, Email: admin@example.com
+2025-07-25 19:03:56 - auth - INFO - Existing user 'admin@example.com' found. Logging in.
+2025-07-25 19:03:56 - werkzeug - INFO - 127.0.0.1 - - [25/Jul/2025 19:03:56] "POST /api/login HTTP/1.1" 200 -
+2025-07-25 19:03:56 - werkzeug - INFO - 127.0.0.1 - - [25/Jul/2025 19:03:56] "[32mGET / HTTP/1.1[0m" 302 -
+2025-07-25 19:03:56 - werkzeug - INFO - 127.0.0.1 - - [25/Jul/2025 19:03:56] "GET /login?next=/ HTTP/1.1" 200 -
+2025-07-25 19:03:56 - werkzeug - INFO - 127.0.0.1 - - [25/Jul/2025 19:03:56] "[36mGET /static/css/main.css HTTP/1.1[0m" 304 -
+2025-07-25 19:03:56 - werkzeug - INFO - 127.0.0.1 - - [25/Jul/2025 19:03:56] "[36mGET /static/js/firebase-init.js HTTP/1.1[0m" 304 -
+2025-07-25 19:03:57 - auth - INFO - Firebase ID token verified for UID: jbTE1abJKaZC3XqeG2bTWRxzkHq2, Email: admin@example.com
+2025-07-25 19:03:57 - auth - INFO - Existing user 'admin@example.com' found. Logging in.
+2025-07-25 19:03:57 - werkzeug - INFO - 127.0.0.1 - - [25/Jul/2025 19:03:57] "POST /api/login HTTP/1.1" 200 -
+2025-07-25 19:03:57 - werkzeug - INFO - 127.0.0.1 - - [25/Jul/2025 19:03:57] "[32mGET / HTTP/1.1[0m" 302 -
+2025-07-25 19:03:57 - werkzeug - INFO - 127.0.0.1 - - [25/Jul/2025 19:03:57] "GET /login?next=/ HTTP/1.1" 200 -
+2025-07-25 19:03:57 - werkzeug - INFO - 127.0.0.1 - - [25/Jul/2025 19:03:57] "[36mGET /static/css/main.css HTTP/1.1[0m" 304 -
+2025-07-25 19:03:57 - werkzeug - INFO - 127.0.0.1 - - [25/Jul/2025 19:03:57] "[36mGET /static/js/firebase-init.js HTTP/1.1[0m" 304 -
+2025-07-25 19:03:57 - auth - INFO - Firebase ID token verified for UID: jbTE1abJKaZC3XqeG2bTWRxzkHq2, Email: admin@example.com
+2025-07-25 19:03:57 - auth - INFO - Existing user 'admin@example.com' found. Logging in.
+2025-07-25 19:03:57 - werkzeug - INFO - 127.0.0.1 - - [25/Jul/2025 19:03:57] "POST /api/login HTTP/1.1" 200 -
+2025-07-25 19:03:57 - werkzeug - INFO - 127.0.0.1 - - [25/Jul/2025 19:03:57] "[32mGET / HTTP/1.1[0m" 302 -
+2025-07-25 19:03:57 - werkzeug - INFO - 127.0.0.1 - - [25/Jul/2025 19:03:57] "GET /login?next=/ HTTP/1.1" 200 -
+2025-07-25 19:03:57 - werkzeug - INFO - 127.0.0.1 - - [25/Jul/2025 19:03:57] "[36mGET /static/css/main.css HTTP/1.1[0m" 304 -
+2025-07-25 19:03:57 - werkzeug - INFO - 127.0.0.1 - - [25/Jul/2025 19:03:57] "[36mGET /static/js/firebase-init.js HTTP/1.1[0m" 304 -
+2025-07-25 19:03:57 - auth - INFO - Firebase ID token verified for UID: jbTE1abJKaZC3XqeG2bTWRxzkHq2, Email: admin@example.com
+2025-07-25 19:03:57 - auth - INFO - Existing user 'admin@example.com' found. Logging in.
+2025-07-25 19:03:57 - werkzeug - INFO - 127.0.0.1 - - [25/Jul/2025 19:03:57] "POST /api/login HTTP/1.1" 200 -
+2025-07-25 19:03:57 - werkzeug - INFO - 127.0.0.1 - - [25/Jul/2025 19:03:57] "[32mGET / HTTP/1.1[0m" 302 -
+2025-07-25 19:03:57 - werkzeug - INFO - 127.0.0.1 - - [25/Jul/2025 19:03:57] "GET /login?next=/ HTTP/1.1" 200 -
+2025-07-25 19:03:57 - werkzeug - INFO - 127.0.0.1 - - [25/Jul/2025 19:03:57] "[36mGET /static/css/main.css HTTP/1.1[0m" 304 -
+2025-07-25 19:03:57 - werkzeug - INFO - 127.0.0.1 - - [25/Jul/2025 19:03:57] "[36mGET /static/js/firebase-init.js HTTP/1.1[0m" 304 -
+2025-07-25 19:03:58 - auth - INFO - Firebase ID token verified for UID: jbTE1abJKaZC3XqeG2bTWRxzkHq2, Email: admin@example.com
+2025-07-25 19:03:58 - auth - INFO - Existing user 'admin@example.com' found. Logging in.
+2025-07-25 19:03:58 - werkzeug - INFO - 127.0.0.1 - - [25/Jul/2025 19:03:58] "POST /api/login HTTP/1.1" 200 -
+2025-07-25 19:03:58 - werkzeug - INFO - 127.0.0.1 - - [25/Jul/2025 19:03:58] "[32mGET / HTTP/1.1[0m" 302 -
+2025-07-25 19:03:58 - werkzeug - INFO - 127.0.0.1 - - [25/Jul/2025 19:03:58] "GET /login?next=/ HTTP/1.1" 200 -
+2025-07-25 19:03:58 - werkzeug - INFO - 127.0.0.1 - - [25/Jul/2025 19:03:58] "[36mGET /static/css/main.css HTTP/1.1[0m" 304 -
+2025-07-25 19:03:58 - werkzeug - INFO - 127.0.0.1 - - [25/Jul/2025 19:03:58] "[36mGET /static/js/firebase-init.js HTTP/1.1[0m" 304 -
+2025-07-25 19:03:58 - auth - INFO - Firebase ID token verified for UID: jbTE1abJKaZC3XqeG2bTWRxzkHq2, Email: admin@example.com
+2025-07-25 19:03:58 - auth - INFO - Existing user 'admin@example.com' found. Logging in.
+2025-07-25 19:03:58 - werkzeug - INFO - 127.0.0.1 - - [25/Jul/2025 19:03:58] "POST /api/login HTTP/1.1" 200 -
+2025-07-25 19:03:58 - werkzeug - INFO - 127.0.0.1 - - [25/Jul/2025 19:03:58] "[32mGET / HTTP/1.1[0m" 302 -
+2025-07-25 19:03:58 - werkzeug - INFO - 127.0.0.1 - - [25/Jul/2025 19:03:58] "GET /login?next=/ HTTP/1.1" 200 -
+2025-07-25 19:03:58 - werkzeug - INFO - 127.0.0.1 - - [25/Jul/2025 19:03:58] "[36mGET /static/css/main.css HTTP/1.1[0m" 304 -
+2025-07-25 19:03:58 - werkzeug - INFO - 127.0.0.1 - - [25/Jul/2025 19:03:58] "[36mGET /static/js/firebase-init.js HTTP/1.1[0m" 304 -
+2025-07-25 19:03:58 - auth - INFO - Firebase ID token verified for UID: jbTE1abJKaZC3XqeG2bTWRxzkHq2, Email: admin@example.com
+2025-07-25 19:03:58 - auth - INFO - Existing user 'admin@example.com' found. Logging in.
+2025-07-25 19:03:58 - werkzeug - INFO - 127.0.0.1 - - [25/Jul/2025 19:03:58] "POST /api/login HTTP/1.1" 200 -
+2025-07-25 19:03:58 - werkzeug - INFO - 127.0.0.1 - - [25/Jul/2025 19:03:58] "[32mGET / HTTP/1.1[0m" 302 -
+2025-07-25 19:03:58 - werkzeug - INFO - 127.0.0.1 - - [25/Jul/2025 19:03:58] "GET /login?next=/ HTTP/1.1" 200 -
+2025-07-25 19:03:58 - werkzeug - INFO - 127.0.0.1 - - [25/Jul/2025 19:03:58] "[36mGET /static/css/main.css HTTP/1.1[0m" 304 -
+2025-07-25 19:03:58 - werkzeug - INFO - 127.0.0.1 - - [25/Jul/2025 19:03:58] "[36mGET /static/js/firebase-init.js HTTP/1.1[0m" 304 -
+2025-07-25 19:03:59 - auth - INFO - Firebase ID token verified for UID: jbTE1abJKaZC3XqeG2bTWRxzkHq2, Email: admin@example.com
+2025-07-25 19:03:59 - auth - INFO - Existing user 'admin@example.com' found. Logging in.
+2025-07-25 19:03:59 - werkzeug - INFO - 127.0.0.1 - - [25/Jul/2025 19:03:59] "POST /api/login HTTP/1.1" 200 -
+2025-07-25 19:03:59 - werkzeug - INFO - 127.0.0.1 - - [25/Jul/2025 19:03:59] "[32mGET / HTTP/1.1[0m" 302 -
+2025-07-25 19:03:59 - werkzeug - INFO - 127.0.0.1 - - [25/Jul/2025 19:03:59] "GET /login?next=/ HTTP/1.1" 200 -
+2025-07-25 19:03:59 - werkzeug - INFO - 127.0.0.1 - - [25/Jul/2025 19:03:59] "[36mGET /static/css/main.css HTTP/1.1[0m" 304 -
+2025-07-25 19:03:59 - werkzeug - INFO - 127.0.0.1 - - [25/Jul/2025 19:03:59] "[36mGET /static/js/firebase-init.js HTTP/1.1[0m" 304 -
+2025-07-25 19:06:29 - auth - INFO - Firebase ID token verified for UID: yShNWVV7KCaouEvKixzCIiPfO512, Email: framuigai@gmail.com
+2025-07-25 19:06:29 - auth - INFO - Firebase ID token verified for UID: yShNWVV7KCaouEvKixzCIiPfO512, Email: framuigai@gmail.com
+2025-07-25 19:06:29 - auth - INFO - New Firebase user 'framuigai@gmail.com' detected. Adding to local DB.
+2025-07-25 19:06:29 - auth - INFO - New Firebase user 'framuigai@gmail.com' detected. Adding to local DB.
+2025-07-25 19:06:29 - db.users_crud - INFO - User 'framuigai@gmail.com' added successfully.
+2025-07-25 19:06:29 - werkzeug - INFO - 127.0.0.1 - - [25/Jul/2025 19:06:29] "POST /api/login HTTP/1.1" 200 -
+2025-07-25 19:06:29 - db.users_crud - WARNING - User email already exists: framuigai@gmail.com
+2025-07-25 19:06:29 - auth - ERROR - Failed to add user 'framuigai@gmail.com' to local DB.
+2025-07-25 19:06:29 - werkzeug - INFO - 127.0.0.1 - - [25/Jul/2025 19:06:29] "[35m[1mPOST /api/login HTTP/1.1[0m" 500 -
+2025-07-25 19:06:29 - admin_routes - INFO - User framuigai@gmail.com accessed dashboard.
+2025-07-25 19:06:30 - werkzeug - INFO - 127.0.0.1 - - [25/Jul/2025 19:06:30] "GET / HTTP/1.1" 200 -
+2025-07-25 19:06:30 - werkzeug - INFO - 127.0.0.1 - - [25/Jul/2025 19:06:30] "[36mGET /static/js/dashboard.js HTTP/1.1[0m" 304 -
+2025-07-25 19:06:30 - werkzeug - INFO - 127.0.0.1 - - [25/Jul/2025 19:06:30] "[36mGET /static/css/main.css HTTP/1.1[0m" 304 -
+2025-07-25 19:06:30 - werkzeug - INFO - 127.0.0.1 - - [25/Jul/2025 19:06:30] "[36mGET /static/js/firebase-init.js HTTP/1.1[0m" 304 -
+2025-07-25 19:06:30 - werkzeug - INFO - 127.0.0.1 - - [25/Jul/2025 19:06:30] "[33mGET /static/favicon.ico HTTP/1.1[0m" 404 -
+2025-07-25 19:10:00 - werkzeug - INFO - 127.0.0.1 - - [25/Jul/2025 19:10:00] "[32mGET / HTTP/1.1[0m" 302 -
+2025-07-25 19:10:00 - werkzeug - INFO - 127.0.0.1 - - [25/Jul/2025 19:10:00] "GET /login?next=/ HTTP/1.1" 200 -
+2025-07-25 19:10:00 - werkzeug - INFO - 127.0.0.1 - - [25/Jul/2025 19:10:00] "GET /static/css/main.css HTTP/1.1" 200 -
+2025-07-25 19:10:00 - werkzeug - INFO - 127.0.0.1 - - [25/Jul/2025 19:10:00] "GET /static/js/firebase-init.js HTTP/1.1" 200 -
+2025-07-25 19:10:01 - werkzeug - INFO - 127.0.0.1 - - [25/Jul/2025 19:10:01] "[33mGET /favicon.ico HTTP/1.1[0m" 404 -
+2025-07-25 19:10:23 - auth - INFO - Firebase ID token verified for UID: jbTE1abJKaZC3XqeG2bTWRxzkHq2, Email: admin@example.com
+2025-07-25 19:10:23 - auth - INFO - Firebase ID token verified for UID: jbTE1abJKaZC3XqeG2bTWRxzkHq2, Email: admin@example.com
+2025-07-25 19:10:23 - auth - INFO - Existing user 'admin@example.com' found. Logging in.
+2025-07-25 19:10:23 - werkzeug - INFO - 127.0.0.1 - - [25/Jul/2025 19:10:23] "POST /api/login HTTP/1.1" 200 -
+2025-07-25 19:10:23 - auth - INFO - Existing user 'admin@example.com' found. Logging in.
+2025-07-25 19:10:23 - werkzeug - INFO - 127.0.0.1 - - [25/Jul/2025 19:10:23] "POST /api/login HTTP/1.1" 200 -
+2025-07-25 19:10:23 - werkzeug - INFO - 127.0.0.1 - - [25/Jul/2025 19:10:23] "[32mGET / HTTP/1.1[0m" 302 -
+2025-07-25 19:10:23 - werkzeug - INFO - 127.0.0.1 - - [25/Jul/2025 19:10:23] "GET /login?next=/ HTTP/1.1" 200 -
+2025-07-25 19:10:23 - werkzeug - INFO - 127.0.0.1 - - [25/Jul/2025 19:10:23] "[36mGET /static/css/main.css HTTP/1.1[0m" 304 -
+2025-07-25 19:10:23 - werkzeug - INFO - 127.0.0.1 - - [25/Jul/2025 19:10:23] "[36mGET /static/js/firebase-init.js HTTP/1.1[0m" 304 -
+2025-07-25 19:10:23 - auth - INFO - Firebase ID token verified for UID: jbTE1abJKaZC3XqeG2bTWRxzkHq2, Email: admin@example.com
+2025-07-25 19:10:23 - auth - INFO - Existing user 'admin@example.com' found. Logging in.
+2025-07-25 19:10:23 - werkzeug - INFO - 127.0.0.1 - - [25/Jul/2025 19:10:23] "POST /api/login HTTP/1.1" 200 -
+2025-07-25 19:10:23 - werkzeug - INFO - 127.0.0.1 - - [25/Jul/2025 19:10:23] "[32mGET / HTTP/1.1[0m" 302 -
+2025-07-25 19:10:23 - werkzeug - INFO - 127.0.0.1 - - [25/Jul/2025 19:10:23] "GET /login?next=/ HTTP/1.1" 200 -
+2025-07-25 19:10:23 - werkzeug - INFO - 127.0.0.1 - - [25/Jul/2025 19:10:23] "[36mGET /static/css/main.css HTTP/1.1[0m" 304 -
+2025-07-25 19:10:23 - werkzeug - INFO - 127.0.0.1 - - [25/Jul/2025 19:10:23] "[36mGET /static/js/firebase-init.js HTTP/1.1[0m" 304 -
+2025-07-25 19:10:23 - auth - INFO - Firebase ID token verified for UID: jbTE1abJKaZC3XqeG2bTWRxzkHq2, Email: admin@example.com
+2025-07-25 19:10:23 - auth - INFO - Existing user 'admin@example.com' found. Logging in.
+2025-07-25 19:10:23 - werkzeug - INFO - 127.0.0.1 - - [25/Jul/2025 19:10:23] "POST /api/login HTTP/1.1" 200 -
+2025-07-25 19:10:23 - werkzeug - INFO - 127.0.0.1 - - [25/Jul/2025 19:10:23] "[32mGET / HTTP/1.1[0m" 302 -
+2025-07-25 19:10:23 - werkzeug - INFO - 127.0.0.1 - - [25/Jul/2025 19:10:23] "GET /login?next=/ HTTP/1.1" 200 -
+2025-07-25 19:10:24 - werkzeug - INFO - 127.0.0.1 - - [25/Jul/2025 19:10:24] "[36mGET /static/js/firebase-init.js HTTP/1.1[0m" 304 -
+2025-07-25 19:10:24 - werkzeug - INFO - 127.0.0.1 - - [25/Jul/2025 19:10:24] "[36mGET /static/css/main.css HTTP/1.1[0m" 304 -
+2025-07-25 19:10:24 - auth - INFO - Firebase ID token verified for UID: jbTE1abJKaZC3XqeG2bTWRxzkHq2, Email: admin@example.com
+2025-07-25 19:10:24 - auth - INFO - Existing user 'admin@example.com' found. Logging in.
+2025-07-25 19:10:24 - werkzeug - INFO - 127.0.0.1 - - [25/Jul/2025 19:10:24] "POST /api/login HTTP/1.1" 200 -
+2025-07-25 19:10:24 - werkzeug - INFO - 127.0.0.1 - - [25/Jul/2025 19:10:24] "[32mGET / HTTP/1.1[0m" 302 -
+2025-07-25 19:10:24 - werkzeug - INFO - 127.0.0.1 - - [25/Jul/2025 19:10:24] "GET /login?next=/ HTTP/1.1" 200 -
+2025-07-25 19:10:24 - werkzeug - INFO - 127.0.0.1 - - [25/Jul/2025 19:10:24] "[36mGET /static/css/main.css HTTP/1.1[0m" 304 -
+2025-07-25 19:10:24 - werkzeug - INFO - 127.0.0.1 - - [25/Jul/2025 19:10:24] "[36mGET /static/js/firebase-init.js HTTP/1.1[0m" 304 -
+2025-07-25 19:10:24 - auth - INFO - Firebase ID token verified for UID: jbTE1abJKaZC3XqeG2bTWRxzkHq2, Email: admin@example.com
+2025-07-25 19:10:24 - auth - INFO - Existing user 'admin@example.com' found. Logging in.
+2025-07-25 19:10:24 - werkzeug - INFO - 127.0.0.1 - - [25/Jul/2025 19:10:24] "POST /api/login HTTP/1.1" 200 -
+2025-07-25 19:10:24 - werkzeug - INFO - 127.0.0.1 - - [25/Jul/2025 19:10:24] "[32mGET / HTTP/1.1[0m" 302 -
+2025-07-25 19:10:24 - werkzeug - INFO - 127.0.0.1 - - [25/Jul/2025 19:10:24] "GET /login?next=/ HTTP/1.1" 200 -
+2025-07-25 19:10:24 - werkzeug - INFO - 127.0.0.1 - - [25/Jul/2025 19:10:24] "[36mGET /static/css/main.css HTTP/1.1[0m" 304 -
+2025-07-25 19:10:24 - werkzeug - INFO - 127.0.0.1 - - [25/Jul/2025 19:10:24] "[36mGET /static/js/firebase-init.js HTTP/1.1[0m" 304 -
+2025-07-25 19:10:25 - auth - INFO - Firebase ID token verified for UID: jbTE1abJKaZC3XqeG2bTWRxzkHq2, Email: admin@example.com
+2025-07-25 19:10:25 - auth - INFO - Existing user 'admin@example.com' found. Logging in.
+2025-07-25 19:10:25 - werkzeug - INFO - 127.0.0.1 - - [25/Jul/2025 19:10:25] "POST /api/login HTTP/1.1" 200 -
+2025-07-25 19:10:25 - werkzeug - INFO - 127.0.0.1 - - [25/Jul/2025 19:10:25] "[32mGET / HTTP/1.1[0m" 302 -
+2025-07-25 19:10:25 - werkzeug - INFO - 127.0.0.1 - - [25/Jul/2025 19:10:25] "GET /login?next=/ HTTP/1.1" 200 -
+2025-07-25 19:10:25 - werkzeug - INFO - 127.0.0.1 - - [25/Jul/2025 19:10:25] "[36mGET /static/css/main.css HTTP/1.1[0m" 304 -
+2025-07-25 19:10:25 - werkzeug - INFO - 127.0.0.1 - - [25/Jul/2025 19:10:25] "[36mGET /static/js/firebase-init.js HTTP/1.1[0m" 304 -
+2025-07-25 19:10:25 - auth - INFO - Firebase ID token verified for UID: jbTE1abJKaZC3XqeG2bTWRxzkHq2, Email: admin@example.com
+2025-07-25 19:10:25 - auth - INFO - Existing user 'admin@example.com' found. Logging in.
+2025-07-25 19:10:25 - werkzeug - INFO - 127.0.0.1 - - [25/Jul/2025 19:10:25] "POST /api/login HTTP/1.1" 200 -
+2025-07-25 19:10:25 - werkzeug - INFO - 127.0.0.1 - - [25/Jul/2025 19:10:25] "[32mGET / HTTP/1.1[0m" 302 -
+2025-07-25 19:10:25 - werkzeug - INFO - 127.0.0.1 - - [25/Jul/2025 19:10:25] "GET /login?next=/ HTTP/1.1" 200 -
+2025-07-25 19:10:25 - werkzeug - INFO - 127.0.0.1 - - [25/Jul/2025 19:10:25] "[36mGET /static/css/main.css HTTP/1.1[0m" 304 -
+2025-07-25 19:10:25 - werkzeug - INFO - 127.0.0.1 - - [25/Jul/2025 19:10:25] "[36mGET /static/js/firebase-init.js HTTP/1.1[0m" 304 -
+2025-07-25 19:12:29 - werkzeug - INFO - 127.0.0.1 - - [25/Jul/2025 19:12:29] "[32mGET / HTTP/1.1[0m" 302 -
+2025-07-25 19:12:29 - werkzeug - INFO - 127.0.0.1 - - [25/Jul/2025 19:12:29] "GET /login?next=/ HTTP/1.1" 200 -
+2025-07-25 19:12:30 - werkzeug - INFO - 127.0.0.1 - - [25/Jul/2025 19:12:30] "GET /static/css/main.css HTTP/1.1" 200 -
+2025-07-25 19:12:30 - werkzeug - INFO - 127.0.0.1 - - [25/Jul/2025 19:12:30] "GET /static/js/firebase-init.js HTTP/1.1" 200 -
+2025-07-25 19:12:30 - werkzeug - INFO - 127.0.0.1 - - [25/Jul/2025 19:12:30] "[33mGET /favicon.ico HTTP/1.1[0m" 404 -
+2025-07-25 19:12:38 - auth - INFO - Firebase ID token verified for UID: yShNWVV7KCaouEvKixzCIiPfO512, Email: framuigai@gmail.com
+2025-07-25 19:12:38 - auth - INFO - Firebase ID token verified for UID: yShNWVV7KCaouEvKixzCIiPfO512, Email: framuigai@gmail.com
+2025-07-25 19:12:38 - auth - INFO - Existing user 'framuigai@gmail.com' found. Logging in.
+2025-07-25 19:12:38 - werkzeug - INFO - 127.0.0.1 - - [25/Jul/2025 19:12:38] "POST /api/login HTTP/1.1" 200 -
+2025-07-25 19:12:38 - auth - INFO - Existing user 'framuigai@gmail.com' found. Logging in.
+2025-07-25 19:12:38 - werkzeug - INFO - 127.0.0.1 - - [25/Jul/2025 19:12:38] "POST /api/login HTTP/1.1" 200 -
+2025-07-25 19:12:39 - admin_routes - INFO - User framuigai@gmail.com accessed dashboard.
+2025-07-25 19:12:39 - werkzeug - INFO - 127.0.0.1 - - [25/Jul/2025 19:12:39] "GET / HTTP/1.1" 200 -
+2025-07-25 19:12:39 - admin_routes - INFO - User framuigai@gmail.com accessed dashboard.
+2025-07-25 19:12:39 - werkzeug - INFO - 127.0.0.1 - - [25/Jul/2025 19:12:39] "GET / HTTP/1.1" 200 -
+2025-07-25 19:12:39 - werkzeug - INFO - 127.0.0.1 - - [25/Jul/2025 19:12:39] "[36mGET /static/css/main.css HTTP/1.1[0m" 304 -
+2025-07-25 19:12:39 - werkzeug - INFO - 127.0.0.1 - - [25/Jul/2025 19:12:39] "[36mGET /static/js/firebase-init.js HTTP/1.1[0m" 304 -
+2025-07-25 19:12:39 - werkzeug - INFO - 127.0.0.1 - - [25/Jul/2025 19:12:39] "GET /static/js/dashboard.js HTTP/1.1" 200 -
+2025-07-25 19:12:39 - werkzeug - INFO - 127.0.0.1 - - [25/Jul/2025 19:12:39] "[33mGET /static/favicon.ico HTTP/1.1[0m" 404 -
+2025-07-25 19:12:43 - werkzeug - INFO - 127.0.0.1 - - [25/Jul/2025 19:12:43] "GET /manage_faqs HTTP/1.1" 200 -
+2025-07-25 19:12:43 - werkzeug - INFO - 127.0.0.1 - - [25/Jul/2025 19:12:43] "[36mGET /static/css/main.css HTTP/1.1[0m" 304 -
+2025-07-25 19:12:43 - werkzeug - INFO - 127.0.0.1 - - [25/Jul/2025 19:12:43] "[36mGET /static/js/firebase-init.js HTTP/1.1[0m" 304 -
+2025-07-25 19:13:34 - werkzeug - INFO - 127.0.0.1 - - [25/Jul/2025 19:13:34] "GET /all-conversations HTTP/1.1" 200 -
+2025-07-25 19:13:34 - werkzeug - INFO - 127.0.0.1 - - [25/Jul/2025 19:13:34] "[36mGET /static/js/firebase-init.js HTTP/1.1[0m" 304 -
+2025-07-25 19:13:34 - werkzeug - INFO - 127.0.0.1 - - [25/Jul/2025 19:13:34] "[36mGET /static/css/main.css HTTP/1.1[0m" 304 -
+2025-07-25 19:13:38 - db.conversations_crud - ERROR - Error getting conversation history for 254120006501: datatype mismatch
+Traceback (most recent call last):
+  File "C:\Users\Admin\PycharmProjects\whatsappbot\db\conversations_crud.py", line 46, in get_conversation_history_by_whatsapp_id
+    cursor.execute(query, tuple(params))
+sqlite3.IntegrityError: datatype mismatch
+2025-07-25 19:13:38 - werkzeug - INFO - 127.0.0.1 - - [25/Jul/2025 19:13:38] "[32mGET /view_conversation/254120006501 HTTP/1.1[0m" 302 -
+2025-07-25 19:13:38 - werkzeug - INFO - 127.0.0.1 - - [25/Jul/2025 19:13:38] "GET /all-conversations HTTP/1.1" 200 -
+2025-07-25 19:13:38 - werkzeug - INFO - 127.0.0.1 - - [25/Jul/2025 19:13:38] "[36mGET /static/css/main.css HTTP/1.1[0m" 304 -
+2025-07-25 19:13:38 - werkzeug - INFO - 127.0.0.1 - - [25/Jul/2025 19:13:38] "[36mGET /static/js/firebase-init.js HTTP/1.1[0m" 304 -
+2025-07-25 19:13:42 - db.conversations_crud - ERROR - Error getting conversation history for 254715849926: datatype mismatch
+Traceback (most recent call last):
+  File "C:\Users\Admin\PycharmProjects\whatsappbot\db\conversations_crud.py", line 46, in get_conversation_history_by_whatsapp_id
+    cursor.execute(query, tuple(params))
+sqlite3.IntegrityError: datatype mismatch
+2025-07-25 19:13:42 - werkzeug - INFO - 127.0.0.1 - - [25/Jul/2025 19:13:42] "[32mGET /view_conversation/254715849926 HTTP/1.1[0m" 302 -
+2025-07-25 19:13:42 - werkzeug - INFO - 127.0.0.1 - - [25/Jul/2025 19:13:42] "GET /all-conversations HTTP/1.1" 200 -
+2025-07-25 19:13:42 - werkzeug - INFO - 127.0.0.1 - - [25/Jul/2025 19:13:42] "[36mGET /static/css/main.css HTTP/1.1[0m" 304 -
+2025-07-25 19:13:42 - werkzeug - INFO - 127.0.0.1 - - [25/Jul/2025 19:13:42] "[36mGET /static/js/firebase-init.js HTTP/1.1[0m" 304 -
+2025-07-25 19:14:01 - webhook - INFO - Processing message for tenant: `tenant_one` (WA ID: 254715849926)
+2025-07-25 19:14:01 - webhook - INFO - Received text message from 254715849926 (Tenant: `tenant_one`): 'trial message'
+2025-07-25 19:14:02 - ai_utils - INFO - No relevant FAQs above threshold (0.75) for query 'trial message...'. Max similarity: 0.59.
+2025-07-25 19:14:02 - ai_utils - INFO - No relevant FAQ found for user query for tenant 'tenant_one'. Proceeding with generative AI.
+2025-07-25 19:14:03 - ai_utils - INFO - Generative AI response for tenant 'tenant_one': I'm sorry, but I need more information to answer y...
+2025-07-25 19:14:04 - whatsapp_api_utils - INFO - Message sent to 254715849926: I'm sorry, but I need more information to answer y...
+2025-07-25 19:14:05 - db.conversations_crud - INFO - Message added to DB from user (Tenant: tenant_one): 'trial message...'
+2025-07-25 19:14:05 - webhook - INFO - Processed and responded to 254715849926 (Tenant: `tenant_one`).
+2025-07-25 19:14:05 - werkzeug - INFO - 127.0.0.1 - - [25/Jul/2025 19:14:05] "POST /webhook HTTP/1.1" 200 -
+2025-07-25 19:14:06 - werkzeug - INFO - 127.0.0.1 - - [25/Jul/2025 19:14:06] "POST /webhook HTTP/1.1" 200 -
+2025-07-25 19:14:06 - werkzeug - INFO - 127.0.0.1 - - [25/Jul/2025 19:14:06] "POST /webhook HTTP/1.1" 200 -
+2025-07-25 19:14:07 - werkzeug - INFO - 127.0.0.1 - - [25/Jul/2025 19:14:07] "POST /webhook HTTP/1.1" 200 -
+2025-07-25 19:14:15 - werkzeug - INFO - 127.0.0.1 - - [25/Jul/2025 19:14:15] "GET /all-conversations HTTP/1.1" 200 -
+2025-07-25 19:14:15 - werkzeug - INFO - 127.0.0.1 - - [25/Jul/2025 19:14:15] "[36mGET /static/css/main.css HTTP/1.1[0m" 304 -
+2025-07-25 19:14:15 - werkzeug - INFO - 127.0.0.1 - - [25/Jul/2025 19:14:15] "[36mGET /static/js/firebase-init.js HTTP/1.1[0m" 304 -
+2025-07-25 19:14:19 - db.conversations_crud - ERROR - Error getting conversation history for 254715849926: datatype mismatch
+Traceback (most recent call last):
+  File "C:\Users\Admin\PycharmProjects\whatsappbot\db\conversations_crud.py", line 46, in get_conversation_history_by_whatsapp_id
+    cursor.execute(query, tuple(params))
+sqlite3.IntegrityError: datatype mismatch
+2025-07-25 19:14:19 - werkzeug - INFO - 127.0.0.1 - - [25/Jul/2025 19:14:19] "[32mGET /view_conversation/254715849926 HTTP/1.1[0m" 302 -
+2025-07-25 19:14:19 - werkzeug - INFO - 127.0.0.1 - - [25/Jul/2025 19:14:19] "GET /all-conversations HTTP/1.1" 200 -
+2025-07-25 19:14:19 - werkzeug - INFO - 127.0.0.1 - - [25/Jul/2025 19:14:19] "[36mGET /static/css/main.css HTTP/1.1[0m" 304 -
+2025-07-25 19:14:19 - werkzeug - INFO - 127.0.0.1 - - [25/Jul/2025 19:14:19] "[36mGET /static/js/firebase-init.js HTTP/1.1[0m" 304 -
+2025-07-25 19:16:07 - werkzeug - INFO - 127.0.0.1 - - [25/Jul/2025 19:16:07] "GET /view_reports HTTP/1.1" 200 -
+2025-07-25 19:16:08 - werkzeug - INFO - 127.0.0.1 - - [25/Jul/2025 19:16:08] "[36mGET /static/css/main.css HTTP/1.1[0m" 304 -
+2025-07-25 19:16:08 - werkzeug - INFO - 127.0.0.1 - - [25/Jul/2025 19:16:08] "[36mGET /static/js/firebase-init.js HTTP/1.1[0m" 304 -
+2025-07-25 19:16:42 - auth - INFO - User framuigai@gmail.com logged out.
+2025-07-25 19:16:42 - werkzeug - INFO - 127.0.0.1 - - [25/Jul/2025 19:16:42] "[32mGET /logout HTTP/1.1[0m" 302 -
+2025-07-25 19:16:42 - werkzeug - INFO - 127.0.0.1 - - [25/Jul/2025 19:16:42] "GET /login HTTP/1.1" 200 -
+2025-07-25 19:16:42 - werkzeug - INFO - 127.0.0.1 - - [25/Jul/2025 19:16:42] "[36mGET /static/js/firebase-init.js HTTP/1.1[0m" 304 -
+2025-07-25 19:16:42 - werkzeug - INFO - 127.0.0.1 - - [25/Jul/2025 19:16:42] "[36mGET /static/css/main.css HTTP/1.1[0m" 304 -
+2025-07-25 19:20:31 - auth - INFO - Firebase ID token verified for UID: tndy7zbbWsS1cDMuuPSxV7UgDIo2, Email: tenantone@example.com
+2025-07-25 19:20:31 - auth - INFO - Firebase ID token verified for UID: tndy7zbbWsS1cDMuuPSxV7UgDIo2, Email: tenantone@example.com
+2025-07-25 19:20:31 - auth - INFO - New Firebase user 'tenantone@example.com' detected. Adding to local DB.
+2025-07-25 19:20:31 - auth - INFO - New Firebase user 'tenantone@example.com' detected. Adding to local DB.
+2025-07-25 19:20:31 - db.users_crud - INFO - User 'tenantone@example.com' added successfully.
+2025-07-25 19:20:31 - werkzeug - INFO - 127.0.0.1 - - [25/Jul/2025 19:20:31] "POST /api/login HTTP/1.1" 200 -
+2025-07-25 19:20:31 - db.users_crud - WARNING - User email already exists: tenantone@example.com
+2025-07-25 19:20:31 - auth - ERROR - Failed to add user 'tenantone@example.com' to local DB.
+2025-07-25 19:20:31 - werkzeug - INFO - 127.0.0.1 - - [25/Jul/2025 19:20:31] "[35m[1mPOST /api/login HTTP/1.1[0m" 500 -
+2025-07-25 19:20:31 - admin_routes - INFO - User tenantone@example.com accessed dashboard.
+2025-07-25 19:20:31 - werkzeug - INFO - 127.0.0.1 - - [25/Jul/2025 19:20:31] "GET / HTTP/1.1" 200 -
+2025-07-25 19:20:31 - werkzeug - INFO - 127.0.0.1 - - [25/Jul/2025 19:20:31] "[36mGET /static/css/main.css HTTP/1.1[0m" 304 -
+2025-07-25 19:20:31 - werkzeug - INFO - 127.0.0.1 - - [25/Jul/2025 19:20:31] "[36mGET /static/js/dashboard.js HTTP/1.1[0m" 304 -
+2025-07-25 19:20:31 - werkzeug - INFO - 127.0.0.1 - - [25/Jul/2025 19:20:31] "[36mGET /static/js/firebase-init.js HTTP/1.1[0m" 304 -
+2025-07-25 19:20:36 - werkzeug - INFO - 127.0.0.1 - - [25/Jul/2025 19:20:36] "GET /manage_faqs HTTP/1.1" 200 -
+2025-07-25 19:20:36 - werkzeug - INFO - 127.0.0.1 - - [25/Jul/2025 19:20:36] "[36mGET /static/css/main.css HTTP/1.1[0m" 304 -
+2025-07-25 19:20:36 - werkzeug - INFO - 127.0.0.1 - - [25/Jul/2025 19:20:36] "[36mGET /static/js/firebase-init.js HTTP/1.1[0m" 304 -
+2025-07-25 19:20:41 - werkzeug - INFO - 127.0.0.1 - - [25/Jul/2025 19:20:41] "GET /all-conversations HTTP/1.1" 200 -
+2025-07-25 19:20:41 - werkzeug - INFO - 127.0.0.1 - - [25/Jul/2025 19:20:41] "[36mGET /static/css/main.css HTTP/1.1[0m" 304 -
+2025-07-25 19:20:41 - werkzeug - INFO - 127.0.0.1 - - [25/Jul/2025 19:20:41] "[36mGET /static/js/firebase-init.js HTTP/1.1[0m" 304 -
+2025-07-25 19:20:45 - werkzeug - INFO - 127.0.0.1 - - [25/Jul/2025 19:20:45] "GET /view_reports HTTP/1.1" 200 -
+2025-07-25 19:20:45 - werkzeug - INFO - 127.0.0.1 - - [25/Jul/2025 19:20:45] "[36mGET /static/css/main.css HTTP/1.1[0m" 304 -
+2025-07-25 19:20:45 - werkzeug - INFO - 127.0.0.1 - - [25/Jul/2025 19:20:45] "[36mGET /static/js/firebase-init.js HTTP/1.1[0m" 304 -
+2025-07-25 19:20:52 - werkzeug - INFO - 127.0.0.1 - - [25/Jul/2025 19:20:52] "GET /manage_faqs HTTP/1.1" 200 -
+2025-07-25 19:20:52 - werkzeug - INFO - 127.0.0.1 - - [25/Jul/2025 19:20:52] "[36mGET /static/css/main.css HTTP/1.1[0m" 304 -
+2025-07-25 19:20:52 - werkzeug - INFO - 127.0.0.1 - - [25/Jul/2025 19:20:52] "[36mGET /static/js/firebase-init.js HTTP/1.1[0m" 304 -
+2025-07-25 19:21:42 - auth - INFO - User tenantone@example.com logged out.
+2025-07-25 19:21:42 - werkzeug - INFO - 127.0.0.1 - - [25/Jul/2025 19:21:42] "[32mGET /logout HTTP/1.1[0m" 302 -
+2025-07-25 19:21:42 - werkzeug - INFO - 127.0.0.1 - - [25/Jul/2025 19:21:42] "GET /login HTTP/1.1" 200 -
+2025-07-25 19:21:42 - werkzeug - INFO - 127.0.0.1 - - [25/Jul/2025 19:21:42] "[36mGET /static/css/main.css HTTP/1.1[0m" 304 -
+2025-07-25 19:21:42 - werkzeug - INFO - 127.0.0.1 - - [25/Jul/2025 19:21:42] "[36mGET /static/js/firebase-init.js HTTP/1.1[0m" 304 -
+2025-07-25 19:21:58 - auth - INFO - Firebase ID token verified for UID: jbTE1abJKaZC3XqeG2bTWRxzkHq2, Email: admin@example.com
+2025-07-25 19:21:58 - auth - INFO - Firebase ID token verified for UID: jbTE1abJKaZC3XqeG2bTWRxzkHq2, Email: admin@example.com
+2025-07-25 19:21:58 - auth - INFO - Existing user 'admin@example.com' found. Logging in.
+2025-07-25 19:21:58 - werkzeug - INFO - 127.0.0.1 - - [25/Jul/2025 19:21:58] "POST /api/login HTTP/1.1" 200 -
+2025-07-25 19:21:58 - auth - INFO - Existing user 'admin@example.com' found. Logging in.
+2025-07-25 19:21:58 - werkzeug - INFO - 127.0.0.1 - - [25/Jul/2025 19:21:58] "POST /api/login HTTP/1.1" 200 -
+2025-07-25 19:21:58 - werkzeug - INFO - 127.0.0.1 - - [25/Jul/2025 19:21:58] "[32mGET / HTTP/1.1[0m" 302 -
+2025-07-25 19:21:58 - werkzeug - INFO - 127.0.0.1 - - [25/Jul/2025 19:21:58] "GET /login?next=/ HTTP/1.1" 200 -
+2025-07-25 19:21:58 - werkzeug - INFO - 127.0.0.1 - - [25/Jul/2025 19:21:58] "[36mGET /static/css/main.css HTTP/1.1[0m" 304 -
+2025-07-25 19:21:58 - werkzeug - INFO - 127.0.0.1 - - [25/Jul/2025 19:21:58] "[36mGET /static/js/firebase-init.js HTTP/1.1[0m" 304 -
+2025-07-25 19:21:59 - auth - INFO - Firebase ID token verified for UID: jbTE1abJKaZC3XqeG2bTWRxzkHq2, Email: admin@example.com
+2025-07-25 19:21:59 - auth - INFO - Existing user 'admin@example.com' found. Logging in.
+2025-07-25 19:21:59 - werkzeug - INFO - 127.0.0.1 - - [25/Jul/2025 19:21:59] "POST /api/login HTTP/1.1" 200 -
+2025-07-25 19:21:59 - werkzeug - INFO - 127.0.0.1 - - [25/Jul/2025 19:21:59] "[32mGET / HTTP/1.1[0m" 302 -
+2025-07-25 19:21:59 - werkzeug - INFO - 127.0.0.1 - - [25/Jul/2025 19:21:59] "GET /login?next=/ HTTP/1.1" 200 -
+2025-07-25 19:21:59 - werkzeug - INFO - 127.0.0.1 - - [25/Jul/2025 19:21:59] "[36mGET /static/css/main.css HTTP/1.1[0m" 304 -
+2025-07-25 19:21:59 - werkzeug - INFO - 127.0.0.1 - - [25/Jul/2025 19:21:59] "[36mGET /static/js/firebase-init.js HTTP/1.1[0m" 304 -
+2025-07-25 19:22:00 - auth - INFO - Firebase ID token verified for UID: jbTE1abJKaZC3XqeG2bTWRxzkHq2, Email: admin@example.com
+2025-07-25 19:22:00 - auth - INFO - Existing user 'admin@example.com' found. Logging in.
+2025-07-25 19:22:00 - werkzeug - INFO - 127.0.0.1 - - [25/Jul/2025 19:22:00] "POST /api/login HTTP/1.1" 200 -
+2025-07-25 19:22:00 - werkzeug - INFO - 127.0.0.1 - - [25/Jul/2025 19:22:00] "[32mGET / HTTP/1.1[0m" 302 -
+2025-07-25 19:22:00 - werkzeug - INFO - 127.0.0.1 - - [25/Jul/2025 19:22:00] "GET /login?next=/ HTTP/1.1" 200 -
+2025-07-25 19:22:00 - werkzeug - INFO - 127.0.0.1 - - [25/Jul/2025 19:22:00] "[36mGET /static/css/main.css HTTP/1.1[0m" 304 -
+2025-07-25 19:22:00 - werkzeug - INFO - 127.0.0.1 - - [25/Jul/2025 19:22:00] "[36mGET /static/js/firebase-init.js HTTP/1.1[0m" 304 -
+2025-07-25 19:22:05 - werkzeug - INFO - 127.0.0.1 - - [25/Jul/2025 19:22:05] "[32mGET / HTTP/1.1[0m" 302 -
+2025-07-25 19:22:05 - werkzeug - INFO - 127.0.0.1 - - [25/Jul/2025 19:22:05] "GET /login?next=/ HTTP/1.1" 200 -
+2025-07-25 19:22:05 - werkzeug - INFO - 127.0.0.1 - - [25/Jul/2025 19:22:05] "[36mGET /static/css/main.css HTTP/1.1[0m" 304 -
+2025-07-25 19:22:05 - werkzeug - INFO - 127.0.0.1 - - [25/Jul/2025 19:22:05] "[36mGET /static/js/firebase-init.js HTTP/1.1[0m" 304 -
+2025-07-25 19:22:07 - auth - INFO - Firebase ID token verified for UID: jbTE1abJKaZC3XqeG2bTWRxzkHq2, Email: admin@example.com
+2025-07-25 19:22:07 - auth - INFO - Existing user 'admin@example.com' found. Logging in.
+2025-07-25 19:22:07 - werkzeug - INFO - 127.0.0.1 - - [25/Jul/2025 19:22:07] "POST /api/login HTTP/1.1" 200 -
+2025-07-25 19:22:07 - werkzeug - INFO - 127.0.0.1 - - [25/Jul/2025 19:22:07] "[32mGET / HTTP/1.1[0m" 302 -
+2025-07-25 19:22:07 - werkzeug - INFO - 127.0.0.1 - - [25/Jul/2025 19:22:07] "GET /login?next=/ HTTP/1.1" 200 -
+2025-07-25 19:22:07 - werkzeug - INFO - 127.0.0.1 - - [25/Jul/2025 19:22:07] "[36mGET /static/css/main.css HTTP/1.1[0m" 304 -
+2025-07-25 19:22:07 - werkzeug - INFO - 127.0.0.1 - - [25/Jul/2025 19:22:07] "[36mGET /static/js/firebase-init.js HTTP/1.1[0m" 304 -
+2025-07-25 19:22:09 - auth - INFO - Firebase ID token verified for UID: jbTE1abJKaZC3XqeG2bTWRxzkHq2, Email: admin@example.com
+2025-07-25 19:22:09 - auth - INFO - Existing user 'admin@example.com' found. Logging in.
+2025-07-25 19:22:09 - werkzeug - INFO - 127.0.0.1 - - [25/Jul/2025 19:22:09] "POST /api/login HTTP/1.1" 200 -
+2025-07-25 19:22:09 - werkzeug - INFO - 127.0.0.1 - - [25/Jul/2025 19:22:09] "[32mGET / HTTP/1.1[0m" 302 -
+2025-07-25 19:22:09 - werkzeug - INFO - 127.0.0.1 - - [25/Jul/2025 19:22:09] "GET /login?next=/ HTTP/1.1" 200 -
+2025-07-25 19:22:09 - werkzeug - INFO - 127.0.0.1 - - [25/Jul/2025 19:22:09] "[36mGET /static/css/main.css HTTP/1.1[0m" 304 -
+2025-07-25 19:22:09 - werkzeug - INFO - 127.0.0.1 - - [25/Jul/2025 19:22:09] "[36mGET /static/js/firebase-init.js HTTP/1.1[0m" 304 -
+2025-07-25 19:22:36 - werkzeug - INFO - 127.0.0.1 - - [25/Jul/2025 19:22:36] "[32mGET / HTTP/1.1[0m" 302 -
+2025-07-25 19:22:36 - werkzeug - INFO - 127.0.0.1 - - [25/Jul/2025 19:22:36] "GET /login?next=/ HTTP/1.1" 200 -
+2025-07-25 19:22:36 - werkzeug - INFO - 127.0.0.1 - - [25/Jul/2025 19:22:36] "GET /static/css/main.css HTTP/1.1" 200 -
+2025-07-25 19:22:36 - werkzeug - INFO - 127.0.0.1 - - [25/Jul/2025 19:22:36] "GET /static/js/firebase-init.js HTTP/1.1" 200 -
+2025-07-25 19:22:40 - werkzeug - INFO - 127.0.0.1 - - [25/Jul/2025 19:22:40] "[33mGET /favicon.ico HTTP/1.1[0m" 404 -
+2025-07-25 19:23:16 - auth - INFO - Firebase ID token verified for UID: leaZNwRhPLa6HqbHyPnijrGCYHv2, Email: tenanttwo@example.com
+2025-07-25 19:23:16 - auth - INFO - Firebase ID token verified for UID: leaZNwRhPLa6HqbHyPnijrGCYHv2, Email: tenanttwo@example.com
+2025-07-25 19:23:16 - auth - INFO - New Firebase user 'tenanttwo@example.com' detected. Adding to local DB.
+2025-07-25 19:23:16 - auth - INFO - New Firebase user 'tenanttwo@example.com' detected. Adding to local DB.
+2025-07-25 19:23:16 - db.users_crud - INFO - User 'tenanttwo@example.com' added successfully.
+2025-07-25 19:23:16 - werkzeug - INFO - 127.0.0.1 - - [25/Jul/2025 19:23:16] "POST /api/login HTTP/1.1" 200 -
+2025-07-25 19:23:16 - db.users_crud - WARNING - User email already exists: tenanttwo@example.com
+2025-07-25 19:23:16 - auth - ERROR - Failed to add user 'tenanttwo@example.com' to local DB.
+2025-07-25 19:23:16 - werkzeug - INFO - 127.0.0.1 - - [25/Jul/2025 19:23:16] "[35m[1mPOST /api/login HTTP/1.1[0m" 500 -
+2025-07-25 19:23:16 - admin_routes - INFO - User tenanttwo@example.com accessed dashboard.
+2025-07-25 19:23:16 - werkzeug - INFO - 127.0.0.1 - - [25/Jul/2025 19:23:16] "GET / HTTP/1.1" 200 -
+2025-07-25 19:23:16 - werkzeug - INFO - 127.0.0.1 - - [25/Jul/2025 19:23:16] "[36mGET /static/css/main.css HTTP/1.1[0m" 304 -
+2025-07-25 19:23:16 - werkzeug - INFO - 127.0.0.1 - - [25/Jul/2025 19:23:16] "GET /static/js/dashboard.js HTTP/1.1" 200 -
+2025-07-25 19:23:16 - werkzeug - INFO - 127.0.0.1 - - [25/Jul/2025 19:23:16] "[36mGET /static/js/firebase-init.js HTTP/1.1[0m" 304 -
+2025-07-25 19:23:34 - werkzeug - INFO - 127.0.0.1 - - [25/Jul/2025 19:23:34] "[33mGET /static/favicon.ico HTTP/1.1[0m" 404 -
+2025-07-25 19:24:19 - werkzeug - INFO - 127.0.0.1 - - [25/Jul/2025 19:24:19] "GET /manage_faqs HTTP/1.1" 200 -
+2025-07-25 19:24:19 - werkzeug - INFO - 127.0.0.1 - - [25/Jul/2025 19:24:19] "[36mGET /static/css/main.css HTTP/1.1[0m" 304 -
+2025-07-25 19:24:19 - werkzeug - INFO - 127.0.0.1 - - [25/Jul/2025 19:24:19] "[36mGET /static/js/firebase-init.js HTTP/1.1[0m" 304 -
+2025-07-25 19:24:36 - admin_routes - ERROR - FAQ action attempted without tenant_id.
+2025-07-25 19:24:36 - werkzeug - INFO - 127.0.0.1 - - [25/Jul/2025 19:24:36] "[32mPOST /manage_faqs HTTP/1.1[0m" 302 -
+2025-07-25 19:24:36 - werkzeug - INFO - 127.0.0.1 - - [25/Jul/2025 19:24:36] "GET /manage_faqs HTTP/1.1" 200 -
+2025-07-25 19:24:36 - werkzeug - INFO - 127.0.0.1 - - [25/Jul/2025 19:24:36] "[36mGET /static/css/main.css HTTP/1.1[0m" 304 -
+2025-07-25 19:24:36 - werkzeug - INFO - 127.0.0.1 - - [25/Jul/2025 19:24:36] "[36mGET /static/js/firebase-init.js HTTP/1.1[0m" 304 -
+2025-07-25 19:26:18 - werkzeug - INFO - 127.0.0.1 - - [25/Jul/2025 19:26:18] "GET /all-conversations HTTP/1.1" 200 -
+2025-07-25 19:26:18 - werkzeug - INFO - 127.0.0.1 - - [25/Jul/2025 19:26:18] "[36mGET /static/css/main.css HTTP/1.1[0m" 304 -
+2025-07-25 19:26:18 - werkzeug - INFO - 127.0.0.1 - - [25/Jul/2025 19:26:18] "[36mGET /static/js/firebase-init.js HTTP/1.1[0m" 304 -
+2025-07-25 19:26:24 - werkzeug - INFO - 127.0.0.1 - - [25/Jul/2025 19:26:24] "GET /view_reports HTTP/1.1" 200 -
+2025-07-25 19:26:24 - werkzeug - INFO - 127.0.0.1 - - [25/Jul/2025 19:26:24] "[36mGET /static/js/firebase-init.js HTTP/1.1[0m" 304 -
+2025-07-25 19:26:24 - werkzeug - INFO - 127.0.0.1 - - [25/Jul/2025 19:26:24] "[36mGET /static/css/main.css HTTP/1.1[0m" 304 -
+2025-07-26 14:02:40 - db.db_connection - INFO - Checked/Created 'tenants' table.
+2025-07-26 14:02:40 - db.db_connection - INFO - Checked/Created 'users' table with role and password support.
+2025-07-26 14:02:40 - db.db_connection - INFO - Checked/Created 'conversations' table.
+2025-07-26 14:02:40 - db.db_connection - INFO - Checked/Created 'faqs' table.
+2025-07-26 14:02:40 - db.db_connection - INFO - FAQs table ensured and migrated if necessary.
+2025-07-26 14:02:40 - __main__ - INFO - Database initialization complete.
+2025-07-26 14:02:40 - firebase_admin_utils - INFO - Firebase Admin SDK initialized using service account file.
+2025-07-26 14:02:40 - __main__ - INFO - Firebase Admin SDK initialized successfully.
+2025-07-26 14:02:40 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://192.168.100.208:5000
+2025-07-26 14:02:40 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2025-07-26 14:03:09 - webhook - INFO - WEBHOOK_VERIFIED
+2025-07-26 14:03:09 - werkzeug - INFO - 127.0.0.1 - - [26/Jul/2025 14:03:09] "GET /webhook?hub.mode=subscribe&hub.challenge=343289082&hub.verify_token=thisisthesecretverifytokenforfrans0 HTTP/1.1" 200 -
+2025-07-26 14:03:38 - webhook - WARNING - Missing mode, token, or challenge in webhook verification request.
+2025-07-26 14:03:38 - werkzeug - INFO - 127.0.0.1 - - [26/Jul/2025 14:03:38] "[31m[1mGET /webhook HTTP/1.1[0m" 400 -
+2025-07-26 14:03:39 - werkzeug - INFO - 127.0.0.1 - - [26/Jul/2025 14:03:39] "[33mGET /favicon.ico HTTP/1.1[0m" 404 -
+2025-07-26 14:03:42 - werkzeug - INFO - 127.0.0.1 - - [26/Jul/2025 14:03:42] "[32mGET / HTTP/1.1[0m" 302 -
+2025-07-26 14:03:43 - werkzeug - INFO - 127.0.0.1 - - [26/Jul/2025 14:03:43] "GET /login?next=/ HTTP/1.1" 200 -
+2025-07-26 14:03:44 - werkzeug - INFO - 127.0.0.1 - - [26/Jul/2025 14:03:44] "GET /static/js/firebase-init.js HTTP/1.1" 200 -
+2025-07-26 14:03:44 - werkzeug - INFO - 127.0.0.1 - - [26/Jul/2025 14:03:44] "GET /static/css/main.css HTTP/1.1" 200 -
+2025-07-26 14:03:52 - auth - INFO - Firebase ID token verified for UID: yShNWVV7KCaouEvKixzCIiPfO512, Email: framuigai@gmail.com
+2025-07-26 14:03:52 - auth - INFO - Firebase ID token verified for UID: yShNWVV7KCaouEvKixzCIiPfO512, Email: framuigai@gmail.com
+2025-07-26 14:03:52 - auth - INFO - Existing user 'framuigai@gmail.com' found. Logging in.
+2025-07-26 14:03:52 - werkzeug - INFO - 127.0.0.1 - - [26/Jul/2025 14:03:52] "POST /api/login HTTP/1.1" 200 -
+2025-07-26 14:03:52 - auth - INFO - Existing user 'framuigai@gmail.com' found. Logging in.
+2025-07-26 14:03:52 - werkzeug - INFO - 127.0.0.1 - - [26/Jul/2025 14:03:52] "POST /api/login HTTP/1.1" 200 -
+2025-07-26 14:03:53 - admin_routes - INFO - User framuigai@gmail.com accessed dashboard.
+2025-07-26 14:03:53 - werkzeug - INFO - 127.0.0.1 - - [26/Jul/2025 14:03:53] "GET / HTTP/1.1" 200 -
+2025-07-26 14:03:54 - werkzeug - INFO - 127.0.0.1 - - [26/Jul/2025 14:03:54] "[36mGET /static/css/main.css HTTP/1.1[0m" 304 -
+2025-07-26 14:03:54 - werkzeug - INFO - 127.0.0.1 - - [26/Jul/2025 14:03:54] "[36mGET /static/js/firebase-init.js HTTP/1.1[0m" 304 -
+2025-07-26 14:03:54 - werkzeug - INFO - 127.0.0.1 - - [26/Jul/2025 14:03:54] "GET /static/js/dashboard.js HTTP/1.1" 200 -
+2025-07-26 14:03:55 - werkzeug - INFO - 127.0.0.1 - - [26/Jul/2025 14:03:55] "[33mGET /static/favicon.ico HTTP/1.1[0m" 404 -
+2025-07-26 14:04:01 - werkzeug - INFO - 127.0.0.1 - - [26/Jul/2025 14:04:01] "GET /manage_faqs HTTP/1.1" 200 -
+2025-07-26 14:04:03 - werkzeug - INFO - 127.0.0.1 - - [26/Jul/2025 14:04:03] "[36mGET /static/css/main.css HTTP/1.1[0m" 304 -
+2025-07-26 14:04:03 - werkzeug - INFO - 127.0.0.1 - - [26/Jul/2025 14:04:03] "[36mGET /static/js/firebase-init.js HTTP/1.1[0m" 304 -
+2025-07-26 14:04:07 - werkzeug - INFO - 127.0.0.1 - - [26/Jul/2025 14:04:07] "GET /all-conversations HTTP/1.1" 200 -
+2025-07-26 14:04:08 - werkzeug - INFO - 127.0.0.1 - - [26/Jul/2025 14:04:08] "[36mGET /static/css/main.css HTTP/1.1[0m" 304 -
+2025-07-26 14:04:08 - werkzeug - INFO - 127.0.0.1 - - [26/Jul/2025 14:04:08] "[36mGET /static/js/firebase-init.js HTTP/1.1[0m" 304 -
+2025-07-26 14:04:13 - werkzeug - INFO - 127.0.0.1 - - [26/Jul/2025 14:04:13] "GET /view_reports HTTP/1.1" 200 -
+2025-07-26 14:04:13 - werkzeug - INFO - 127.0.0.1 - - [26/Jul/2025 14:04:13] "[36mGET /static/css/main.css HTTP/1.1[0m" 304 -
+2025-07-26 14:04:13 - werkzeug - INFO - 127.0.0.1 - - [26/Jul/2025 14:04:13] "[36mGET /static/js/firebase-init.js HTTP/1.1[0m" 304 -
+2025-07-26 14:04:18 - auth - INFO - User framuigai@gmail.com logged out.
+2025-07-26 14:04:18 - werkzeug - INFO - 127.0.0.1 - - [26/Jul/2025 14:04:18] "[32mGET /logout HTTP/1.1[0m" 302 -
+2025-07-26 14:04:18 - werkzeug - INFO - 127.0.0.1 - - [26/Jul/2025 14:04:18] "GET /login HTTP/1.1" 200 -
+2025-07-26 14:04:19 - werkzeug - INFO - 127.0.0.1 - - [26/Jul/2025 14:04:19] "[36mGET /static/css/main.css HTTP/1.1[0m" 304 -
+2025-07-26 14:04:19 - werkzeug - INFO - 127.0.0.1 - - [26/Jul/2025 14:04:19] "[36mGET /static/js/firebase-init.js HTTP/1.1[0m" 304 -

@@ -15,7 +15,6 @@
     {{ moment.include_moment() }}
     {{ moment.locale('en') }}
 
-    <!-- ✅ Inject Firebase Config for All Pages -->
     <script>
         const firebaseConfig = {
             apiKey: "{{ FIREBASE_API_KEY }}",
@@ -37,14 +36,16 @@
             {% if current_user.is_authenticated %}
                 <span class="welcome-message">Welcome, {{ current_user.email }}!</span>
                 <a href="{{ url_for('admin_routes.dashboard') }}">Dashboard</a>
-                {% if current_user.role == 'admin' %}
-                    <a href="{{ url_for('admin_routes.manage_clients') }}">Manage Clients</a>
+                {% if current_user.role == 'super_admin' %}
+                    <a href="{{ url_for('admin_routes.manage_client_admins') }}">Manage Tenant Admins</a>
+                {% endif %}
+                {% if current_user.role in ['admin', 'super_admin'] %}
                     <a href="{{ url_for('admin_routes.manage_users') }}">Manage Users</a>
                 {% endif %}
+                <a href="{{ url_for('admin_routes.manage_clients') }}">Manage Clients</a>
                 <a href="{{ url_for('admin_routes.manage_faqs') }}">Manage FAQs</a>
                 <a href="{{ url_for('admin_routes.all_conversations') }}">Conversations</a>
                 <a href="{{ url_for('admin_routes.view_reports') }}">Reports</a>
-                <!-- ✅ Fix: Logout button with ID -->
                 <a href="#" id="logout-button">Logout</a>
             {% else %}
                 <a href="{{ url_for('auth.login') }}">Login</a>
@@ -66,7 +67,6 @@
     <footer><p>&copy; 2025 WhatsApp Bot Admin. All rights reserved.</p></footer>
 </div>
 
-<!-- ✅ Firebase Initialization -->
 <script src="{{ url_for('static', filename='js/firebase-init.js') }}"></script>
 </body>
 </html>

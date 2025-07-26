@@ -19,13 +19,17 @@
         <div class="mb-3">
             <label class="form-label">Role:</label>
             <select name="role" class="form-select" required>
-                <option value="client">Client</option>
-                <option value="admin">Admin</option>
+                {% if current_user.role == 'super_admin' %}
+                    <option value="client">Client</option>
+                    <option value="admin">Tenant Admin</option>
+                {% elif current_user.role == 'admin' %}
+                    <option value="client">Client</option>
+                {% endif %}
             </select>
         </div>
         <div class="mb-3">
             <label class="form-label">Tenant:</label>
-            <select name="tenant_id" class="form-select">
+            <select name="tenant_id" class="form-select" {% if current_user.role == 'admin' %}required{% endif %}>
                 <option value="">None (For Super Admin)</option>
                 {% for tenant in tenants %}
                 <option value="{{ tenant['tenant_id'] }}">{{ tenant['tenant_name'] }}</option>
@@ -64,7 +68,7 @@
 
                         <select name="role" class="form-select d-inline-block mb-1" style="width: 130px;">
                             <option value="client" {{ 'selected' if user['role'] == 'client' else '' }}>Client</option>
-                            <option value="admin" {{ 'selected' if user['role'] == 'admin' else '' }}>Admin</option>
+                            <option value="admin" {{ 'selected' if user['role'] == 'admin' else '' }}>Tenant Admin</option>
                         </select>
 
                         <select name="tenant_id" class="form-select d-inline-block mb-1" style="width: 150px;">

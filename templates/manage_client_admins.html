@@ -1,0 +1,75 @@
+{% extends "base.html" %}
+{% block title %}Manage Tenant Admins{% endblock %}
+{% block body_content %}
+<div class="container mt-4">
+    <h2>Manage Tenant Admins</h2>
+    <p class="text-muted">Only Super Admin can manage tenant admins.</p>
+    <hr>
+
+    <!-- ✅ Add Tenant Admin Form -->
+    <h4>Add Tenant Admin</h4>
+    <form method="POST" action="{{ url_for('admin_routes.manage_client_admins') }}" class="mb-4">
+        <input type="hidden" name="action" value="add">
+        <div class="mb-3">
+            <label>Email:</label>
+            <input type="email" name="email" class="form-control" required>
+        </div>
+        <div class="mb-3">
+            <label>Password:</label>
+            <input type="password" name="password" class="form-control" required>
+        </div>
+        <div class="mb-3">
+            <label>Tenant:</label>
+            <select name="tenant_id" class="form-select" required>
+                {% for tenant in tenants %}
+                <option value="{{ tenant['tenant_id'] }}">{{ tenant['tenant_name'] }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <button type="submit" class="btn btn-primary">Add Tenant Admin</button>
+    </form>
+
+    <hr>
+
+    <!-- ✅ Existing Tenant Admins Table -->
+    <h4>Existing Tenant Admins</h4>
+    <table class="table table-bordered table-hover align-middle">
+        <thead class="table-dark">
+            <tr>
+                <th>ID</th>
+                <th>Email</th>
+                <th>Tenant</th>
+                <th style="width: 30%">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% if admins %}
+                {% for admin in admins %}
+                <tr>
+                    <td>{{ admin['id'] }}</td>
+                    <td>{{ admin['email'] }}</td>
+                    <td>
+                        {% for tenant in tenants %}
+                            {% if tenant['tenant_id'] == admin['tenant_id'] %}
+                                {{ tenant['tenant_name'] }}
+                            {% endif %}
+                        {% endfor %}
+                    </td>
+                    <td>
+                        <form method="POST" action="{{ url_for('admin_routes.manage_client_admins') }}" class="d-inline-block">
+                            <input type="hidden" name="action" value="delete">
+                            <input type="hidden" name="user_id" value="{{ admin['id'] }}">
+                            <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure you want to delete this tenant admin?');">Delete</button>
+                        </form>
+                    </td>
+                </tr>
+                {% endfor %}
+            {% else %}
+                <tr>
+                    <td colspan="4" class="text-center text-muted">No tenant admins found.</td>
+                </tr>
+            {% endif %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}
