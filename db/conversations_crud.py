@@ -54,59 +54,61 @@ def get_conversation_history_by_whatsapp_id(wa_id, limit=10, tenant_id=None):
     return conversations[::-1]
 
 
-def get_all_conversations(tenant_id=None):
+
+def get_all_conversations(tenant_id=None, wa_id=None, limit=100):
     conn = get_db_connection()
     cursor = conn.cursor()
-    unique_conversations = []
+    conversations = []
+
+    sub_conditions = []
+    params = []
+    if tenant_id:
+        sub_conditions.append("tenant_id = ?")
+        params.append(tenant_id)
+    if wa_id:
+        sub_conditions.append("wa_id = ?")
+        params.append(wa_id)
+
+    sub_query = " AND ".join(sub_conditions)
+    if sub_query:
+        sub_query = "WHERE " + sub_query
+
+    query = f"""
+    SELECT c.*, t.tenant_name
+    FROM conversations c
+    LEFT JOIN tenants t ON c.tenant_id = t.tenant_id
+    INNER JOIN (
+        SELECT wa_id, MAX(timestamp) as last_timestamp
+        FROM conversations
+        {sub_query}
+        GROUP BY wa_id
+    ) sub
+    ON c.wa_id = sub.wa_id AND c.timestamp = sub.last_timestamp
+    """
+    # Add filtering in main query for c.tenant_id, c.wa_id if needed (for safety)
+    main_conditions = []
+    if tenant_id:
+        main_conditions.append("c.tenant_id = ?")
+        params.append(tenant_id)
+    if wa_id:
+        main_conditions.append("c.wa_id = ?")
+        params.append(wa_id)
+    if main_conditions:
+        query += " WHERE " + " AND ".join(main_conditions)
+    query += " ORDER BY c.timestamp DESC LIMIT ?"
+    params.append(limit)
+
     try:
-        query = """
-            SELECT
-                c.wa_id,
-                c.message_text,
-                c.response_text,
-                c.timestamp,
-                c.tenant_id,
-                t.tenant_name
-            FROM conversations c
-            INNER JOIN (
-                SELECT wa_id, MAX(timestamp) AS max_timestamp
-                FROM conversations
-        """
-        params = []
-        if tenant_id:
-            query += " WHERE tenant_id = ?"
-            params.append(tenant_id)
-
-        query += """
-                GROUP BY wa_id
-            ) AS latest_messages
-            ON c.wa_id = latest_messages.wa_id AND c.timestamp = latest_messages.max_timestamp
-            LEFT JOIN tenants t ON c.tenant_id = t.tenant_id
-        """
-
-        # ✅ Apply tenant_id filter again for admin check
-        if tenant_id:
-            query += " WHERE c.tenant_id = ?"
-            params.append(tenant_id)
-
-        query += " ORDER BY c.timestamp DESC"
-
         cursor.execute(query, tuple(params))
         for row in cursor.fetchall():
-            unique_conversations.append({
-                "wa_id": row["wa_id"],
-                "last_message_text": row["message_text"],
-                "ai_response": row["response_text"],
-                "last_timestamp": datetime.fromtimestamp(row["timestamp"]),  # ✅ Convert UNIX to datetime
-                "tenant_id": row["tenant_id"],
-                "tenant_name": row["tenant_name"] or "Unknown"
-            })
-        logger.debug(f"Retrieved {len(unique_conversations)} unique conversations (Tenant: {tenant_id}).")
-    except sqlite3.Error as e:
-        logger.error(f"Error getting all conversations: {e}", exc_info=True)
+            conversations.append(dict(row))
+    except Exception as e:
+        logger.error(f"Error fetching conversations: {e}", exc_info=True)
     finally:
         conn.close()
-    return unique_conversations
+    return conversations
+
+
 
 
 
