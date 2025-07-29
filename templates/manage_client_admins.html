@@ -20,11 +20,7 @@
         </div>
         <div class="mb-3">
             <label>Tenant:</label>
-            <select name="tenant_id" class="form-select" required>
-                {% for tenant in tenants %}
-                <option value="{{ tenant['tenant_id'] }}">{{ tenant['tenant_name'] }}</option>
-                {% endfor %}
-            </select>
+            <input type="text" name="tenant_id" class="form-control" required placeholder="Enter tenant/business name or ID">
         </div>
         <button type="submit" class="btn btn-primary">Add Tenant Admin</button>
     </form>
@@ -48,13 +44,7 @@
                 <tr>
                     <td>{{ admin['id'] }}</td>
                     <td>{{ admin['email'] }}</td>
-                    <td>
-                        {% for tenant in tenants %}
-                            {% if tenant['tenant_id'] == admin['tenant_id'] %}
-                                {{ tenant['tenant_name'] }}
-                            {% endif %}
-                        {% endfor %}
-                    </td>
+                    <td>{{ admin['tenant_id'] }}</td>
                     <td>
                         <form method="POST" action="{{ url_for('users_routes.manage_client_admins') }}" class="d-inline-block">
                             <input type="hidden" name="action" value="delete">

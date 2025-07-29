@@ -19,24 +19,12 @@
         <div class="mb-3">
             <label class="form-label">Role:</label>
             <select name="role" class="form-select" required>
-                {% if current_user.role == 'super_admin' %}
-                    <option value="client">Client</option>
-                    <option value="admin">Tenant Admin</option>
-                {% elif current_user.role == 'admin' %}
-                    <option value="client">Client</option>
-                {% endif %}
+                <option value="client" selected>Client</option>
             </select>
         </div>
         <div class="mb-3">
             <label class="form-label">Tenant:</label>
-            <select name="tenant_id" class="form-select" {% if current_user.role == 'admin' %}required{% endif %}>
-                <option value="">None (For Super Admin)</option>
-                {% for tenant in tenants %}
-                    {% if current_user.role == 'super_admin' or tenant['tenant_id'] == current_user.tenant_id %}
-                        <option value="{{ tenant['tenant_id'] }}">{{ tenant['tenant_name'] }}</option>
-                    {% endif %}
-                {% endfor %}
-            </select>
+            <input type="text" name="tenant_id" class="form-control" {% if current_user.role == 'admin' %}required{% endif %} placeholder="Enter tenant/business name or ID">
         </div>
         <button type="submit" class="btn btn-primary">Add User</button>
     </form>
@@ -72,21 +60,9 @@
 
                             <select name="role" class="form-select d-inline-block mb-1" style="width: 130px;">
                                 <option value="client" {% if user['role'] == 'client' %}selected{% endif %}>Client</option>
-                                {% if current_user.role == 'super_admin' %}
-                                <option value="admin" {% if user['role'] == 'admin' %}selected{% endif %}>Tenant Admin</option>
-                                {% endif %}
                             </select>
 
-                            <select name="tenant_id" class="form-select d-inline-block mb-1" style="width: 150px;">
-                                <option value="">None</option>
-                                {% for tenant in tenants %}
-                                    {% if current_user.role == 'super_admin' or tenant['tenant_id'] == current_user.tenant_id %}
-                                        <option value="{{ tenant['tenant_id'] }}" {% if tenant['tenant_id'] == (user['tenant_id'] or '') %}selected{% endif %}>
-                                            {{ tenant['tenant_name'] }}
-                                        </option>
-                                    {% endif %}
-                                {% endfor %}
-                            </select>
+                            <input type="text" name="tenant_id" class="form-control d-inline-block mb-1" style="width: 150px;" value="{{ user['tenant_id'] or '' }}" placeholder="Tenant">
 
                             <button type="submit" class="btn btn-warning btn-sm">Update</button>
                         </form>

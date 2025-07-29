@@ -50,7 +50,7 @@
                 {% if current_user.role in ['admin', 'super_admin'] %}
                     <a href="{{ url_for('users_routes.manage_users') }}">Manage Users</a>
                     <a href="{{ url_for('faqs_routes.manage_faqs') }}">Manage FAQs</a>
-                    <a href="{{ url_for('users_routes.manage_clients') }}">Manage Tenants</a>
+
                 {% endif %}
                 {% if current_user.role == 'super_admin' %}
                     <a href="{{ url_for('users_routes.manage_client_admins') }}">Tenant Admins</a>

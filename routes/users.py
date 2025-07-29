@@ -1,129 +1,105 @@
 # routes/users.py
 
 import logging
-from flask import Blueprint, render_template, flash, redirect, url_for, request
+from flask import Blueprint, render_template, request, flash, redirect, url_for, abort
 from flask_login import login_required, current_user
-from utils.auth_decorators import role_required
-from db.users_crud import add_user, get_all_users, update_user, delete_user, get_user_by_id, get_user_by_email
-from db.tenants_crud import get_all_tenants
+
+from db.users_crud import add_user, update_user, delete_user, get_all_users, get_user_by_id
+from db.tenants_crud import get_all_tenants, get_tenant_by_id
 
 users_bp = Blueprint('users_routes', __name__, template_folder='../templates')
-
 logger = logging.getLogger(__name__)
 
 @users_bp.route('/manage_users', methods=['GET', 'POST'])
 @login_required
-@role_required(['super_admin', 'admin'])
 def manage_users():
     tenants = get_all_tenants()
-    messages = []
+    users = get_all_users()
 
     if request.method == 'POST':
         action = request.form.get('action')
-        email = request.form.get('email')
-        password = request.form.get('password')
-        role = request.form.get('role')
-        tenant_id = request.form.get('tenant_id') or None
-        user_id = request.form.get('user_id')
-
-        if current_user.role == 'admin':
-            tenant_id = current_user.tenant_id
-            role = 'client'
-
         if action == 'add':
-            if get_user_by_email(email):
-                messages.append(('error', f'User with email {email} already exists.'))
+            email = request.form.get('email', '').strip()
+            password = request.form.get('password', '').strip()
+            role = 'client'  # force role for all users added here
+            tenant_id = request.form.get('tenant_id', '').strip() or None
+            if not email or not password:
+                flash('Email and password are required.', 'danger')
+            elif (current_user.role == 'admin' and (not tenant_id or tenant_id != current_user.tenant_id)):
+                flash('Tenant admins can only add users to their own tenant.', 'danger')
             else:
-                add_user(
-                    email=email,
-                    password=password,
-                    role=role,
-                    tenant_id=tenant_id
-                )
-                messages.append(('success', f'User {email} added.'))
-        elif action == 'update':
-            if current_user.role == 'admin':
-                target_user = get_user_by_id(user_id)
-                if not target_user or target_user['tenant_id'] != current_user.tenant_id:
-                    messages.append(('error', "You cannot modify users outside your tenant."))
+                if add_user(email, password, role, tenant_id):
+                    flash('User added successfully.', 'success')
                 else:
-                    update_user(
-                        user_id=user_id,
-                        email=email,
-                        password=password,
-                        role='client',
-                        tenant_id=current_user.tenant_id
-                    )
-                    messages.append(('success', f'User {email} updated.'))
-            else:
-                update_user(
-                    user_id=user_id,
-                    email=email,
-                    password=password,
-                    role=role,
-                    tenant_id=tenant_id
-                )
-                messages.append(('success', f'User {email} updated.'))
-        elif action == 'delete':
-            if current_user.role == 'admin':
-                target_user = get_user_by_id(user_id)
-                if not target_user or target_user['tenant_id'] != current_user.tenant_id:
-                    messages.append(('error', "You cannot delete users outside your tenant."))
-                else:
-                    delete_user(user_id)
-                    messages.append(('success', f'User {user_id} deleted.'))
-            else:
-                delete_user(user_id)
-                messages.append(('success', f'User {user_id} deleted.'))
+                    flash('Error adding user. Email may already exist.', 'danger')
+            return redirect(url_for('users_routes.manage_users'))
 
-    if current_user.role == 'super_admin':
-        users = get_all_users()
-    elif current_user.role == 'admin':
-        users = [
-            user for user in get_all_users()
-            if user['tenant_id'] == current_user.tenant_id and user['role'] == 'client'
-        ]
-    else:
-        users = []
-    return render_template('manage_users.html', tenants=tenants, users=users, current_user=current_user, messages=messages)
+        elif action == 'update':
+            user_id = request.form.get('user_id')
+            email = request.form.get('email', '').strip() or None
+            password = request.form.get('password', '').strip() or None
+            role = 'client'  # force role
+            tenant_id = request.form.get('tenant_id', '').strip() or None
+            user = get_user_by_id(user_id)
+            if not user:
+                flash('User not found.', 'danger')
+            elif (current_user.role == 'admin' and (not tenant_id or tenant_id != current_user.tenant_id)):
+                flash('Tenant admins can only update users in their own tenant.', 'danger')
+            elif update_user(user_id, email, password, role, tenant_id):
+                flash('User updated successfully.', 'success')
+            else:
+                flash('Error updating user.', 'danger')
+            return redirect(url_for('users_routes.manage_users'))
+
+        elif action == 'delete':
+            user_id = request.form.get('user_id')
+            user = get_user_by_id(user_id)
+            if not user:
+                flash('User not found.', 'danger')
+            elif (current_user.role == 'admin' and user['tenant_id'] != current_user.tenant_id):
+                flash('Tenant admins can only delete users in their own tenant.', 'danger')
+            elif delete_user(user_id):
+                flash('User deleted successfully.', 'success')
+            else:
+                flash('Error deleting user.', 'danger')
+            return redirect(url_for('users_routes.manage_users'))
+
+    # Only show clients to tenant admins; super admin sees all
+    if current_user.role == 'admin':
+        users = [u for u in users if u['tenant_id'] == current_user.tenant_id and u['role'] == 'client']
+    return render_template('manage_users.html', users=users, tenants=tenants)
 
 @users_bp.route('/manage_client_admins', methods=['GET', 'POST'])
 @login_required
-@role_required(['super_admin'])
 def manage_client_admins():
+    if current_user.role != 'super_admin':
+        abort(403)
     tenants = get_all_tenants()
-    admins = [user for user in get_all_users() if user['role'] == 'admin']
-    messages = []
+    admins = [u for u in get_all_users() if u['role'] == 'admin']
+
     if request.method == 'POST':
         action = request.form.get('action')
         if action == 'add':
-            email = request.form.get('email')
-            password = request.form.get('password')
-            tenant_id = request.form.get('tenant_id')
-            if get_user_by_email(email):
-                messages.append(('error', f'Admin with email {email} already exists.'))
+            email = request.form.get('email', '').strip()
+            password = request.form.get('password', '').strip()
+            role = 'admin'  # force role for admins
+            tenant_id = request.form.get('tenant_id', '').strip() or None
+            if not email or not password or not tenant_id:
+                flash('All fields are required.', 'danger')
+            elif add_user(email, password, role, tenant_id):
+                flash('Tenant admin added successfully.', 'success')
             else:
-                add_user(
-                    email=email,
-                    password=password,
-                    role='admin',
-                    tenant_id=tenant_id
-                )
-                messages.append(('success', f'Admin {email} added.'))
+                flash('Error adding tenant admin. Email may already exist.', 'danger')
+            return redirect(url_for('users_routes.manage_client_admins'))
         elif action == 'delete':
             user_id = request.form.get('user_id')
-            delete_user(user_id)
-            messages.append(('success', f'Admin {user_id} deleted.'))
-    return render_template('manage_client_admins.html', tenants=tenants, admins=admins, messages=messages)
+            user = get_user_by_id(user_id)
+            if not user:
+                flash('Tenant admin not found.', 'danger')
+            elif delete_user(user_id):
+                flash('Tenant admin deleted.', 'success')
+            else:
+                flash('Error deleting tenant admin.', 'danger')
+            return redirect(url_for('users_routes.manage_client_admins'))
 
-# FIX: Add /manage_clients route to support menu and templates!
-@users_bp.route('/manage_clients', methods=['GET'])
-@login_required
-@role_required(['super_admin', 'admin'])
-def manage_clients():
-    tenants = get_all_tenants()
-    # For admin: show only their own tenant
-    if current_user.role == 'admin':
-        tenants = [t for t in tenants if t['tenant_id'] == current_user.tenant_id]
-    return render_template('manage_clients.html', tenants=tenants, current_user=current_user)
-
+    return render_template('manage_client_admins.html', admins=admins, tenants=tenants)
