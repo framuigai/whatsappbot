@@ -4,6 +4,7 @@ import sys
 import logging
 from dotenv import load_dotenv
 from werkzeug.security import generate_password_hash
+import uuid  # <-- Add for generating unique uids
 
 # Load environment variables
 load_dotenv()
@@ -106,7 +107,10 @@ def seed_initial_data():
                     logger.info(f"✅ Firebase user created: {user['email']}")
                 except Exception as e:
                     logger.warning(f"❌ Firebase user skipped for {user['email']}: {e}")
-            # Always add user to DB; pass uid if available (None if not)
+            # --- PATCH: Always set a non-null uid ---
+            if not uid:
+                # Use email as uid for demo/testing, or uuid.uuid4() for uniqueness
+                uid = str(uuid.uuid4())
             add_user(
                 email=user["email"],
                 password=user["password"],

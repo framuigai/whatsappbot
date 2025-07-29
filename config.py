@@ -17,8 +17,9 @@ log_level_map = {
 
 # --- Flask Configuration ---
 SECRET_KEY = os.getenv('FLASK_SECRET_KEY', 'a_very_strong_and_secret_key_please_change_this_in_production')
-SESSION_COOKIE_SECURE = os.getenv('SESSION_COOKIE_SECURE', 'True').lower() == 'true'
-REMEMBER_COOKIE_SECURE = os.getenv('REMEMBER_COOKIE_SECURE', 'True').lower() == 'true'
+# PATCH: use False as default for local dev convenience.
+SESSION_COOKIE_SECURE = os.getenv('SESSION_COOKIE_SECURE', 'False').lower() == 'true'
+REMEMBER_COOKIE_SECURE = os.getenv('REMEMBER_COOKIE_SECURE', 'False').lower() == 'true'
 SESSION_COOKIE_HTTPONLY = os.getenv('SESSION_COOKIE_HTTPONLY', 'True').lower() == 'true'
 REMEMBER_COOKIE_HTTPONLY = os.getenv('REMEMBER_COOKIE_HTTPONLY', 'True').lower() == 'true'
 FLASK_DEBUG = os.getenv("FLASK_DEBUG", "False").lower() == "true"

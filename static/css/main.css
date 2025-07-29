@@ -1,221 +1,230 @@
-/* static/css/main.css */
 body {
-    font-family: Arial, sans-serif;
-    background-color: #f4f4f4;
-    color: #333;
+    font-family: 'Segoe UI', Arial, sans-serif;
+    background-color: #f7f8fa;
+    color: #263159;
     margin: 0;
     padding: 0;
 }
 
+/* Header and Nav */
 header {
-    background-color: #007bff;
-    color: white;
-    padding: 15px;
+    background-color: #263159;
+    color: #fff;
+    padding: 18px 0 10px 0;
     text-align: center;
+    border-bottom: 2px solid #4F8FF9;
 }
 
 header h1 {
-    margin: 0;
-    font-size: 24px;
+    margin: 0 0 8px 0;
+    font-size: 26px;
+    letter-spacing: 1px;
 }
 
 .main-nav {
-    margin-top: 10px;
+    margin-bottom: 0;
 }
 
 .main-nav a {
-    color: white;
+    color: #fff;
     text-decoration: none;
-    margin: 0 10px;
-    font-weight: bold;
+    margin: 0 12px;
+    font-weight: 600;
+    padding: 6px 8px;
+    border-radius: 5px;
+    transition: background 0.2s;
+    font-size: 16px;
 }
 
 .main-nav a:hover {
-    text-decoration: underline;
-}
-
-.container {
-    background-color: #fff;
-    margin: 20px auto;
-    padding: 30px;
-    border-radius: 8px;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-    max-width: 900px;
-    width: 90%;
-    text-align: center;
-}
-
-h1, h2 {
-    color: #007bff;
-    margin-bottom: 20px;
-}
-
-p {
-    line-height: 1.6;
-    margin-bottom: 15px;
+    background-color: #4F8FF9;
+    color: #fff;
 }
 
 footer {
     text-align: center;
-    padding: 15px;
-    font-size: 14px;
+    padding: 14px 0;
+    font-size: 15px;
     color: #555;
+    background: #f2f3f7;
+    border-top: 1px solid #e0e3ea;
+    margin-top: 30px;
 }
 
+/* Container */
+.container {
+    background-color: #fff;
+    margin: 28px auto 18px auto;
+    padding: 34px 30px 30px 30px;
+    border-radius: 12px;
+    box-shadow: 0 3px 14px rgba(38,49,89, 0.09);
+    max-width: 950px;
+    width: 96%;
+    text-align: left;
+}
+
+/* Headings */
+h1, h2, h3 {
+    color: #263159;
+    margin-bottom: 22px;
+}
+
+.page-title {
+    font-size: 1.5rem;
+    color: #4F8FF9;
+    margin-bottom: 15px;
+}
+
+/* Paragraphs */
+p {
+    line-height: 1.7;
+    margin-bottom: 15px;
+    color: #3e4666;
+}
+
+/* Buttons */
 .button, .button-small {
     display: inline-block;
-    background-color: #28a745;
-    color: white;
+    background-color: #4F8FF9;
+    color: #fff;
     padding: 10px 20px;
     text-decoration: none;
     border-radius: 5px;
-    transition: background-color 0.3s ease;
-    font-size: 14px;
+    transition: background 0.2s;
+    font-size: 15px;
+    border: none;
+    cursor: pointer;
+    font-weight: 500;
 }
 
 .button-small {
-    padding: 6px 12px;
-    font-size: 12px;
+    padding: 7px 14px;
+    font-size: 13px;
 }
 
 .button:hover, .button-small:hover {
-    background-color: #218838;
+    background-color: #3c6ecb;
+    color: #fff;
 }
 
-.flashes {
-    list-style: none;
-    padding: 0;
+.btn-success, .flashes .success {
+    background-color: #43b97f;
+    color: #fff;
 }
 
-.flashes li {
-    padding: 10px;
-    margin-bottom: 10px;
-    border-radius: 4px;
+.btn-success:hover {
+    background-color: #38996a;
 }
 
-.flashes .success {
-    background-color: #d4edda;
-    color: #155724;
-}
-
-.flashes .danger {
-    background-color: #f8d7da;
-    color: #721c24;
-}
-
+/* Table Styles */
 .data-table {
     width: 100%;
     border-collapse: collapse;
-    margin-top: 20px;
+    margin-top: 22px;
+    background: #fff;
+    border-radius: 8px;
+    overflow: hidden;
 }
 
 .data-table th,
 .data-table td {
-    border: 1px solid #ddd;
-    padding: 10px;
+    border: 1px solid #e5e9f2;
+    padding: 11px 10px;
     text-align: left;
 }
 
 .data-table th {
-    background-color: #007bff;
-    color: white;
+    background-color: #263159;
+    color: #fff;
+    font-weight: 600;
+    font-size: 15px;
 }
 
 .data-table tr:nth-child(even) {
-    background-color: #f9f9f9;
+    background-color: #f7f8fa;
 }
 
+/* Flash messages (notifications) */
+.flashes {
+    list-style: none;
+    padding: 0;
+    margin-bottom: 16px;
+}
+
+.flashes li {
+    padding: 11px;
+    margin-bottom: 7px;
+    border-radius: 6px;
+    font-size: 15px;
+}
+
+.flashes .success {
+    background-color: #e9faef;
+    color: #21784c;
+}
+
+.flashes .danger {
+    background-color: #fde8e6;
+    color: #a83232;
+}
+
+.flashes .info {
+    background-color: #eaf6ff;
+    color: #145585;
+}
+
+/* Loading Spinner */
 .loading-spinner {
     text-align: center;
-    padding: 10px;
+    padding: 12px;
     font-weight: bold;
-    color: #007bff;
+    color: #4F8FF9;
 }
 
 .error-message {
-    color: red;
+    color: #a83232;
     font-weight: bold;
 }
-/* Reset */
-body {
-    margin: 0;
-    padding: 0;
-    font-family: Arial, sans-serif;
-    background-color: #f4f4f4;
-    color: #333;
+
+/* Responsive */
+@media (max-width: 700px) {
+    .container {
+        padding: 14px 4vw;
+        max-width: 99vw;
+    }
+    .main-nav a {
+        display: block;
+        margin: 7px 0;
+        font-size: 15px;
+    }
+    header {
+        padding: 13px 0 5px 0;
+    }
 }
 
-/* Layout */
-.container {
-    max-width: 1200px;
-    margin: 20px auto;
-    padding: 20px;
-    background: #fff;
-    border-radius: 8px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-}
-
-header {
-    text-align: center;
-    margin-bottom: 20px;
-}
-
-.main-nav a {
-    margin: 0 10px;
-    text-decoration: none;
-    color: #007bff;
-}
-
-.main-nav a:hover {
-    text-decoration: underline;
-}
-
-/* Buttons */
-.button,
-.button-small {
-    display: inline-block;
-    background-color: #28a745;
-    color: white;
-    padding: 8px 16px;
+/* Form elements */
+input, select, textarea {
+    border: 1px solid #b8c3d8;
     border-radius: 4px;
-    text-decoration: none;
+    padding: 7px 9px;
+    font-size: 15px;
+    margin-bottom: 8px;
+    background: #f9fafe;
+}
+
+input:focus, select:focus, textarea:focus {
+    border-color: #4F8FF9;
+    outline: none;
+}
+
+label {
+    color: #263159;
     font-size: 14px;
+    margin-bottom: 3px;
 }
 
-.button-small {
-    padding: 6px 12px;
-    font-size: 12px;
+hr {
+    border: none;
+    border-top: 1px solid #e0e3ea;
+    margin: 28px 0;
 }
-
-.button:hover {
-    background-color: #218838;
-}
-
-/* Tables */
-.data-table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-top: 20px;
-}
-
-.data-table th, .data-table td {
-    border: 1px solid #ddd;
-    padding: 8px;
-}
-
-.data-table th {
-    background-color: #f8f8f8;
-    text-align: left;
-}
-
-/* Flash Messages */
-.flashes li {
-    list-style: none;
-    margin: 10px 0;
-    padding: 10px;
-    border-radius: 4px;
-}
-
-.flashes .success { background: #d4edda; color: #155724; }
-.flashes .danger { background: #f8d7da; color: #721c24; }
-.flashes .info { background: #d1ecf1; color: #0c5460; }

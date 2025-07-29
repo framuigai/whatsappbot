@@ -1,6 +1,7 @@
 # db/users_crud.py
 import sqlite3
 import logging
+import uuid  # <-- NEW: for generating unique uids
 from werkzeug.security import generate_password_hash
 from db.db_connection import get_db_connection
 
@@ -10,19 +11,24 @@ def add_user(email, password=None, role="client", tenant_id=None, uid=None):
     """
     Add a new user to the database.
     Password is always hashed before saving.
-    UID is optional (for Firebase integration).
+    UID is always required; for local users, a UUID will be generated if not given.
     """
     conn = get_db_connection()
     try:
         cursor = conn.cursor()
         password_hash = generate_password_hash(password) if password else None
 
+        # PATCH: Always assign a unique uid if not provided
+        if not uid:
+            # Use email as uid if you prefer, but uuid4() is safer/unique
+            uid = str(uuid.uuid4())
+
         cursor.execute("""
             INSERT INTO users (uid, email, password_hash, role, tenant_id)
             VALUES (?, ?, ?, ?, ?)
         """, (uid, email, password_hash, role, tenant_id))
         conn.commit()
-        logger.info(f"User '{email}' added successfully.")
+        logger.info(f"User '{email}' added successfully with uid='{uid}'.")
         return True
     except sqlite3.IntegrityError:
         logger.warning(f"User email already exists: {email}")
@@ -33,7 +39,32 @@ def add_user(email, password=None, role="client", tenant_id=None, uid=None):
     finally:
         conn.close()
 
+def migrate_users_set_uid_for_nulls():
+    """
+    Find users with uid IS NULL or empty and assign them a unique uid.
+    """
+    conn = get_db_connection()
+    try:
+        cursor = conn.cursor()
+        cursor.execute("SELECT id, email FROM users WHERE uid IS NULL OR uid = ''")
+        users = cursor.fetchall()
+        count = 0
+        for user in users:
+            new_uid = str(uuid.uuid4())
+            cursor.execute("UPDATE users SET uid=? WHERE id=?", (new_uid, user["id"]))
+            logger.info(f"User with id={user['id']} ({user['email']}) assigned new uid={new_uid}")
+            count += 1
+        if count > 0:
+            conn.commit()
+            logger.info(f"Migration complete: {count} user(s) updated with unique uid.")
+        else:
+            logger.info("No users found needing uid migration.")
+    except sqlite3.Error as e:
+        logger.error(f"Error migrating user uids: {e}", exc_info=True)
+    finally:
+        conn.close()
 
+# ... rest of your file unchanged ...
 def get_user_by_email(email):
     conn = get_db_connection()
     try:
@@ -46,7 +77,6 @@ def get_user_by_email(email):
         return None
     finally:
         conn.close()
-
 
 def get_user_by_uid(uid):
     conn = get_db_connection()
@@ -61,7 +91,6 @@ def get_user_by_uid(uid):
     finally:
         conn.close()
 
-
 def get_user_by_id(user_id):
     conn = get_db_connection()
     try:
@@ -74,7 +103,6 @@ def get_user_by_id(user_id):
         return None
     finally:
         conn.close()
-
 
 def get_all_users():
     conn = get_db_connection()
@@ -89,7 +117,6 @@ def get_all_users():
     finally:
         conn.close()
 
-
 def get_users_by_role(role):
     conn = get_db_connection()
     try:
@@ -103,7 +130,6 @@ def get_users_by_role(role):
     finally:
         conn.close()
 
-
 def get_users_by_tenant(tenant_id):
     conn = get_db_connection()
     try:
@@ -116,7 +142,6 @@ def get_users_by_tenant(tenant_id):
         return []
     finally:
         conn.close()
-
 
 def update_user(user_id, email=None, password=None, role=None, tenant_id=None, uid=None):
     """
@@ -158,7 +183,6 @@ def update_user(user_id, email=None, password=None, role=None, tenant_id=None, u
         return False
     finally:
         conn.close()
-
 
 def delete_user(user_id):
     conn = get_db_connection()
