@@ -45,7 +45,7 @@ def load_user(uid):
 @auth_bp.route('/login', methods=['GET', 'POST'])
 def login():
     if current_user.is_authenticated:
-        return redirect(url_for('admin_routes.dashboard'))
+        return redirect(url_for('dashboard_routes.dashboard'))  # FIXED: update to new blueprint
 
     # Handle local fallback login
     if request.method == 'POST' and not FIREBASE_ENABLED:
@@ -62,7 +62,7 @@ def login():
             login_user(user)
             logger.info(f"User '{email}' logged in with local auth.")
             flash('Login successful!', 'success')
-            return redirect(url_for('admin_routes.dashboard'))
+            return redirect(url_for('dashboard_routes.dashboard'))  # FIXED: update to new blueprint
         else:
             logger.warning(f"Failed login attempt for '{email}' with local auth.")
             flash('Invalid email or password.', 'danger')

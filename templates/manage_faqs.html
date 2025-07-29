@@ -18,8 +18,17 @@
     <label for="answer">Answer:</label>
     <textarea id="answer" name="answer" rows="4" required></textarea>
 
-    <!-- Hidden tenant_id -->
-    <input type="hidden" name="tenant_id" value="{{ tenant_id }}">
+    {% if current_user.role == 'super_admin' %}
+        <label for="tenant_id">Tenant:</label>
+        <select name="tenant_id" id="tenant_id" required>
+            {% for tenant in tenants %}
+                <option value="{{ tenant.tenant_id }}" {% if tenant.tenant_id == tenant_id %}selected{% endif %}>{{ tenant.tenant_name }}</option>
+            {% endfor %}
+        </select>
+    {% else %}
+        <!-- Always use current_user.tenant_id for tenant admins -->
+        <input type="hidden" name="tenant_id" value="{{ tenant_id }}">
+    {% endif %}
 
     <button type="submit" class="button-primary">Add FAQ</button>
 </form>

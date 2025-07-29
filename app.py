@@ -20,8 +20,11 @@ from config import (
 # Import blueprints and utility functions
 from auth import auth_bp, load_user
 from webhook import webhook_bp
-from admin_routes import admin_bp
 from api_routes import api_bp
+from routes.dashboard import dashboard_bp
+from routes.users import users_bp
+from routes.faqs import faqs_bp
+from routes.conversations import conversations_bp
 
 from db.db_connection import init_db
 import firebase_admin_utils
@@ -57,7 +60,10 @@ login_manager.user_loader(load_user)
 # Register blueprints
 app.register_blueprint(auth_bp)
 app.register_blueprint(webhook_bp)
-app.register_blueprint(admin_bp)
+app.register_blueprint(dashboard_bp)
+app.register_blueprint(users_bp)
+app.register_blueprint(faqs_bp)
+app.register_blueprint(conversations_bp)
 app.register_blueprint(api_bp)
 
 # --- Gemini API Configuration ---
@@ -80,7 +86,7 @@ def inject_firebase_config():
 def home():
     """Redirects to the login page or dashboard based on authentication status."""
     if current_user.is_authenticated:
-        return redirect(url_for('admin_routes.dashboard'))
+        return redirect(url_for('dashboard_routes.dashboard'))  # FIXED: update to new blueprint
     return redirect(url_for('auth.login'))
 
 @app.route('/login-page')

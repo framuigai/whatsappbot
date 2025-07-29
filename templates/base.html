@@ -44,16 +44,16 @@
         <h1>WhatsApp Bot Admin Panel</h1>
         <nav class="main-nav">
             {% if current_user.is_authenticated %}
-                <a href="{{ url_for('admin_routes.dashboard') }}">Dashboard</a>
-                <a href="{{ url_for('admin_routes.all_conversations') }}">Conversations</a>
-                <a href="{{ url_for('admin_routes.view_reports') }}">Reports</a>
+                <a href="{{ url_for('dashboard_routes.dashboard') }}">Dashboard</a>
+                <a href="{{ url_for('conversations_routes.all_conversations') }}">Conversations</a>
+                <a href="{{ url_for('dashboard_routes.view_reports') }}">Reports</a>
                 {% if current_user.role in ['admin', 'super_admin'] %}
-                    <a href="{{ url_for('admin_routes.manage_users') }}">Manage Users</a>
-                    <a href="{{ url_for('admin_routes.manage_faqs') }}">Manage FAQs</a>
-                    <a href="{{ url_for('admin_routes.manage_clients') }}">Manage Tenants</a>
+                    <a href="{{ url_for('users_routes.manage_users') }}">Manage Users</a>
+                    <a href="{{ url_for('faqs_routes.manage_faqs') }}">Manage FAQs</a>
+                    <a href="{{ url_for('users_routes.manage_clients') }}">Manage Tenants</a>
                 {% endif %}
                 {% if current_user.role == 'super_admin' %}
-                    <a href="{{ url_for('admin_routes.manage_client_admins') }}">Tenant Admins</a>
+                    <a href="{{ url_for('users_routes.manage_client_admins') }}">Tenant Admins</a>
                 {% endif %}
                 <a href="{{ url_for('auth.logout') }}" id="logout-button">Logout</a>
             {% else %}

@@ -10,7 +10,7 @@
                 <th>WhatsApp ID</th>
                 <th>Last Message</th>
                 <th>AI Response</th>
-                {% if user_role == 'admin' %}
+                {% if user_role == 'super_admin' %}
                     <th>Tenant</th>
                 {% endif %}
                 <th>Timestamp</th>
@@ -23,7 +23,7 @@
                     <td>{{ conv.wa_id }}</td>
                     <td>{{ conv.last_message_text }}</td>
                     <td>{{ conv.ai_response if conv.ai_response else "N/A" }}</td>
-                    {% if user_role == 'admin' %}
+                    {% if user_role == 'super_admin' %}
                         <td>{{ conv.tenant_name }}</td>
                     {% endif %}
                     <td>
@@ -34,7 +34,7 @@
                         {% endif %}
                     </td>
                     <td>
-                        <a href="{{ url_for('admin_routes.view_conversation', wa_id=conv.wa_id) }}" class="button-small">View History</a>
+                        <a href="{{ url_for('conversations_routes.view_conversation', wa_id=conv.wa_id) }}" class="button-small">View History</a>
                     </td>
                 </tr>
             {% endfor %}

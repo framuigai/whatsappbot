@@ -5,6 +5,6 @@
 <div id="conversation-list" class="conversation-history" data-wa-id="{{ wa_id }}">
     Loading conversation history...
 </div>
-<a href="{{ url_for('admin_routes.all_conversations') }}" class="back-link">Back to All Conversations</a>
+<a href="{{ url_for('conversations_routes.all_conversations') }}" class="back-link">Back to All Conversations</a>
 <script src="{{ url_for('static', filename='js/dashboard.js') }}"></script>
 {% endblock %}
