@@ -3,9 +3,8 @@ import sys
 import logging
 import google.generativeai as genai
 from flask import Flask, redirect, url_for, render_template
-from flask_login import LoginManager, current_user, login_required, logout_user
-from flask_moment import Moment # Import Flask-Moment
-
+from flask_login import LoginManager, current_user
+from flask_moment import Moment
 
 from config import (
     LOGGING_LEVEL, log_level_map, SECRET_KEY, SESSION_COOKIE_SECURE,
@@ -14,7 +13,8 @@ from config import (
     DATABASE_NAME, WHATSAPP_PHONE_NUMBER_ID,
     FLASK_DEBUG, HOST, PORT,
     FIREBASE_API_KEY, FIREBASE_AUTH_DOMAIN, FIREBASE_PROJECT_ID,
-    FIREBASE_STORAGE_BUCKET, FIREBASE_MESSAGING_SENDER_ID, FIREBASE_APP_ID
+    FIREBASE_STORAGE_BUCKET, FIREBASE_MESSAGING_SENDER_ID, FIREBASE_APP_ID,
+    FIREBASE_ENABLED  # <-- Import the flag!
 )
 
 # Import blueprints and utility functions
@@ -23,10 +23,7 @@ from webhook import webhook_bp
 from admin_routes import admin_bp
 from api_routes import api_bp
 
-# --- START MODIFICATION FOR DB REFACTORING ---
 from db.db_connection import init_db
-# --- END MODIFICATION FOR DB REFACTORING ---
-
 import firebase_admin_utils
 
 # --- Logging Configuration (From config.py) ---
@@ -42,7 +39,6 @@ logging.basicConfig(
 logger = logging.getLogger(__name__)
 
 app = Flask(__name__, template_folder='templates')
-# Initialize Flask-Moment
 moment = Moment(app)
 
 # --- App Configuration (From config.py) ---
@@ -69,14 +65,15 @@ genai.configure(api_key=GEMINI_API_KEY)
 
 @app.context_processor
 def inject_firebase_config():
-    """Inject Firebase configuration into all templates."""
+    """Inject Firebase configuration and flag into all templates."""
     return {
         'FIREBASE_API_KEY': FIREBASE_API_KEY,
         'FIREBASE_AUTH_DOMAIN': FIREBASE_AUTH_DOMAIN,
         'FIREBASE_PROJECT_ID': FIREBASE_PROJECT_ID,
         'FIREBASE_STORAGE_BUCKET': FIREBASE_STORAGE_BUCKET,
         'FIREBASE_MESSAGING_SENDER_ID': FIREBASE_MESSAGING_SENDER_ID,
-        'FIREBASE_APP_ID': FIREBASE_APP_ID
+        'FIREBASE_APP_ID': FIREBASE_APP_ID,
+        'FIREBASE_ENABLED': FIREBASE_ENABLED  # <-- Make available in all templates
     }
 
 @app.route('/')
@@ -86,21 +83,15 @@ def home():
         return redirect(url_for('admin_routes.dashboard'))
     return redirect(url_for('auth.login'))
 
-
 @app.route('/login-page')
 def login_page():
     """Renders the login page template."""
-    # The login page needs the client-side Firebase config to initialize the SDK.
-    # Pass the config to the template.
     return render_template('login.html', config=app.config)
 
 # --- Database Initialization ---
 with app.app_context():
     init_db()
     logger.info("Database initialization complete.")
-
-
-
 
 if __name__ == "__main__":
     logging.getLogger('whatsapp_api_utils').setLevel(log_level_map.get(LOGGING_LEVEL, logging.INFO))
@@ -114,11 +105,15 @@ if __name__ == "__main__":
     logging.getLogger('admin_routes').setLevel(log_level_map.get(LOGGING_LEVEL, logging.INFO))
     logging.getLogger('firebase_admin_utils').setLevel(log_level_map.get(LOGGING_LEVEL, logging.INFO))
 
-    try:
-        firebase_admin_utils.init_firebase_admin()
-        logger.info("Firebase Admin SDK initialized successfully.")
-    except Exception as e:
-        logger.critical(f"Failed to initialize Firebase Admin SDK: {e}", exc_info=True)
-        sys.exit(1) # Exit if Firebase init fails
+    # Firebase Admin SDK should only be initialized if enabled
+    if FIREBASE_ENABLED:
+        try:
+            firebase_admin_utils.init_firebase_admin()
+            logger.info("Firebase Admin SDK initialized successfully.")
+        except Exception as e:
+            logger.critical(f"Failed to initialize Firebase Admin SDK: {e}", exc_info=True)
+            sys.exit(1)
+    else:
+        logger.info("Firebase Admin SDK initialization skipped (FIREBASE_ENABLED is False).")
 
     app.run(debug=FLASK_DEBUG, host=HOST, port=PORT, use_reloader=False)

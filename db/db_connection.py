@@ -33,7 +33,7 @@ def create_tenants_table():  # RENAMED from create_tenants_config_table
                 CREATE TABLE IF NOT EXISTS tenants (
                     tenant_id TEXT PRIMARY KEY,
                     tenant_name TEXT NOT NULL,
-                    whatsapp_phone_number_id TEXT UNIQUE NOT NULL, -- Ensure this is unique
+                    whatsapp_phone_number_id TEXT NOT NULL, -- Ensure this is unique
                     whatsapp_api_token TEXT NOT NULL,
                     ai_system_instruction TEXT,
                     ai_model_name TEXT

@@ -5,16 +5,15 @@ from flask_login import login_required, current_user
 from db.tenants_crud import get_all_tenants, get_tenant_by_id
 from db.conversations_crud import get_conversation_history_by_whatsapp_id, get_monthly_conversation_counts
 from db.faqs_crud import get_all_faqs
+from config import FIREBASE_ENABLED  # <-- Import flag
 
 api_bp = Blueprint('api_routes', __name__, url_prefix='/api')
 logger = logging.getLogger(__name__)
-
 
 # --- Health Check ---
 @api_bp.route('/ping', methods=['GET'])
 def ping():
     return jsonify({"message": "API is alive"}), 200
-
 
 # --- API: Get Clients ---
 @api_bp.route('/clients', methods=['GET'])
@@ -31,7 +30,6 @@ def get_clients():
         logger.error(f"Error fetching clients: {e}", exc_info=True)
         return jsonify({"message": "Internal server error"}), 500
 
-
 # --- API: Get Chat History ---
 @api_bp.route('/chat_history/<string:wa_id>', methods=['GET'])
 @login_required
@@ -46,7 +44,6 @@ def get_chat_history(wa_id):
         logger.error(f"Error fetching chat history for {wa_id}: {e}", exc_info=True)
         return jsonify({"message": "Internal server error"}), 500
 
-
 # --- API: Get FAQs ---
 @api_bp.route('/faqs', methods=['GET'])
 @login_required
@@ -58,7 +55,6 @@ def get_faqs():
     except Exception as e:
         logger.error(f"Error fetching FAQs: {e}", exc_info=True)
         return jsonify({"message": "Internal server error"}), 500
-
 
 # --- ✅ NEW API: Get Monthly Report Data ---
 @api_bp.route('/reports/monthly', methods=['GET'])
@@ -76,3 +72,12 @@ def get_monthly_report():
     except Exception as e:
         logger.error(f"Error fetching monthly report: {e}", exc_info=True)
         return jsonify({"message": "Internal server error"}), 500
+
+# --- PROTECT /api/login if you ever add it here ---
+@api_bp.route('/login', methods=['POST'])
+def api_login():
+    if not FIREBASE_ENABLED:
+        logger.warning("/api/login called but FIREBASE_ENABLED is False. Returning 403.")
+        return jsonify({"message": "Firebase login is disabled."}), 403
+    # If implemented, delegate to real handler
+    return jsonify({"message": "Not implemented."}), 501

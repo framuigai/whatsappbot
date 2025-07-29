@@ -3,11 +3,10 @@ import logging
 import json
 from flask import Blueprint, render_template, url_for, flash, redirect, request
 from flask_login import login_required, current_user
-from config import LOGGING_LEVEL, log_level_map, FIREBASE_CONFIG
+from config import LOGGING_LEVEL, log_level_map, FIREBASE_CONFIG, FIREBASE_ENABLED  # <-- Add FIREBASE_ENABLED import
 from werkzeug.security import generate_password_hash
 from utils.auth_decorators import role_required
 from firebase_admin_utils import create_user_in_firebase, update_user_in_firebase, delete_user_in_firebase
-
 
 from db.conversations_crud import (
     get_conversation_count, get_all_conversations, get_conversation_history_by_whatsapp_id,
@@ -15,7 +14,7 @@ from db.conversations_crud import (
 )
 from db.faqs_crud import get_all_faqs, get_faq_by_id, add_faq, update_faq, delete_faq_by_id
 from db.tenants_crud import get_all_tenants, add_tenant, update_tenant, delete_tenant
-from db.users_crud import add_user, get_all_users, update_user, delete_user
+from db.users_crud import add_user, get_all_users, update_user, delete_user, get_user_by_id, get_users_by_role
 from ai_utils import generate_embedding
 
 admin_bp = Blueprint('admin_routes', __name__, template_folder='../templates', static_folder='../static')
@@ -106,7 +105,6 @@ def manage_clients():
         return render_template('manage_clients.html', user_email=current_user.email, tenants=[])
 
 
-
 @admin_bp.route('/view_conversation/<wa_id>')
 @login_required
 def view_conversation(wa_id):
@@ -122,7 +120,6 @@ def view_conversation(wa_id):
         logger.error(f"Error fetching conversation history: {e}", exc_info=True)
         flash("Error loading conversation history.", "danger")
         return redirect(url_for('admin_routes.all_conversations'))
-
 
 
 @admin_bp.route('/manage_users', methods=['GET', 'POST'])
@@ -147,13 +144,21 @@ def manage_users():
                 flash("Tenant admins can only create client users.", "danger")
                 return redirect(url_for('admin_routes.manage_users'))
 
-            # Create user in Firebase
-            firebase_uid = create_user_in_firebase(email, password)
-            if firebase_uid:
-                users_crud.add_user(email=email, password=password, role=role, tenant_id=tenant_id, uid=firebase_uid)
-                flash(f"User {email} created successfully.", "success")
+            if FIREBASE_ENABLED:
+                firebase_uid = create_user_in_firebase(email, password)
+                if firebase_uid:
+                    users_crud.add_user(email=email, password=password, role=role, tenant_id=tenant_id, uid=firebase_uid)
+                    flash(f"User {email} created successfully (in Firebase and local DB).", "success")
+                    logger.info(f"User {email} created via Firebase and added to local DB.")
+                else:
+                    flash("Failed to create user in Firebase.", "danger")
+                    logger.error(f"Failed to create user {email} in Firebase.")
             else:
-                flash("Failed to create user in Firebase.", "danger")
+                # Local DB only
+                password_hash = generate_password_hash(password)
+                users_crud.add_user(email=email, password_hash=password_hash, role=role, tenant_id=tenant_id)
+                flash(f"User {email} created successfully (local DB only).", "success")
+                logger.info(f"User {email} created in local DB (Firebase disabled).")
 
         elif action == 'update':
             user_id = request.form.get('user_id')
@@ -167,24 +172,36 @@ def manage_users():
                 flash("User not found.", "danger")
                 return redirect(url_for('admin_routes.manage_users'))
 
-            update_user_in_firebase(user['uid'], email=email if email else None, password=password if password else None)
-            users_crud.update_user(user_id, email=email, password=password, role=role, tenant_id=tenant_id)
+            if FIREBASE_ENABLED and user.get('uid'):
+                update_user_in_firebase(user['uid'], email=email if email else None, password=password if password else None)
+                logger.info(f"User {user['email']} updated in Firebase.")
+            else:
+                logger.info(f"User {user['email']} update in Firebase skipped (Firebase disabled or user has no UID).")
+
+            # Update local DB
+            password_hash = generate_password_hash(password) if password else None
+            users_crud.update_user(user_id, email=email, password_hash=password_hash, role=role, tenant_id=tenant_id)
             flash("User updated successfully.", "success")
+            logger.info(f"User {user['email']} updated in local DB.")
 
         elif action == 'delete':
             user_id = request.form.get('user_id')
             user = users_crud.get_user_by_id(user_id)
             if user:
-                delete_user_in_firebase(user['uid'])
+                if FIREBASE_ENABLED and user.get('uid'):
+                    delete_user_in_firebase(user['uid'])
+                    logger.info(f"User {user['email']} deleted in Firebase.")
+                else:
+                    logger.info(f"User {user['email']} delete in Firebase skipped (Firebase disabled or no UID).")
                 users_crud.delete_user(user_id)
                 flash("User deleted successfully.", "success")
+                logger.info(f"User {user['email']} deleted in local DB.")
             else:
                 flash("User not found.", "danger")
 
         return redirect(url_for('admin_routes.manage_users'))
 
     return render_template('manage_users.html', users=users, tenants=tenants)
-
 
 
 @admin_bp.route('/manage_client_admins', methods=['GET', 'POST'])
@@ -203,26 +220,41 @@ def manage_client_admins():
             password = request.form.get('password')
             tenant_id = request.form.get('tenant_id')
 
-            firebase_uid = create_user_in_firebase(email, password)
-            if firebase_uid:
-                users_crud.add_user(email=email, password=password, role='admin', tenant_id=tenant_id, uid=firebase_uid)
-                flash(f"Tenant Admin {email} added successfully.", "success")
+            if FIREBASE_ENABLED:
+                firebase_uid = create_user_in_firebase(email, password)
+                if firebase_uid:
+                    users_crud.add_user(email=email, password=password, role='admin', tenant_id=tenant_id, uid=firebase_uid)
+                    flash(f"Tenant Admin {email} added successfully (in Firebase and local DB).", "success")
+                    logger.info(f"Tenant Admin {email} created via Firebase and added to local DB.")
+                else:
+                    flash("Failed to create tenant admin in Firebase.", "danger")
+                    logger.error(f"Failed to create tenant admin {email} in Firebase.")
             else:
-                flash("Failed to create tenant admin in Firebase.", "danger")
+                # Local DB only
+                password_hash = generate_password_hash(password)
+                users_crud.add_user(email=email, password_hash=password_hash, role='admin', tenant_id=tenant_id)
+                flash(f"Tenant Admin {email} created successfully (local DB only).", "success")
+                logger.info(f"Tenant Admin {email} created in local DB (Firebase disabled).")
 
         elif action == 'delete':
             user_id = request.form.get('user_id')
             user = users_crud.get_user_by_id(user_id)
             if user:
-                delete_user_in_firebase(user['uid'])
+                if FIREBASE_ENABLED and user.get('uid'):
+                    delete_user_in_firebase(user['uid'])
+                    logger.info(f"Tenant Admin {user['email']} deleted in Firebase.")
+                else:
+                    logger.info(f"Tenant Admin {user['email']} delete in Firebase skipped (Firebase disabled or no UID).")
                 users_crud.delete_user(user_id)
                 flash("Tenant Admin deleted successfully.", "success")
+                logger.info(f"Tenant Admin {user['email']} deleted in local DB.")
             else:
                 flash("User not found.", "danger")
 
         return redirect(url_for('admin_routes.manage_client_admins'))
 
     return render_template('manage_client_admins.html', admins=admins, tenants=tenants)
+
 
 @admin_bp.route('/manage_faqs', methods=['GET', 'POST'])
 @login_required

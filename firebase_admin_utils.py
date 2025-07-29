@@ -1,11 +1,13 @@
 # firebase_admin_utils.py
-import firebase_admin
-from firebase_admin import credentials, auth
 import logging
 import os
 import json
-# Removed client-side Firebase config variables as they are not used by Admin SDK here
-from config import LOGGING_LEVEL, log_level_map
+from config import LOGGING_LEVEL, log_level_map, FIREBASE_ENABLED  # <-- Import FIREBASE_ENABLED
+
+# Import firebase_admin only if enabled to avoid errors in non-Firebase mode
+if FIREBASE_ENABLED:
+    import firebase_admin
+    from firebase_admin import credentials, auth
 
 logger = logging.getLogger(__name__)
 logger.setLevel(log_level_map.get(LOGGING_LEVEL, logging.INFO)) # Set level for this module
@@ -16,6 +18,10 @@ _firebase_app = None
 def init_firebase_admin():
     """Initializes the Firebase Admin SDK."""
     global _firebase_app
+    if not FIREBASE_ENABLED:
+        logger.info("Firebase Admin SDK initialization skipped (FIREBASE_ENABLED is False).")
+        return None
+
     if _firebase_app:
         logger.info("Firebase Admin SDK already initialized.")
         return _firebase_app
@@ -51,6 +57,9 @@ def verify_id_token(id_token):
     Verifies a Firebase ID token using the Firebase Admin SDK.
     Returns the decoded token (dict) if valid, raises an exception otherwise.
     """
+    if not FIREBASE_ENABLED:
+        logger.error("verify_id_token called but FIREBASE_ENABLED is False.")
+        raise RuntimeError("Firebase is not enabled.")
     try:
         # Ensure Firebase Admin SDK is initialized before trying to verify
         if not _firebase_app:
@@ -71,6 +80,9 @@ def verify_id_token(id_token):
         raise Exception("Failed to verify ID token due to an unexpected error")
 
 def create_user_in_firebase(email, password):
+    if not FIREBASE_ENABLED:
+        logger.info("create_user_in_firebase called but FIREBASE_ENABLED is False. Returning None.")
+        return None
     try:
         user = auth.create_user(email=email, password=password)
         return user.uid
@@ -79,6 +91,9 @@ def create_user_in_firebase(email, password):
         return None
 
 def update_user_in_firebase(uid, email=None, password=None):
+    if not FIREBASE_ENABLED:
+        logger.info("update_user_in_firebase called but FIREBASE_ENABLED is False. Returning False.")
+        return False
     try:
         update_data = {}
         if email:
@@ -93,6 +108,9 @@ def update_user_in_firebase(uid, email=None, password=None):
         return False
 
 def delete_user_in_firebase(uid):
+    if not FIREBASE_ENABLED:
+        logger.info("delete_user_in_firebase called but FIREBASE_ENABLED is False. Returning False.")
+        return False
     try:
         auth.delete_user(uid)
         return True

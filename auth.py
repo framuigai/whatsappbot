@@ -2,20 +2,21 @@
 import logging
 from flask import Blueprint, render_template, request, jsonify, redirect, url_for, flash
 from flask_login import UserMixin, login_user, logout_user, current_user, login_required
-from firebase_admin import auth as firebase_auth
 from config import (
-    LOGGING_LEVEL, log_level_map,
-    FIREBASE_API_KEY, FIREBASE_AUTH_DOMAIN, FIREBASE_PROJECT_ID,
-    FIREBASE_STORAGE_BUCKET, FIREBASE_MESSAGING_SENDER_ID, FIREBASE_APP_ID
+    LOGGING_LEVEL, log_level_map, FIREBASE_API_KEY, FIREBASE_AUTH_DOMAIN, FIREBASE_PROJECT_ID,
+    FIREBASE_STORAGE_BUCKET, FIREBASE_MESSAGING_SENDER_ID, FIREBASE_APP_ID, FIREBASE_ENABLED
 )
 from db.users_crud import get_user_by_email, add_user, get_user_by_uid
+from werkzeug.security import check_password_hash
+
+# Import Firebase only if enabled
+if FIREBASE_ENABLED:
+    from firebase_admin import auth as firebase_auth
 
 auth_bp = Blueprint('auth', __name__, template_folder='../templates', static_folder='../static')
 logger = logging.getLogger(__name__)
 logger.setLevel(log_level_map.get(LOGGING_LEVEL, logging.INFO))
 
-
-# --- Flask-Login User Model ---
 class User(UserMixin):
     def __init__(self, uid, email, role=None, tenant_id=None):
         self.id = uid  # Flask-Login stores this in session
@@ -26,25 +27,36 @@ class User(UserMixin):
     def get_id(self):
         return str(self.id)
 
-
-# --- Load User Callback ---
 def load_user(uid):
-    """
-    Required by Flask-Login: reload user from UID stored in session.
-    """
+    """Required by Flask-Login: reload user from UID stored in session."""
     if uid:
         user_data = get_user_by_uid(uid)  # Fetch user from DB by UID
         if user_data:
             return User(user_data['uid'], user_data['email'], user_data['role'], user_data['tenant_id'])
     return None
 
-
-# --- Routes ---
-@auth_bp.route('/login')
+@auth_bp.route('/login', methods=['GET', 'POST'])
 def login():
     if current_user.is_authenticated:
         return redirect(url_for('admin_routes.dashboard'))
 
+    # Handle local fallback login
+    if request.method == 'POST' and not FIREBASE_ENABLED:
+        email = request.form.get('email')
+        password = request.form.get('password')
+        user_record = get_user_by_email(email)
+        if user_record and user_record.get('password_hash') and check_password_hash(user_record['password_hash'], password):
+            user = User(user_record['uid'], user_record['email'], user_record['role'], user_record.get('tenant_id'))
+            login_user(user)
+            logger.info(f"User '{email}' logged in with local auth.")
+            flash('Login successful!', 'success')
+            return redirect(url_for('admin_routes.dashboard'))
+        else:
+            logger.warning(f"Failed login attempt for '{email}' with local auth.")
+            flash('Invalid email or password.', 'danger')
+            return render_template('login.html')
+
+    # Always pass the config for template
     firebase_client_config = {
         "apiKey": FIREBASE_API_KEY,
         "authDomain": FIREBASE_AUTH_DOMAIN,
@@ -55,13 +67,17 @@ def login():
     }
     return render_template('login.html', firebase_config=firebase_client_config)
 
-
 @auth_bp.route('/api/login', methods=['POST'])
 def firebase_login():
+    if not FIREBASE_ENABLED:
+        logger.warning("Attempted Firebase login API while FIREBASE_ENABLED is False.")
+        return jsonify({"message": "Firebase login is disabled."}), 403
+
     try:
         data = request.get_json()
         id_token = data.get('idToken')
         if not id_token:
+            logger.warning("Missing ID token in Firebase login API.")
             return jsonify({"message": "Missing ID token"}), 400
 
         # Verify Firebase token
@@ -79,7 +95,6 @@ def firebase_login():
             user = User(uid=user_record['uid'], email=user_record['email'], role=user_record['role'], tenant_id=user_record.get('tenant_id'))
         else:
             logger.info(f"New Firebase user '{email}' detected. Adding to local DB.")
-            # Provision user with Firebase UID and default role
             created = add_user(uid=firebase_uid, email=email, password_hash=None, role='client', tenant_id=None)
             if created:
                 user_record = get_user_by_email(email)
@@ -90,12 +105,12 @@ def firebase_login():
 
         # Log in user
         login_user(user)
+        logger.info(f"User '{email}' logged in via Firebase auth.")
         return jsonify({"message": "Login successful", "email": email}), 200
 
     except Exception as e:
         logger.error(f"Error during Firebase login: {e}", exc_info=True)
         return jsonify({"message": "Internal server error"}), 500
-
 
 @auth_bp.route('/logout')
 @login_required
