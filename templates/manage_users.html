@@ -23,8 +23,8 @@
             </select>
         </div>
         <div class="mb-3">
-            <label class="form-label">Tenant:</label>
-            <input type="text" name="tenant_id" class="form-control" {% if current_user.role == 'admin' %}required{% endif %} placeholder="Enter tenant/business name or ID">
+            <label class="form-label">Client:</label>
+            <input type="text" name="client_id" class="form-control" required placeholder="Enter client/business name or ID">
         </div>
         <button type="submit" class="btn btn-primary">Add User</button>
     </form>
@@ -37,20 +37,20 @@
                 <th>ID</th>
                 <th>Email</th>
                 <th>Role</th>
-                <th>Tenant</th>
+                <th>Client</th>
                 <th style="width: 40%">Actions</th>
             </tr>
         </thead>
         <tbody>
             {% for user in users %}
-                {% if current_user.role == 'super_admin' or (current_user.role == 'admin' and user['tenant_id'] == current_user.tenant_id and user['role'] == 'client') %}
+                {% if current_user.role == 'super_admin' %}
+                {% if user['active'] == 1 %}
                 <tr>
                     <td>{{ user['id'] }}</td>
                     <td>{{ user['email'] }}</td>
                     <td>{{ user['role'] }}</td>
-                    <td>{{ user['tenant_id'] or 'None' }}</td>
+                    <td>{{ user['client_id'] or 'None' }}</td>
                     <td>
-                        {% if current_user.role == 'super_admin' or (user['tenant_id'] == current_user.tenant_id and user['role'] == 'client') %}
                         <form method="POST" action="{{ url_for('users_routes.manage_users') }}" class="d-inline-block me-2">
                             <input type="hidden" name="action" value="update">
                             <input type="hidden" name="user_id" value="{{ user['id'] }}">
@@ -62,7 +62,7 @@
                                 <option value="client" {% if user['role'] == 'client' %}selected{% endif %}>Client</option>
                             </select>
 
-                            <input type="text" name="tenant_id" class="form-control d-inline-block mb-1" style="width: 150px;" value="{{ user['tenant_id'] or '' }}" placeholder="Tenant">
+                            <input type="text" name="client_id" class="form-control d-inline-block mb-1" style="width: 150px;" value="{{ user['client_id'] or '' }}" placeholder="Client">
 
                             <button type="submit" class="btn btn-warning btn-sm">Update</button>
                         </form>
@@ -72,9 +72,9 @@
                             <input type="hidden" name="user_id" value="{{ user['id'] }}">
                             <button type="submit" class="btn btn-danger btn-sm">Delete</button>
                         </form>
-                        {% endif %}
                     </td>
                 </tr>
+                {% endif %}
                 {% endif %}
             {% endfor %}
         </tbody>

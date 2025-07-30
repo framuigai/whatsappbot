@@ -6,10 +6,10 @@
     <p>Welcome, {{ user_email }}!</p>
     <p id="conversation-summary">Loading conversation stats...</p>
 
-    {% if user_role == 'admin' %}
-        <p>You have full access to all tenants.</p>
+    {% if user_role == 'super_admin' %}
+        <p>You have full access to all clients.</p>
     {% else %}
-        <p>You can view data only for your tenant.</p>
+        <p>You can view data only for your client.</p>
     {% endif %}
 </div>
 <script src="{{ url_for('static', filename='js/dashboard.js') }}"></script>

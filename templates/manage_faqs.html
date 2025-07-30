@@ -19,15 +19,16 @@
     <textarea id="answer" name="answer" rows="4" required></textarea>
 
     {% if current_user.role == 'super_admin' %}
-        <label for="tenant_id">Tenant:</label>
-        <select name="tenant_id" id="tenant_id" required>
-            {% for tenant in tenants %}
-                <option value="{{ tenant.tenant_id }}" {% if tenant.tenant_id == tenant_id %}selected{% endif %}>{{ tenant.tenant_name }}</option>
+        <label for="client_id">Client:</label>
+        <select name="client_id" id="client_id" required>
+            {% for client in clients %}
+                {% if client.active == 1 %}
+                <option value="{{ client.client_id }}" {% if client.client_id == client_id %}selected{% endif %}>{{ client.client_name }}</option>
+                {% endif %}
             {% endfor %}
         </select>
     {% else %}
-        <!-- Always use current_user.tenant_id for tenant admins -->
-        <input type="hidden" name="tenant_id" value="{{ tenant_id }}">
+        <input type="hidden" name="client_id" value="{{ client_id }}">
     {% endif %}
 
     <button type="submit" class="button-primary">Add FAQ</button>
@@ -41,10 +42,12 @@
         </thead>
         <tbody>
             {% for faq in faqs %}
+                {% if faq.active == 1 %}
                 <tr>
                     <td>{{ faq.question }}</td>
                     <td>{{ faq.answer }}</td>
                 </tr>
+                {% endif %}
             {% endfor %}
         </tbody>
     </table>

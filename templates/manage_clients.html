@@ -2,33 +2,35 @@
 {% block title %}Manage Clients{% endblock %}
 {% block body_content %}
 <div class="container mt-4">
-    <h2>Manage Tenants (Clients)</h2>
-    <p class="text-muted">Here you can view and manage all tenants.</p>
+    <h2>Manage Clients</h2>
+    <p class="text-muted">Here you can view and manage all clients.</p>
     <hr>
 
-    <h4>Existing Tenants</h4>
+    <h4>Existing Clients</h4>
     <table class="table table-bordered table-hover align-middle">
         <thead class="table-dark">
             <tr>
-                <th>Tenant ID</th>
-                <th>Name</th>
+                <th>Client ID</th>
+                <th>Client Name</th>
                 <th>WhatsApp Phone ID</th>
                 <th>WhatsApp Token</th>
             </tr>
         </thead>
         <tbody>
-            {% if tenants %}
-                {% for tenant in tenants %}
-                <tr>
-                    <td>{{ tenant['tenant_id'] }}</td>
-                    <td>{{ tenant['tenant_name'] }}</td>
-                    <td>{{ tenant['whatsapp_phone_number_id'] }}</td>
-                    <td>{{ tenant['whatsapp_api_token'] }}</td>
-                </tr>
+            {% if clients %}
+                {% for client in clients %}
+                    {% if client['active'] == 1 %}
+                    <tr>
+                        <td>{{ client['client_id'] }}</td>
+                        <td>{{ client['client_name'] }}</td>
+                        <td>{{ client['whatsapp_phone_number_id'] }}</td>
+                        <td>{{ client['whatsapp_api_token'] }}</td>
+                    </tr>
+                    {% endif %}
                 {% endfor %}
             {% else %}
                 <tr>
-                    <td colspan="4" class="text-center text-muted">No tenants found.</td>
+                    <td colspan="4" class="text-center text-muted">No clients found.</td>
                 </tr>
             {% endif %}
         </tbody>

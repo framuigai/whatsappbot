@@ -11,7 +11,7 @@
                 <th>Last Message</th>
                 <th>AI Response</th>
                 {% if user_role == 'super_admin' %}
-                    <th>Tenant</th>
+                    <th>Client</th>
                 {% endif %}
                 <th>Timestamp</th>
                 <th>Actions</th>
@@ -24,7 +24,7 @@
                     <td>{{ conv.last_message_text }}</td>
                     <td>{{ conv.ai_response if conv.ai_response else "N/A" }}</td>
                     {% if user_role == 'super_admin' %}
-                        <td>{{ conv.tenant_name }}</td>
+                        <td>{{ conv.client_name }}</td>
                     {% endif %}
                     <td>
                         {% if conv.last_timestamp %}

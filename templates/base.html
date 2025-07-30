@@ -27,7 +27,6 @@
             window.FIREBASE_ENABLED = true;
         </script>
     {% else %}
-        <!-- Config for disabling Firebase logic in JS -->
         <script>
             const firebaseConfig = { disabled: true };
             window.FIREBASE_ENABLED = false;
@@ -47,13 +46,10 @@
                 <a href="{{ url_for('dashboard_routes.dashboard') }}">Dashboard</a>
                 <a href="{{ url_for('conversations_routes.all_conversations') }}">Conversations</a>
                 <a href="{{ url_for('dashboard_routes.view_reports') }}">Reports</a>
-                {% if current_user.role in ['admin', 'super_admin'] %}
+                {% if current_user.role == 'super_admin' %}
                     <a href="{{ url_for('users_routes.manage_users') }}">Manage Users</a>
                     <a href="{{ url_for('faqs_routes.manage_faqs') }}">Manage FAQs</a>
-
-                {% endif %}
-                {% if current_user.role == 'super_admin' %}
-                    <a href="{{ url_for('users_routes.manage_client_admins') }}">Tenant Admins</a>
+                    <a href="{{ url_for('users_routes.manage_clients') }}">Manage Clients</a>
                 {% endif %}
                 <a href="{{ url_for('auth.logout') }}" id="logout-button">Logout</a>
             {% else %}
@@ -76,7 +72,7 @@
     </div>
 
     <footer>
-        &copy; {{ moment().year }} WhatsApp Bot Admin Panel &mdash; Multi-tenant platform
+        &copy; {{ moment().year }} WhatsApp Bot Admin Panel &mdash; Multi-client platform
     </footer>
 
     <script src="{{ url_for('static', filename='js/firebase-init.js') }}"></script>
