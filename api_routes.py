@@ -1,83 +1,97 @@
-# api_routes.py
+# routes/api_routes.py
+
 import logging
-from flask import Blueprint, jsonify, abort
-from flask_login import login_required, current_user
-from db.tenants_crud import get_all_tenants, get_tenant_by_id
-from db.conversations_crud import get_conversation_history_by_whatsapp_id, get_monthly_conversation_counts
+from flask import Blueprint, jsonify, request
+from flask_login import current_user, login_required
+from db.clients_crud import get_all_clients, get_client_by_id
 from db.faqs_crud import get_all_faqs
-from config import FIREBASE_ENABLED  # <-- Import flag
+from db.conversations_crud import (
+    get_conversation_history_by_whatsapp_id,
+    get_monthly_conversation_counts,
+    get_daily_conversation_counts
+)
 
 api_bp = Blueprint('api_routes', __name__, url_prefix='/api')
 logger = logging.getLogger(__name__)
 
-# --- Health Check ---
-@api_bp.route('/ping', methods=['GET'])
-def ping():
-    return jsonify({"message": "API is alive"}), 200
-
-# --- API: Get Clients ---
 @api_bp.route('/clients', methods=['GET'])
 @login_required
-def get_clients():
-    try:
-        if current_user.role == 'admin':
-            tenants = get_all_tenants()
-        else:
-            tenant = get_tenant_by_id(current_user.tenant_id)
-            tenants = [tenant] if tenant else []
-        return jsonify({"tenants": tenants}), 200
-    except Exception as e:
-        logger.error(f"Error fetching clients: {e}", exc_info=True)
-        return jsonify({"message": "Internal server error"}), 500
+def api_get_clients():
+    """
+    Return all active clients.
+    """
+    logger.info(f"User {current_user.email} requested client list.")
+    clients = get_all_clients()
+    return jsonify({"clients": clients})
 
-# --- API: Get Chat History ---
-@api_bp.route('/chat_history/<string:wa_id>', methods=['GET'])
+@api_bp.route('/clients/<client_id>', methods=['GET'])
 @login_required
-def get_chat_history(wa_id):
-    try:
-        tenant_id = None if current_user.role == 'admin' else current_user.tenant_id
-        conversations = get_conversation_history_by_whatsapp_id(wa_id, tenant_id=tenant_id)
-        if not conversations and current_user.role != 'admin':
-            abort(403, description="Access denied for this WhatsApp ID.")
-        return jsonify({"wa_id": wa_id, "conversations": conversations}), 200
-    except Exception as e:
-        logger.error(f"Error fetching chat history for {wa_id}: {e}", exc_info=True)
-        return jsonify({"message": "Internal server error"}), 500
+def api_get_client_by_id(client_id):
+    """
+    Get a single client by client_id.
+    """
+    logger.info(f"User {current_user.email} requested client by id: {client_id}")
+    client = get_client_by_id(client_id)
+    if not client or client.get("active", 1) != 1:
+        return jsonify({"error": "Client not found."}), 404
+    return jsonify(client)
 
-# --- API: Get FAQs ---
 @api_bp.route('/faqs', methods=['GET'])
 @login_required
-def get_faqs():
-    try:
-        tenant_id = None if current_user.role == 'admin' else current_user.tenant_id
-        faqs = get_all_faqs(tenant_id=tenant_id)
-        return jsonify({"faqs": faqs}), 200
-    except Exception as e:
-        logger.error(f"Error fetching FAQs: {e}", exc_info=True)
-        return jsonify({"message": "Internal server error"}), 500
+def api_get_faqs():
+    """
+    Return all FAQs for the current user's client.
+    """
+    if current_user.role == "super_admin":
+        client_id = request.args.get("client_id")
+        if not client_id:
+            return jsonify({"error": "client_id required for super_admin."}), 400
+    else:
+        client_id = getattr(current_user, 'client_id', None)
+    faqs = get_all_faqs(client_id)
+    return jsonify({"faqs": faqs})
 
-# --- ✅ NEW API: Get Monthly Report Data ---
+@api_bp.route('/chat_history/<wa_id>', methods=['GET'])
+@login_required
+def api_get_chat_history(wa_id):
+    """
+    Return conversation history for a WhatsApp ID, for the current user's client only.
+    """
+    if current_user.role == "super_admin":
+        client_id = request.args.get("client_id")
+    else:
+        client_id = getattr(current_user, 'client_id', None)
+    history = get_conversation_history_by_whatsapp_id(wa_id, client_id=client_id)
+    return jsonify({"conversations": history})
+
 @api_bp.route('/reports/monthly', methods=['GET'])
 @login_required
-def get_monthly_report():
-    try:
-        tenant_id = None if current_user.role == 'admin' else current_user.tenant_id
-        monthly_counts = get_monthly_conversation_counts(tenant_id=tenant_id)
+def api_get_monthly_report():
+    """
+    Return monthly conversation counts for current user's client.
+    """
+    if current_user.role == "super_admin":
+        client_id = request.args.get("client_id")
+    else:
+        client_id = getattr(current_user, 'client_id', None)
+    counts = get_monthly_conversation_counts(client_id)
+    months = [row['month'] for row in counts]
+    values = [row['count'] for row in counts]
+    return jsonify({"labels": months, "values": values, "raw": counts})
 
-        labels = [item['month'] for item in monthly_counts]
-        values = [item['count'] for item in monthly_counts]
+@api_bp.route('/reports/daily', methods=['GET'])
+@login_required
+def api_get_daily_report():
+    """
+    Return daily conversation counts for current user's client.
+    """
+    if current_user.role == "super_admin":
+        client_id = request.args.get("client_id")
+    else:
+        client_id = getattr(current_user, 'client_id', None)
+    counts = get_daily_conversation_counts(client_id)
+    days = [row['date'] for row in counts]
+    values = [row['count'] for row in counts]
+    return jsonify({"labels": days, "values": values, "raw": counts})
 
-        logger.info(f"Monthly report generated for tenant_id: {tenant_id}, Data points: {len(labels)}")
-        return jsonify({"labels": labels, "values": values}), 200
-    except Exception as e:
-        logger.error(f"Error fetching monthly report: {e}", exc_info=True)
-        return jsonify({"message": "Internal server error"}), 500
 
-# --- PROTECT /api/login if you ever add it here ---
-@api_bp.route('/login', methods=['POST'])
-def api_login():
-    if not FIREBASE_ENABLED:
-        logger.warning("/api/login called but FIREBASE_ENABLED is False. Returning 403.")
-        return jsonify({"message": "Firebase login is disabled."}), 403
-    # If implemented, delegate to real handler
-    return jsonify({"message": "Not implemented."}), 501

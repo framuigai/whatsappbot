@@ -18,11 +18,11 @@ logger = logging.getLogger(__name__)
 logger.setLevel(log_level_map.get(LOGGING_LEVEL, logging.INFO))
 
 class User(UserMixin):
-    def __init__(self, uid, email, role=None, tenant_id=None):
+    def __init__(self, uid, email, role=None, client_id=None):
         self.id = uid  # Flask-Login stores this in session. Always use 'uid' from DB!
         self.email = email
         self.role = role
-        self.tenant_id = tenant_id
+        self.client_id = client_id
 
     def get_id(self):
         # Always return string for session compatibility.
@@ -35,7 +35,7 @@ def load_user(uid):
         user_data = get_user_by_uid(uid)
         logger.debug(f"[LOGIN_DEBUG] user_data loaded: {user_data}")
         if user_data:
-            return User(user_data['uid'], user_data['email'], user_data['role'], user_data['tenant_id'])
+            return User(user_data['uid'], user_data['email'], user_data['role'], user_data['client_id'])
         else:
             logger.warning(f"[LOGIN_DEBUG] No user found in DB with uid={uid}")
     else:
@@ -45,7 +45,7 @@ def load_user(uid):
 @auth_bp.route('/login', methods=['GET', 'POST'])
 def login():
     if current_user.is_authenticated:
-        return redirect(url_for('dashboard_routes.dashboard'))  # FIXED: update to new blueprint
+        return redirect(url_for('dashboard_routes.dashboard'))  # update to new blueprint
 
     # Handle local fallback login
     if request.method == 'POST' and not FIREBASE_ENABLED:
@@ -58,11 +58,16 @@ def login():
                 logger.error(f"User '{email}' cannot be logged in: user.uid is None. Run migration to fix null uids.")
                 flash("This account cannot log in until the system administrator updates the user database.", "danger")
                 return render_template('login.html')
-            user = User(user_record['uid'], user_record['email'], user_record['role'], user_record.get('tenant_id'))
+            # Only allow login for super_admin or client roles
+            if user_record['role'] not in ('super_admin', 'client'):
+                logger.warning(f"Login attempt with invalid role: {user_record['role']}")
+                flash('Unauthorized role.', 'danger')
+                return render_template('login.html')
+            user = User(user_record['uid'], user_record['email'], user_record['role'], user_record.get('client_id'))
             login_user(user)
             logger.info(f"User '{email}' logged in with local auth.")
             flash('Login successful!', 'success')
-            return redirect(url_for('dashboard_routes.dashboard'))  # FIXED: update to new blueprint
+            return redirect(url_for('dashboard_routes.dashboard'))  # update to new blueprint
         else:
             logger.warning(f"Failed login attempt for '{email}' with local auth.")
             flash('Invalid email or password.', 'danger')
@@ -104,16 +109,21 @@ def firebase_login():
 
         if user_record:
             logger.info(f"Existing user '{email}' found. Logging in.")
-            user = User(uid=user_record['uid'], email=user_record['email'], role=user_record['role'], tenant_id=user_record.get('tenant_id'))
+            user = User(uid=user_record['uid'], email=user_record['email'], role=user_record['role'], client_id=user_record.get('client_id'))
         else:
             logger.info(f"New Firebase user '{email}' detected. Adding to local DB.")
-            created = add_user(uid=firebase_uid, email=email, password_hash=None, role='client', tenant_id=None)
+            created = add_user(uid=firebase_uid, email=email, password_hash=None, role='client', client_id=None)
             if created:
                 user_record = get_user_by_email(email)
-                user = User(uid=user_record['uid'], email=user_record['email'], role=user_record['role'], tenant_id=user_record.get('tenant_id'))
+                user = User(uid=user_record['uid'], email=user_record['email'], role=user_record['role'], client_id=user_record.get('client_id'))
             else:
                 logger.error(f"Failed to add user '{email}' to local DB.")
                 return jsonify({"message": "Failed to provision user"}), 500
+
+        # Only allow login for super_admin or client roles
+        if user.role not in ('super_admin', 'client'):
+            logger.warning(f"Firebase login attempt with invalid role: {user.role}")
+            return jsonify({"message": "Unauthorized role."}), 403
 
         # Log in user
         login_user(user)

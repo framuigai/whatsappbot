@@ -104,7 +104,7 @@ if __name__ == "__main__":
     logging.getLogger('db.db_connection').setLevel(log_level_map.get(LOGGING_LEVEL, logging.INFO))
     logging.getLogger('db.conversations_crud').setLevel(log_level_map.get(LOGGING_LEVEL, logging.INFO))
     logging.getLogger('db.faqs_crud').setLevel(log_level_map.get(LOGGING_LEVEL, logging.INFO))
-    logging.getLogger('db.tenants_crud').setLevel(log_level_map.get(LOGGING_LEVEL, logging.INFO))
+    logging.getLogger('db.clients_crud').setLevel(log_level_map.get(LOGGING_LEVEL, logging.INFO))  # CHANGED
     logging.getLogger('ai_utils').setLevel(log_level_map.get(LOGGING_LEVEL, logging.INFO))
     logging.getLogger('auth').setLevel(log_level_map.get(LOGGING_LEVEL, logging.INFO))
     logging.getLogger('webhook').setLevel(log_level_map.get(LOGGING_LEVEL, logging.INFO))

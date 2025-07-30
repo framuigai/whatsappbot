@@ -22,10 +22,10 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     function renderClients(data, container) {
-        if (data.tenants?.length) {
+        if (data.clients?.length) {
             let html = "<ul>";
-            data.tenants.forEach(t => {
-                html += `<li><strong>${t.tenant_name}</strong> (ID: ${t.tenant_id})</li>`;
+            data.clients.forEach(c => {
+                html += `<li><strong>${c.client_name}</strong> (ID: ${c.client_id})</li>`;
             });
             html += "</ul>";
             container.innerHTML = html;
