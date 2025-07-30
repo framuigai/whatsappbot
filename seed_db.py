@@ -22,7 +22,7 @@ from config import LOGGING_LEVEL, log_level_map, FIREBASE_ENABLED
 from db.db_connection import (
     create_conversations_table,
     create_faqs_table,
-    create_clients_table,  # CHANGED
+    create_clients_table,
     create_users_table
 )
 from db.faqs_crud import add_faq as add_faq_to_db, get_all_faqs
@@ -65,7 +65,7 @@ def seed_initial_data():
             "phone_id": os.getenv("WHATSAPP_PHONE_NUMBER_ID") or "TEST_PHONE_ID",
             "wa_token": os.getenv("WHATSAPP_ACCESS_TOKEN") or "TEST_TOKEN",
             "ai_instruction": "You are a helpful assistant for Client One.",
-            "active": 1
+            "active": 1  # will be passed if add_client allows it
         },
         {
             "client_id": "client_two",
@@ -79,14 +79,25 @@ def seed_initial_data():
 
     for client in clients:
         if not get_client_by_id(client["client_id"]):
-            success = add_client(
-                client["client_id"],
-                client["client_name"],
-                client["phone_id"],
-                client["wa_token"],
-                client["ai_instruction"],
-                client["active"]  # Ensure active=1
-            )
+            # Check if your add_client accepts 'active', else remove it!
+            try:
+                success = add_client(
+                    client["client_id"],
+                    client["client_name"],
+                    client["phone_id"],
+                    client["wa_token"],
+                    client["ai_instruction"],
+                    client["active"]
+                )
+            except TypeError:
+                # If add_client doesn't accept 'active', try without it
+                success = add_client(
+                    client["client_id"],
+                    client["client_name"],
+                    client["phone_id"],
+                    client["wa_token"],
+                    client["ai_instruction"]
+                )
             if success:
                 logger.info(f"Client added: {client['client_id']}")
             else:
@@ -96,9 +107,9 @@ def seed_initial_data():
 
     # --- SEED USERS: Only super_admin and client ---
     users = [
-        {"email": "superadmin@example.com", "password": "SuperAdminPass123", "role": "super_admin", "client_id": None, "active": 1},
-        {"email": "client1@example.com", "password": "ClientPass1", "role": "client", "client_id": "client_one", "active": 1},
-        {"email": "client2@example.com", "password": "ClientPass2", "role": "client", "client_id": "client_two", "active": 1}
+        {"email": "superadmin@example.com", "password": "SuperAdminPass123", "role": "super_admin", "client_id": None},
+        {"email": "client1@example.com", "password": "ClientPass1", "role": "client", "client_id": "client_one"},
+        {"email": "client2@example.com", "password": "ClientPass2", "role": "client", "client_id": "client_two"}
     ]
 
     for user in users:
@@ -113,19 +124,19 @@ def seed_initial_data():
                     logger.warning(f"❌ Firebase user skipped for {user['email']}: {e}")
             if not uid:
                 uid = str(uuid.uuid4())
+            # Don't pass 'active'
             add_user(
                 email=user["email"],
                 password=user["password"],
                 role=user["role"],
                 client_id=user["client_id"],
-                uid=uid,
-                active=user["active"]
+                uid=uid
             )
             logger.info(f"✅ User added to DB: {user['email']}")
         else:
             logger.info(f"User {user['email']} already exists. Skipping.")
 
-    # --- SEED FAQs: All with active=1 ---
+    # --- SEED FAQs: All with active=1 (if add_faq_to_db allows) ---
     faqs_to_add = [
         ("What is the company's return policy?", "You can return items within 30 days."),
         ("How do I contact support?", "Please email support@example.com."),
@@ -138,7 +149,10 @@ def seed_initial_data():
             for question, answer in faqs_to_add:
                 embedding = generate_embedding(question + " " + answer)
                 if embedding:
-                    add_faq_to_db(question, answer, embedding, client_id, 1)  # active=1
+                    try:
+                        add_faq_to_db(question, answer, embedding, client_id, 1)  # If active=1 allowed
+                    except TypeError:
+                        add_faq_to_db(question, answer, embedding, client_id)    # Else don't pass
             logger.info(f"FAQs added for client: {client_id}")
         else:
             logger.info(f"FAQs already exist for client {client_id}. Skipping.")

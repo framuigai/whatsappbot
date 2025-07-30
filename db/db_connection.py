@@ -31,7 +31,7 @@ def create_clients_table():
                 CREATE TABLE IF NOT EXISTS clients (
                     client_id TEXT PRIMARY KEY,
                     client_name TEXT NOT NULL,
-                    whatsapp_phone_number_id TEXT NOT NULL UNIQUE,
+                    whatsapp_phone_number_id TEXT NOT NULL,
                     whatsapp_api_token TEXT NOT NULL,
                     ai_system_instruction TEXT,
                     ai_model_name TEXT,

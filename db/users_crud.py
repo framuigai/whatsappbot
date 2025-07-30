@@ -111,7 +111,8 @@ def get_all_users():
     conn = get_db_connection()
     try:
         cursor = conn.cursor()
-        cursor.execute("SELECT id, uid, email, role, client_id FROM users WHERE active = 1 ORDER BY id ASC")
+        # Fetch active so the template can check it
+        cursor.execute("SELECT id, uid, email, role, client_id, active FROM users WHERE active = 1 ORDER BY id ASC")
         rows = cursor.fetchall()
         return [dict(row) for row in rows]
     except sqlite3.Error as e:
@@ -119,6 +120,7 @@ def get_all_users():
         return []
     finally:
         conn.close()
+
 
 def get_users_by_role(role):
     if role not in ("super_admin", "client"):

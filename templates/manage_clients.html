@@ -6,6 +6,37 @@
     <p class="text-muted">Here you can view and manage all clients.</p>
     <hr>
 
+
+    {# Add Client Form (only for super_admin) #}
+    {% if current_user.role == 'super_admin' %}
+    <div class="mb-4">
+        <h4>Add New Client</h4>
+        <form method="POST" class="form-add-client" style="margin-bottom: 2rem;">
+            <div class="form-group mb-2">
+                <label for="client_id">Client ID:</label>
+                <input type="text" name="client_id" id="client_id" class="form-control" required placeholder="Unique client ID">
+            </div>
+            <div class="form-group mb-2">
+                <label for="client_name">Client Name:</label>
+                <input type="text" name="client_name" id="client_name" class="form-control" placeholder="Business name">
+            </div>
+            <div class="form-group mb-2">
+                <label for="phone_id">WhatsApp Phone ID:</label>
+                <input type="text" name="phone_id" id="phone_id" class="form-control" required>
+            </div>
+            <div class="form-group mb-2">
+                <label for="wa_token">WhatsApp API Token:</label>
+                <input type="text" name="wa_token" id="wa_token" class="form-control" required>
+            </div>
+            <div class="form-group mb-2">
+                <label for="ai_instruction">AI Instruction (optional):</label>
+                <input type="text" name="ai_instruction" id="ai_instruction" class="form-control">
+            </div>
+            <button type="submit" class="btn btn-primary">Add Client</button>
+        </form>
+    </div>
+    {% endif %}
+
     <h4>Existing Clients</h4>
     <table class="table table-bordered table-hover align-middle">
         <thead class="table-dark">

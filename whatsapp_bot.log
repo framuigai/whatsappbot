@@ -10069,3 +10069,521 @@ werkzeug.routing.exceptions.BuildError: Could not build url for endpoint 'users_
 2025-07-29 18:33:40 - werkzeug - INFO - 127.0.0.1 - - [29/Jul/2025 18:33:40] "GET /manage_users HTTP/1.1" 200 -
 2025-07-29 18:33:40 - werkzeug - INFO - 127.0.0.1 - - [29/Jul/2025 18:33:40] "[36mGET /static/css/main.css HTTP/1.1[0m" 304 -
 2025-07-29 18:33:40 - werkzeug - INFO - 127.0.0.1 - - [29/Jul/2025 18:33:40] "[36mGET /static/js/firebase-init.js HTTP/1.1[0m" 304 -
+2025-07-30 15:27:43 - db.db_connection - INFO - Checked/Created 'clients' table.
+2025-07-30 15:27:43 - db.db_connection - INFO - Checked/Created 'users' table with role and password support.
+2025-07-30 15:27:43 - db.db_connection - INFO - Checked/Created 'conversations' table.
+2025-07-30 15:27:43 - db.db_connection - INFO - Checked/Created 'faqs' table.
+2025-07-30 15:27:43 - __main__ - INFO - Database initialization complete.
+2025-07-30 15:27:43 - __main__ - INFO - Firebase Admin SDK initialization skipped (FIREBASE_ENABLED is False).
+2025-07-30 15:27:43 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://192.168.100.19:5000
+2025-07-30 15:27:43 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2025-07-30 15:32:16 - db.db_connection - INFO - Checked/Created 'clients' table.
+2025-07-30 15:32:16 - db.db_connection - INFO - Checked/Created 'users' table with role and password support.
+2025-07-30 15:32:16 - db.db_connection - INFO - Checked/Created 'conversations' table.
+2025-07-30 15:32:16 - db.db_connection - INFO - Checked/Created 'faqs' table.
+2025-07-30 15:32:16 - __main__ - INFO - Database initialization complete.
+2025-07-30 15:32:16 - __main__ - INFO - Firebase Admin SDK initialization skipped (FIREBASE_ENABLED is False).
+2025-07-30 15:32:16 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://192.168.100.19:5000
+2025-07-30 15:32:16 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2025-07-30 15:32:35 - webhook - INFO - WEBHOOK_VERIFIED
+2025-07-30 15:32:35 - werkzeug - INFO - 127.0.0.1 - - [30/Jul/2025 15:32:35] "GET /webhook?hub.mode=subscribe&hub.challenge=1908535605&hub.verify_token=thisisthesecretverifytokenforfrans0 HTTP/1.1" 200 -
+2025-07-30 15:53:19 - db.db_connection - INFO - Checked/Created 'clients' table.
+2025-07-30 15:53:19 - db.db_connection - INFO - Checked/Created 'users' table with role and password support.
+2025-07-30 15:53:19 - db.db_connection - INFO - Checked/Created 'conversations' table.
+2025-07-30 15:53:19 - db.db_connection - INFO - Checked/Created 'faqs' table.
+2025-07-30 15:53:19 - __main__ - INFO - Database initialization complete.
+2025-07-30 15:53:19 - __main__ - INFO - Firebase Admin SDK initialization skipped (FIREBASE_ENABLED is False).
+2025-07-30 15:53:19 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://192.168.100.19:5000
+2025-07-30 15:53:19 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2025-07-30 15:54:06 - werkzeug - INFO - 127.0.0.1 - - [30/Jul/2025 15:54:06] "[32mGET / HTTP/1.1[0m" 302 -
+2025-07-30 15:54:06 - werkzeug - INFO - 127.0.0.1 - - [30/Jul/2025 15:54:06] "GET /login?next=/ HTTP/1.1" 200 -
+2025-07-30 15:54:07 - werkzeug - INFO - 127.0.0.1 - - [30/Jul/2025 15:54:07] "GET /static/js/firebase-init.js HTTP/1.1" 200 -
+2025-07-30 15:54:07 - werkzeug - INFO - 127.0.0.1 - - [30/Jul/2025 15:54:07] "GET /static/css/main.css HTTP/1.1" 200 -
+2025-07-30 15:54:08 - werkzeug - INFO - 127.0.0.1 - - [30/Jul/2025 15:54:08] "[33mGET /favicon.ico HTTP/1.1[0m" 404 -
+2025-07-30 15:54:13 - werkzeug - INFO - 127.0.0.1 - - [30/Jul/2025 15:54:13] "[32mGET / HTTP/1.1[0m" 302 -
+2025-07-30 15:54:13 - werkzeug - INFO - 127.0.0.1 - - [30/Jul/2025 15:54:13] "GET /login?next=/ HTTP/1.1" 200 -
+2025-07-30 15:54:13 - werkzeug - INFO - 127.0.0.1 - - [30/Jul/2025 15:54:13] "[36mGET /static/css/main.css HTTP/1.1[0m" 304 -
+2025-07-30 15:54:13 - werkzeug - INFO - 127.0.0.1 - - [30/Jul/2025 15:54:13] "[36mGET /static/js/firebase-init.js HTTP/1.1[0m" 304 -
+2025-07-30 15:54:14 - werkzeug - INFO - 127.0.0.1 - - [30/Jul/2025 15:54:14] "[33mGET /favicon.ico HTTP/1.1[0m" 404 -
+2025-07-30 15:54:19 - werkzeug - INFO - 127.0.0.1 - - [30/Jul/2025 15:54:19] "GET /login?next=/ HTTP/1.1" 200 -
+2025-07-30 15:54:19 - werkzeug - INFO - 127.0.0.1 - - [30/Jul/2025 15:54:19] "[36mGET /static/css/main.css HTTP/1.1[0m" 304 -
+2025-07-30 15:54:19 - werkzeug - INFO - 127.0.0.1 - - [30/Jul/2025 15:54:19] "[36mGET /static/js/firebase-init.js HTTP/1.1[0m" 304 -
+2025-07-30 15:55:32 - auth - INFO - User 'superadmin@example.com' logged in with local auth.
+2025-07-30 15:55:32 - werkzeug - INFO - 127.0.0.1 - - [30/Jul/2025 15:55:32] "[32mPOST /login HTTP/1.1[0m" 302 -
+2025-07-30 15:55:32 - routes.dashboard - INFO - User superadmin@example.com accessed dashboard (client_id: None).
+2025-07-30 15:55:32 - routes.dashboard - ERROR - Error fetching dashboard data: Could not build url for endpoint 'users_routes.manage_clients'. Did you mean 'users_routes.manage_users' instead?
+Traceback (most recent call last):
+  File "C:\Users\Admin\PycharmProjects\whatsappbot\routes\dashboard.py", line 27, in dashboard
+    return render_template(
+           ^^^^^^^^^^^^^^^^
+  File "C:\Users\Admin\.conda\envs\whatsappbot\Lib\site-packages\flask\templating.py", line 150, in render_template
+    return _render(app, template, context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Admin\.conda\envs\whatsappbot\Lib\site-packages\flask\templating.py", line 131, in _render
+    rv = template.render(context)
+         ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Admin\.conda\envs\whatsappbot\Lib\site-packages\jinja2\environment.py", line 1295, in render
+    self.environment.handle_exception()
+  File "C:\Users\Admin\.conda\envs\whatsappbot\Lib\site-packages\jinja2\environment.py", line 942, in handle_exception
+    raise rewrite_traceback_stack(source=source)
+  File "C:\Users\Admin\PycharmProjects\whatsappbot\templates\dashboard.html", line 1, in top-level template code
+    {% extends "base.html" %}
+  File "C:\Users\Admin\PycharmProjects\whatsappbot\templates\base.html", line 52, in top-level template code
+    <a href="{{ url_for('users_routes.manage_clients') }}">Manage Clients</a>
+    ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Admin\.conda\envs\whatsappbot\Lib\site-packages\flask\app.py", line 1121, in url_for
+    return self.handle_url_build_error(error, endpoint, values)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Admin\.conda\envs\whatsappbot\Lib\site-packages\flask\app.py", line 1110, in url_for
+    rv = url_adapter.build(  # type: ignore[union-attr]
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Admin\.conda\envs\whatsappbot\Lib\site-packages\werkzeug\routing\map.py", line 924, in build
+    raise BuildError(endpoint, values, method, self)
+werkzeug.routing.exceptions.BuildError: Could not build url for endpoint 'users_routes.manage_clients'. Did you mean 'users_routes.manage_users' instead?
+2025-07-30 15:55:32 - werkzeug - INFO - 127.0.0.1 - - [30/Jul/2025 15:55:32] "[35m[1mGET / HTTP/1.1[0m" 500 -
+2025-07-30 15:55:32 - werkzeug - INFO - 127.0.0.1 - - [30/Jul/2025 15:55:32] "[36mGET /?__debugger__=yes&cmd=resource&f=debugger.js HTTP/1.1[0m" 304 -
+2025-07-30 15:55:32 - werkzeug - INFO - 127.0.0.1 - - [30/Jul/2025 15:55:32] "[36mGET /?__debugger__=yes&cmd=resource&f=style.css HTTP/1.1[0m" 304 -
+2025-07-30 15:55:32 - werkzeug - INFO - 127.0.0.1 - - [30/Jul/2025 15:55:32] "GET /?__debugger__=yes&cmd=resource&f=console.png&s=G4Rp5qjfcZZB0JNZk7WB HTTP/1.1" 200 -
+2025-07-30 15:55:32 - werkzeug - INFO - 127.0.0.1 - - [30/Jul/2025 15:55:32] "[36mGET /?__debugger__=yes&cmd=resource&f=console.png HTTP/1.1[0m" 304 -
+2025-07-30 16:02:38 - routes.dashboard - INFO - User superadmin@example.com accessed dashboard (client_id: None).
+2025-07-30 16:02:38 - routes.dashboard - ERROR - Error fetching dashboard data: Could not build url for endpoint 'users_routes.manage_clients'. Did you mean 'users_routes.manage_users' instead?
+Traceback (most recent call last):
+  File "C:\Users\Admin\PycharmProjects\whatsappbot\routes\dashboard.py", line 27, in dashboard
+    return render_template(
+           ^^^^^^^^^^^^^^^^
+  File "C:\Users\Admin\.conda\envs\whatsappbot\Lib\site-packages\flask\templating.py", line 150, in render_template
+    return _render(app, template, context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Admin\.conda\envs\whatsappbot\Lib\site-packages\flask\templating.py", line 131, in _render
+    rv = template.render(context)
+         ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Admin\.conda\envs\whatsappbot\Lib\site-packages\jinja2\environment.py", line 1295, in render
+    self.environment.handle_exception()
+  File "C:\Users\Admin\.conda\envs\whatsappbot\Lib\site-packages\jinja2\environment.py", line 942, in handle_exception
+    raise rewrite_traceback_stack(source=source)
+  File "C:\Users\Admin\PycharmProjects\whatsappbot\templates\dashboard.html", line 1, in top-level template code
+    {% extends "base.html" %}
+  File "C:\Users\Admin\PycharmProjects\whatsappbot\templates\base.html", line 52, in top-level template code
+    <a href="{{ url_for('users_routes.manage_clients') }}">Manage Clients</a>
+    ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Admin\.conda\envs\whatsappbot\Lib\site-packages\flask\app.py", line 1121, in url_for
+    return self.handle_url_build_error(error, endpoint, values)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Admin\.conda\envs\whatsappbot\Lib\site-packages\flask\app.py", line 1110, in url_for
+    rv = url_adapter.build(  # type: ignore[union-attr]
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Admin\.conda\envs\whatsappbot\Lib\site-packages\werkzeug\routing\map.py", line 924, in build
+    raise BuildError(endpoint, values, method, self)
+werkzeug.routing.exceptions.BuildError: Could not build url for endpoint 'users_routes.manage_clients'. Did you mean 'users_routes.manage_users' instead?
+2025-07-30 16:02:38 - werkzeug - INFO - 127.0.0.1 - - [30/Jul/2025 16:02:38] "[35m[1mGET / HTTP/1.1[0m" 500 -
+2025-07-30 16:02:38 - werkzeug - INFO - 127.0.0.1 - - [30/Jul/2025 16:02:38] "[36mGET /?__debugger__=yes&cmd=resource&f=style.css HTTP/1.1[0m" 304 -
+2025-07-30 16:02:38 - werkzeug - INFO - 127.0.0.1 - - [30/Jul/2025 16:02:38] "[36mGET /?__debugger__=yes&cmd=resource&f=debugger.js HTTP/1.1[0m" 304 -
+2025-07-30 16:02:38 - werkzeug - INFO - 127.0.0.1 - - [30/Jul/2025 16:02:38] "[36mGET /?__debugger__=yes&cmd=resource&f=console.png&s=G4Rp5qjfcZZB0JNZk7WB HTTP/1.1[0m" 304 -
+2025-07-30 16:02:38 - werkzeug - INFO - 127.0.0.1 - - [30/Jul/2025 16:02:38] "[36mGET /?__debugger__=yes&cmd=resource&f=console.png HTTP/1.1[0m" 304 -
+2025-07-30 16:02:46 - db.db_connection - INFO - Checked/Created 'clients' table.
+2025-07-30 16:02:46 - db.db_connection - INFO - Checked/Created 'users' table with role and password support.
+2025-07-30 16:02:46 - db.db_connection - INFO - Checked/Created 'conversations' table.
+2025-07-30 16:02:46 - db.db_connection - INFO - Checked/Created 'faqs' table.
+2025-07-30 16:02:46 - __main__ - INFO - Database initialization complete.
+2025-07-30 16:02:46 - __main__ - INFO - Firebase Admin SDK initialization skipped (FIREBASE_ENABLED is False).
+2025-07-30 16:02:46 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://192.168.100.19:5000
+2025-07-30 16:02:46 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2025-07-30 16:03:29 - werkzeug - INFO - 127.0.0.1 - - [30/Jul/2025 16:03:29] "[32mGET / HTTP/1.1[0m" 302 -
+2025-07-30 16:03:29 - werkzeug - INFO - 127.0.0.1 - - [30/Jul/2025 16:03:29] "GET /login?next=/ HTTP/1.1" 200 -
+2025-07-30 16:03:29 - werkzeug - INFO - 127.0.0.1 - - [30/Jul/2025 16:03:29] "GET /static/css/main.css HTTP/1.1" 200 -
+2025-07-30 16:03:29 - werkzeug - INFO - 127.0.0.1 - - [30/Jul/2025 16:03:29] "GET /static/js/firebase-init.js HTTP/1.1" 200 -
+2025-07-30 16:03:43 - auth - INFO - User 'superadmin@example.com' logged in with local auth.
+2025-07-30 16:03:43 - werkzeug - INFO - 127.0.0.1 - - [30/Jul/2025 16:03:43] "[32mPOST /login HTTP/1.1[0m" 302 -
+2025-07-30 16:03:43 - routes.dashboard - INFO - User superadmin@example.com accessed dashboard (client_id: None).
+2025-07-30 16:03:43 - werkzeug - INFO - 127.0.0.1 - - [30/Jul/2025 16:03:43] "GET / HTTP/1.1" 200 -
+2025-07-30 16:03:43 - werkzeug - INFO - 127.0.0.1 - - [30/Jul/2025 16:03:43] "[36mGET /static/css/main.css HTTP/1.1[0m" 304 -
+2025-07-30 16:03:43 - werkzeug - INFO - 127.0.0.1 - - [30/Jul/2025 16:03:43] "GET /static/js/dashboard.js HTTP/1.1" 200 -
+2025-07-30 16:03:43 - werkzeug - INFO - 127.0.0.1 - - [30/Jul/2025 16:03:43] "[36mGET /static/js/firebase-init.js HTTP/1.1[0m" 304 -
+2025-07-30 16:03:43 - werkzeug - INFO - 127.0.0.1 - - [30/Jul/2025 16:03:43] "[33mGET /static/favicon.ico HTTP/1.1[0m" 404 -
+2025-07-30 16:03:45 - werkzeug - INFO - 127.0.0.1 - - [30/Jul/2025 16:03:45] "GET /all-conversations HTTP/1.1" 200 -
+2025-07-30 16:03:45 - werkzeug - INFO - 127.0.0.1 - - [30/Jul/2025 16:03:45] "[36mGET /static/css/main.css HTTP/1.1[0m" 304 -
+2025-07-30 16:03:45 - werkzeug - INFO - 127.0.0.1 - - [30/Jul/2025 16:03:45] "[36mGET /static/js/firebase-init.js HTTP/1.1[0m" 304 -
+2025-07-30 16:03:46 - werkzeug - INFO - 127.0.0.1 - - [30/Jul/2025 16:03:46] "GET /view_reports HTTP/1.1" 200 -
+2025-07-30 16:03:46 - werkzeug - INFO - 127.0.0.1 - - [30/Jul/2025 16:03:46] "[36mGET /static/js/firebase-init.js HTTP/1.1[0m" 304 -
+2025-07-30 16:03:46 - werkzeug - INFO - 127.0.0.1 - - [30/Jul/2025 16:03:46] "[36mGET /static/css/main.css HTTP/1.1[0m" 304 -
+2025-07-30 16:03:47 - werkzeug - INFO - 127.0.0.1 - - [30/Jul/2025 16:03:47] "GET /manage_users HTTP/1.1" 200 -
+2025-07-30 16:03:48 - werkzeug - INFO - 127.0.0.1 - - [30/Jul/2025 16:03:48] "[36mGET /static/css/main.css HTTP/1.1[0m" 304 -
+2025-07-30 16:03:48 - werkzeug - INFO - 127.0.0.1 - - [30/Jul/2025 16:03:48] "[36mGET /static/js/firebase-init.js HTTP/1.1[0m" 304 -
+2025-07-30 16:03:50 - werkzeug - INFO - 127.0.0.1 - - [30/Jul/2025 16:03:50] "GET /manage_faqs HTTP/1.1" 200 -
+2025-07-30 16:03:50 - werkzeug - INFO - 127.0.0.1 - - [30/Jul/2025 16:03:50] "[36mGET /static/css/main.css HTTP/1.1[0m" 304 -
+2025-07-30 16:03:50 - werkzeug - INFO - 127.0.0.1 - - [30/Jul/2025 16:03:50] "[36mGET /static/js/firebase-init.js HTTP/1.1[0m" 304 -
+2025-07-30 16:03:51 - werkzeug - INFO - 127.0.0.1 - - [30/Jul/2025 16:03:51] "GET /manage_clients HTTP/1.1" 200 -
+2025-07-30 16:03:51 - werkzeug - INFO - 127.0.0.1 - - [30/Jul/2025 16:03:51] "[36mGET /static/js/firebase-init.js HTTP/1.1[0m" 304 -
+2025-07-30 16:03:51 - werkzeug - INFO - 127.0.0.1 - - [30/Jul/2025 16:03:51] "[36mGET /static/css/main.css HTTP/1.1[0m" 304 -
+2025-07-30 16:03:57 - werkzeug - INFO - 127.0.0.1 - - [30/Jul/2025 16:03:57] "GET /manage_users HTTP/1.1" 200 -
+2025-07-30 16:03:57 - werkzeug - INFO - 127.0.0.1 - - [30/Jul/2025 16:03:57] "[36mGET /static/css/main.css HTTP/1.1[0m" 304 -
+2025-07-30 16:03:57 - werkzeug - INFO - 127.0.0.1 - - [30/Jul/2025 16:03:57] "[36mGET /static/js/firebase-init.js HTTP/1.1[0m" 304 -
+2025-07-30 16:04:04 - werkzeug - INFO - 127.0.0.1 - - [30/Jul/2025 16:04:04] "GET /manage_clients HTTP/1.1" 200 -
+2025-07-30 16:04:04 - werkzeug - INFO - 127.0.0.1 - - [30/Jul/2025 16:04:04] "[36mGET /static/css/main.css HTTP/1.1[0m" 304 -
+2025-07-30 16:04:04 - werkzeug - INFO - 127.0.0.1 - - [30/Jul/2025 16:04:04] "[36mGET /static/js/firebase-init.js HTTP/1.1[0m" 304 -
+2025-07-30 16:04:05 - werkzeug - INFO - 127.0.0.1 - - [30/Jul/2025 16:04:05] "GET /manage_users HTTP/1.1" 200 -
+2025-07-30 16:04:05 - werkzeug - INFO - 127.0.0.1 - - [30/Jul/2025 16:04:05] "[36mGET /static/css/main.css HTTP/1.1[0m" 304 -
+2025-07-30 16:04:05 - werkzeug - INFO - 127.0.0.1 - - [30/Jul/2025 16:04:05] "[36mGET /static/js/firebase-init.js HTTP/1.1[0m" 304 -
+2025-07-30 16:04:10 - werkzeug - INFO - 127.0.0.1 - - [30/Jul/2025 16:04:10] "GET /manage_clients HTTP/1.1" 200 -
+2025-07-30 16:04:10 - werkzeug - INFO - 127.0.0.1 - - [30/Jul/2025 16:04:10] "[36mGET /static/css/main.css HTTP/1.1[0m" 304 -
+2025-07-30 16:04:10 - werkzeug - INFO - 127.0.0.1 - - [30/Jul/2025 16:04:10] "[36mGET /static/js/firebase-init.js HTTP/1.1[0m" 304 -
+2025-07-30 16:04:14 - werkzeug - INFO - 127.0.0.1 - - [30/Jul/2025 16:04:14] "GET /manage_users HTTP/1.1" 200 -
+2025-07-30 16:04:14 - werkzeug - INFO - 127.0.0.1 - - [30/Jul/2025 16:04:14] "[36mGET /static/css/main.css HTTP/1.1[0m" 304 -
+2025-07-30 16:04:14 - werkzeug - INFO - 127.0.0.1 - - [30/Jul/2025 16:04:14] "[36mGET /static/js/firebase-init.js HTTP/1.1[0m" 304 -
+2025-07-30 16:04:20 - werkzeug - INFO - 127.0.0.1 - - [30/Jul/2025 16:04:20] "GET /manage_clients HTTP/1.1" 200 -
+2025-07-30 16:04:20 - werkzeug - INFO - 127.0.0.1 - - [30/Jul/2025 16:04:20] "[36mGET /static/css/main.css HTTP/1.1[0m" 304 -
+2025-07-30 16:04:20 - werkzeug - INFO - 127.0.0.1 - - [30/Jul/2025 16:04:20] "[36mGET /static/js/firebase-init.js HTTP/1.1[0m" 304 -
+2025-07-30 16:04:22 - werkzeug - INFO - 127.0.0.1 - - [30/Jul/2025 16:04:22] "GET /manage_users HTTP/1.1" 200 -
+2025-07-30 16:04:22 - werkzeug - INFO - 127.0.0.1 - - [30/Jul/2025 16:04:22] "[36mGET /static/css/main.css HTTP/1.1[0m" 304 -
+2025-07-30 16:04:22 - werkzeug - INFO - 127.0.0.1 - - [30/Jul/2025 16:04:22] "[36mGET /static/js/firebase-init.js HTTP/1.1[0m" 304 -
+2025-07-30 16:04:59 - db.users_crud - WARNING - User email already exists: client3@example.com
+2025-07-30 16:04:59 - werkzeug - INFO - 127.0.0.1 - - [30/Jul/2025 16:04:59] "[32mPOST /manage_users HTTP/1.1[0m" 302 -
+2025-07-30 16:04:59 - werkzeug - INFO - 127.0.0.1 - - [30/Jul/2025 16:04:59] "GET /manage_users HTTP/1.1" 200 -
+2025-07-30 16:04:59 - werkzeug - INFO - 127.0.0.1 - - [30/Jul/2025 16:04:59] "[36mGET /static/css/main.css HTTP/1.1[0m" 304 -
+2025-07-30 16:04:59 - werkzeug - INFO - 127.0.0.1 - - [30/Jul/2025 16:04:59] "[36mGET /static/js/firebase-init.js HTTP/1.1[0m" 304 -
+2025-07-30 16:05:11 - auth - INFO - User superadmin@example.com logged out.
+2025-07-30 16:05:11 - werkzeug - INFO - 127.0.0.1 - - [30/Jul/2025 16:05:11] "[32mGET /logout HTTP/1.1[0m" 302 -
+2025-07-30 16:05:11 - werkzeug - INFO - 127.0.0.1 - - [30/Jul/2025 16:05:11] "GET /login HTTP/1.1" 200 -
+2025-07-30 16:05:11 - werkzeug - INFO - 127.0.0.1 - - [30/Jul/2025 16:05:11] "[36mGET /static/css/main.css HTTP/1.1[0m" 304 -
+2025-07-30 16:05:11 - werkzeug - INFO - 127.0.0.1 - - [30/Jul/2025 16:05:11] "[36mGET /static/js/firebase-init.js HTTP/1.1[0m" 304 -
+2025-07-30 16:05:23 - auth - INFO - User 'client1@example.com' logged in with local auth.
+2025-07-30 16:05:23 - werkzeug - INFO - 127.0.0.1 - - [30/Jul/2025 16:05:23] "[32mPOST /login HTTP/1.1[0m" 302 -
+2025-07-30 16:05:23 - routes.dashboard - INFO - User client1@example.com accessed dashboard (client_id: client_one).
+2025-07-30 16:05:23 - werkzeug - INFO - 127.0.0.1 - - [30/Jul/2025 16:05:23] "GET / HTTP/1.1" 200 -
+2025-07-30 16:05:23 - werkzeug - INFO - 127.0.0.1 - - [30/Jul/2025 16:05:23] "[36mGET /static/css/main.css HTTP/1.1[0m" 304 -
+2025-07-30 16:05:23 - werkzeug - INFO - 127.0.0.1 - - [30/Jul/2025 16:05:23] "[36mGET /static/js/dashboard.js HTTP/1.1[0m" 304 -
+2025-07-30 16:05:23 - werkzeug - INFO - 127.0.0.1 - - [30/Jul/2025 16:05:23] "[36mGET /static/js/firebase-init.js HTTP/1.1[0m" 304 -
+2025-07-30 16:05:25 - werkzeug - INFO - 127.0.0.1 - - [30/Jul/2025 16:05:25] "GET /all-conversations HTTP/1.1" 200 -
+2025-07-30 16:05:25 - werkzeug - INFO - 127.0.0.1 - - [30/Jul/2025 16:05:25] "[36mGET /static/css/main.css HTTP/1.1[0m" 304 -
+2025-07-30 16:05:25 - werkzeug - INFO - 127.0.0.1 - - [30/Jul/2025 16:05:25] "[36mGET /static/js/firebase-init.js HTTP/1.1[0m" 304 -
+2025-07-30 16:05:26 - werkzeug - INFO - 127.0.0.1 - - [30/Jul/2025 16:05:26] "GET /view_reports HTTP/1.1" 200 -
+2025-07-30 16:05:26 - werkzeug - INFO - 127.0.0.1 - - [30/Jul/2025 16:05:26] "[36mGET /static/css/main.css HTTP/1.1[0m" 304 -
+2025-07-30 16:05:26 - werkzeug - INFO - 127.0.0.1 - - [30/Jul/2025 16:05:26] "[36mGET /static/js/firebase-init.js HTTP/1.1[0m" 304 -
+2025-07-30 16:05:27 - routes.dashboard - INFO - User client1@example.com accessed dashboard (client_id: client_one).
+2025-07-30 16:05:27 - werkzeug - INFO - 127.0.0.1 - - [30/Jul/2025 16:05:27] "GET / HTTP/1.1" 200 -
+2025-07-30 16:05:27 - werkzeug - INFO - 127.0.0.1 - - [30/Jul/2025 16:05:27] "[36mGET /static/css/main.css HTTP/1.1[0m" 304 -
+2025-07-30 16:05:27 - werkzeug - INFO - 127.0.0.1 - - [30/Jul/2025 16:05:27] "[36mGET /static/js/dashboard.js HTTP/1.1[0m" 304 -
+2025-07-30 16:05:27 - werkzeug - INFO - 127.0.0.1 - - [30/Jul/2025 16:05:27] "[36mGET /static/js/firebase-init.js HTTP/1.1[0m" 304 -
+2025-07-30 16:05:30 - werkzeug - INFO - 127.0.0.1 - - [30/Jul/2025 16:05:30] "GET /all-conversations HTTP/1.1" 200 -
+2025-07-30 16:05:30 - werkzeug - INFO - 127.0.0.1 - - [30/Jul/2025 16:05:30] "[36mGET /static/css/main.css HTTP/1.1[0m" 304 -
+2025-07-30 16:05:30 - werkzeug - INFO - 127.0.0.1 - - [30/Jul/2025 16:05:30] "[36mGET /static/js/firebase-init.js HTTP/1.1[0m" 304 -
+2025-07-30 16:05:31 - werkzeug - INFO - 127.0.0.1 - - [30/Jul/2025 16:05:31] "GET /view_reports HTTP/1.1" 200 -
+2025-07-30 16:05:31 - werkzeug - INFO - 127.0.0.1 - - [30/Jul/2025 16:05:31] "[36mGET /static/css/main.css HTTP/1.1[0m" 304 -
+2025-07-30 16:05:31 - werkzeug - INFO - 127.0.0.1 - - [30/Jul/2025 16:05:31] "[36mGET /static/js/firebase-init.js HTTP/1.1[0m" 304 -
+2025-07-30 16:05:32 - auth - INFO - User client1@example.com logged out.
+2025-07-30 16:05:32 - werkzeug - INFO - 127.0.0.1 - - [30/Jul/2025 16:05:32] "[32mGET /logout HTTP/1.1[0m" 302 -
+2025-07-30 16:05:32 - werkzeug - INFO - 127.0.0.1 - - [30/Jul/2025 16:05:32] "GET /login HTTP/1.1" 200 -
+2025-07-30 16:05:32 - werkzeug - INFO - 127.0.0.1 - - [30/Jul/2025 16:05:32] "[36mGET /static/css/main.css HTTP/1.1[0m" 304 -
+2025-07-30 16:05:32 - werkzeug - INFO - 127.0.0.1 - - [30/Jul/2025 16:05:32] "[36mGET /static/js/firebase-init.js HTTP/1.1[0m" 304 -
+2025-07-30 16:05:46 - auth - INFO - User 'client2@example.com' logged in with local auth.
+2025-07-30 16:05:46 - werkzeug - INFO - 127.0.0.1 - - [30/Jul/2025 16:05:46] "[32mPOST /login HTTP/1.1[0m" 302 -
+2025-07-30 16:05:46 - routes.dashboard - INFO - User client2@example.com accessed dashboard (client_id: client_two).
+2025-07-30 16:05:46 - werkzeug - INFO - 127.0.0.1 - - [30/Jul/2025 16:05:46] "GET / HTTP/1.1" 200 -
+2025-07-30 16:05:46 - werkzeug - INFO - 127.0.0.1 - - [30/Jul/2025 16:05:46] "[36mGET /static/css/main.css HTTP/1.1[0m" 304 -
+2025-07-30 16:05:46 - werkzeug - INFO - 127.0.0.1 - - [30/Jul/2025 16:05:46] "[36mGET /static/js/dashboard.js HTTP/1.1[0m" 304 -
+2025-07-30 16:05:46 - werkzeug - INFO - 127.0.0.1 - - [30/Jul/2025 16:05:46] "[36mGET /static/js/firebase-init.js HTTP/1.1[0m" 304 -
+2025-07-30 16:05:47 - werkzeug - INFO - 127.0.0.1 - - [30/Jul/2025 16:05:47] "GET /all-conversations HTTP/1.1" 200 -
+2025-07-30 16:05:47 - werkzeug - INFO - 127.0.0.1 - - [30/Jul/2025 16:05:47] "[36mGET /static/css/main.css HTTP/1.1[0m" 304 -
+2025-07-30 16:05:47 - werkzeug - INFO - 127.0.0.1 - - [30/Jul/2025 16:05:47] "[36mGET /static/js/firebase-init.js HTTP/1.1[0m" 304 -
+2025-07-30 16:05:48 - werkzeug - INFO - 127.0.0.1 - - [30/Jul/2025 16:05:48] "GET /view_reports HTTP/1.1" 200 -
+2025-07-30 16:05:48 - werkzeug - INFO - 127.0.0.1 - - [30/Jul/2025 16:05:48] "[36mGET /static/css/main.css HTTP/1.1[0m" 304 -
+2025-07-30 16:05:48 - werkzeug - INFO - 127.0.0.1 - - [30/Jul/2025 16:05:48] "[36mGET /static/js/firebase-init.js HTTP/1.1[0m" 304 -
+2025-07-30 16:05:48 - auth - INFO - User client2@example.com logged out.
+2025-07-30 16:05:48 - werkzeug - INFO - 127.0.0.1 - - [30/Jul/2025 16:05:48] "[32mGET /logout HTTP/1.1[0m" 302 -
+2025-07-30 16:05:48 - werkzeug - INFO - 127.0.0.1 - - [30/Jul/2025 16:05:48] "GET /login HTTP/1.1" 200 -
+2025-07-30 16:05:49 - werkzeug - INFO - 127.0.0.1 - - [30/Jul/2025 16:05:49] "[36mGET /static/css/main.css HTTP/1.1[0m" 304 -
+2025-07-30 16:05:49 - werkzeug - INFO - 127.0.0.1 - - [30/Jul/2025 16:05:49] "[36mGET /static/js/firebase-init.js HTTP/1.1[0m" 304 -
+2025-07-30 16:06:05 - auth - INFO - User 'superadmin@example.com' logged in with local auth.
+2025-07-30 16:06:05 - werkzeug - INFO - 127.0.0.1 - - [30/Jul/2025 16:06:05] "[32mPOST /login HTTP/1.1[0m" 302 -
+2025-07-30 16:06:05 - routes.dashboard - INFO - User superadmin@example.com accessed dashboard (client_id: None).
+2025-07-30 16:06:05 - werkzeug - INFO - 127.0.0.1 - - [30/Jul/2025 16:06:05] "GET / HTTP/1.1" 200 -
+2025-07-30 16:06:05 - werkzeug - INFO - 127.0.0.1 - - [30/Jul/2025 16:06:05] "[36mGET /static/css/main.css HTTP/1.1[0m" 304 -
+2025-07-30 16:06:05 - werkzeug - INFO - 127.0.0.1 - - [30/Jul/2025 16:06:05] "[36mGET /static/js/firebase-init.js HTTP/1.1[0m" 304 -
+2025-07-30 16:06:05 - werkzeug - INFO - 127.0.0.1 - - [30/Jul/2025 16:06:05] "[36mGET /static/js/dashboard.js HTTP/1.1[0m" 304 -
+2025-07-30 16:06:07 - werkzeug - INFO - 127.0.0.1 - - [30/Jul/2025 16:06:07] "GET /all-conversations HTTP/1.1" 200 -
+2025-07-30 16:06:07 - werkzeug - INFO - 127.0.0.1 - - [30/Jul/2025 16:06:07] "[36mGET /static/css/main.css HTTP/1.1[0m" 304 -
+2025-07-30 16:06:07 - werkzeug - INFO - 127.0.0.1 - - [30/Jul/2025 16:06:07] "[36mGET /static/js/firebase-init.js HTTP/1.1[0m" 304 -
+2025-07-30 16:06:07 - routes.dashboard - INFO - User superadmin@example.com accessed dashboard (client_id: None).
+2025-07-30 16:06:07 - werkzeug - INFO - 127.0.0.1 - - [30/Jul/2025 16:06:07] "GET / HTTP/1.1" 200 -
+2025-07-30 16:06:08 - werkzeug - INFO - 127.0.0.1 - - [30/Jul/2025 16:06:08] "[36mGET /static/js/dashboard.js HTTP/1.1[0m" 304 -
+2025-07-30 16:06:08 - werkzeug - INFO - 127.0.0.1 - - [30/Jul/2025 16:06:08] "[36mGET /static/css/main.css HTTP/1.1[0m" 304 -
+2025-07-30 16:06:08 - werkzeug - INFO - 127.0.0.1 - - [30/Jul/2025 16:06:08] "[36mGET /static/js/firebase-init.js HTTP/1.1[0m" 304 -
+2025-07-30 16:06:08 - werkzeug - INFO - 127.0.0.1 - - [30/Jul/2025 16:06:08] "GET /view_reports HTTP/1.1" 200 -
+2025-07-30 16:06:08 - werkzeug - INFO - 127.0.0.1 - - [30/Jul/2025 16:06:08] "[36mGET /static/css/main.css HTTP/1.1[0m" 304 -
+2025-07-30 16:06:08 - werkzeug - INFO - 127.0.0.1 - - [30/Jul/2025 16:06:08] "[36mGET /static/js/firebase-init.js HTTP/1.1[0m" 304 -
+2025-07-30 16:06:09 - werkzeug - INFO - 127.0.0.1 - - [30/Jul/2025 16:06:09] "GET /manage_users HTTP/1.1" 200 -
+2025-07-30 16:06:09 - werkzeug - INFO - 127.0.0.1 - - [30/Jul/2025 16:06:09] "[36mGET /static/js/firebase-init.js HTTP/1.1[0m" 304 -
+2025-07-30 16:06:09 - werkzeug - INFO - 127.0.0.1 - - [30/Jul/2025 16:06:09] "[36mGET /static/css/main.css HTTP/1.1[0m" 304 -
+2025-07-30 16:06:12 - werkzeug - INFO - 127.0.0.1 - - [30/Jul/2025 16:06:12] "GET /manage_faqs HTTP/1.1" 200 -
+2025-07-30 16:06:12 - werkzeug - INFO - 127.0.0.1 - - [30/Jul/2025 16:06:12] "[36mGET /static/css/main.css HTTP/1.1[0m" 304 -
+2025-07-30 16:06:12 - werkzeug - INFO - 127.0.0.1 - - [30/Jul/2025 16:06:12] "[36mGET /static/js/firebase-init.js HTTP/1.1[0m" 304 -
+2025-07-30 16:07:45 - db.faqs_crud - INFO - FAQ added: Q='Where is the location?...' for client 'client_two'
+2025-07-30 16:07:45 - werkzeug - INFO - 127.0.0.1 - - [30/Jul/2025 16:07:45] "POST /manage_faqs HTTP/1.1" 200 -
+2025-07-30 16:07:45 - werkzeug - INFO - 127.0.0.1 - - [30/Jul/2025 16:07:45] "[36mGET /static/css/main.css HTTP/1.1[0m" 304 -
+2025-07-30 16:07:45 - werkzeug - INFO - 127.0.0.1 - - [30/Jul/2025 16:07:45] "[36mGET /static/js/firebase-init.js HTTP/1.1[0m" 304 -
+2025-07-30 16:07:48 - werkzeug - INFO - 127.0.0.1 - - [30/Jul/2025 16:07:48] "GET /manage_faqs HTTP/1.1" 200 -
+2025-07-30 16:07:48 - werkzeug - INFO - 127.0.0.1 - - [30/Jul/2025 16:07:48] "[36mGET /static/css/main.css HTTP/1.1[0m" 304 -
+2025-07-30 16:07:48 - werkzeug - INFO - 127.0.0.1 - - [30/Jul/2025 16:07:48] "[36mGET /static/js/firebase-init.js HTTP/1.1[0m" 304 -
+2025-07-30 16:10:25 - db.db_connection - INFO - Checked/Created 'clients' table.
+2025-07-30 16:10:25 - db.db_connection - INFO - Checked/Created 'users' table with role and password support.
+2025-07-30 16:10:25 - db.db_connection - INFO - Checked/Created 'conversations' table.
+2025-07-30 16:10:25 - db.db_connection - INFO - Checked/Created 'faqs' table.
+2025-07-30 16:10:25 - __main__ - INFO - Database initialization complete.
+2025-07-30 16:10:25 - __main__ - INFO - Firebase Admin SDK initialization skipped (FIREBASE_ENABLED is False).
+2025-07-30 16:10:25 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://192.168.100.19:5000
+2025-07-30 16:10:25 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2025-07-30 16:10:25 - werkzeug - INFO - 127.0.0.1 - - [30/Jul/2025 16:10:25] "GET /view_reports HTTP/1.1" 200 -
+2025-07-30 16:10:25 - werkzeug - INFO - 127.0.0.1 - - [30/Jul/2025 16:10:25] "[36mGET /static/css/main.css HTTP/1.1[0m" 304 -
+2025-07-30 16:10:25 - werkzeug - INFO - 127.0.0.1 - - [30/Jul/2025 16:10:25] "[36mGET /static/js/firebase-init.js HTTP/1.1[0m" 304 -
+2025-07-30 16:10:29 - werkzeug - INFO - 127.0.0.1 - - [30/Jul/2025 16:10:29] "GET /all-conversations HTTP/1.1" 200 -
+2025-07-30 16:10:29 - werkzeug - INFO - 127.0.0.1 - - [30/Jul/2025 16:10:29] "[36mGET /static/css/main.css HTTP/1.1[0m" 304 -
+2025-07-30 16:10:29 - werkzeug - INFO - 127.0.0.1 - - [30/Jul/2025 16:10:29] "[36mGET /static/js/firebase-init.js HTTP/1.1[0m" 304 -
+2025-07-30 16:10:31 - werkzeug - INFO - 127.0.0.1 - - [30/Jul/2025 16:10:31] "GET /view_reports HTTP/1.1" 200 -
+2025-07-30 16:10:31 - werkzeug - INFO - 127.0.0.1 - - [30/Jul/2025 16:10:31] "[36mGET /static/js/firebase-init.js HTTP/1.1[0m" 304 -
+2025-07-30 16:10:31 - werkzeug - INFO - 127.0.0.1 - - [30/Jul/2025 16:10:31] "[36mGET /static/css/main.css HTTP/1.1[0m" 304 -
+2025-07-30 16:10:31 - werkzeug - INFO - 127.0.0.1 - - [30/Jul/2025 16:10:31] "GET /manage_users HTTP/1.1" 200 -
+2025-07-30 16:10:31 - werkzeug - INFO - 127.0.0.1 - - [30/Jul/2025 16:10:31] "[36mGET /static/css/main.css HTTP/1.1[0m" 304 -
+2025-07-30 16:10:31 - werkzeug - INFO - 127.0.0.1 - - [30/Jul/2025 16:10:31] "[36mGET /static/js/firebase-init.js HTTP/1.1[0m" 304 -
+2025-07-30 16:10:37 - werkzeug - INFO - 127.0.0.1 - - [30/Jul/2025 16:10:37] "GET /manage_clients HTTP/1.1" 200 -
+2025-07-30 16:10:37 - werkzeug - INFO - 127.0.0.1 - - [30/Jul/2025 16:10:37] "[36mGET /static/css/main.css HTTP/1.1[0m" 304 -
+2025-07-30 16:10:37 - werkzeug - INFO - 127.0.0.1 - - [30/Jul/2025 16:10:37] "[36mGET /static/js/firebase-init.js HTTP/1.1[0m" 304 -
+2025-07-30 16:10:38 - werkzeug - INFO - 127.0.0.1 - - [30/Jul/2025 16:10:38] "GET /manage_users HTTP/1.1" 200 -
+2025-07-30 16:10:38 - werkzeug - INFO - 127.0.0.1 - - [30/Jul/2025 16:10:38] "[36mGET /static/css/main.css HTTP/1.1[0m" 304 -
+2025-07-30 16:10:38 - werkzeug - INFO - 127.0.0.1 - - [30/Jul/2025 16:10:38] "[36mGET /static/js/firebase-init.js HTTP/1.1[0m" 304 -
+2025-07-30 16:11:26 - werkzeug - INFO - 127.0.0.1 - - [30/Jul/2025 16:11:26] "GET /manage_users HTTP/1.1" 200 -
+2025-07-30 16:11:26 - werkzeug - INFO - 127.0.0.1 - - [30/Jul/2025 16:11:26] "[36mGET /static/css/main.css HTTP/1.1[0m" 304 -
+2025-07-30 16:11:26 - werkzeug - INFO - 127.0.0.1 - - [30/Jul/2025 16:11:26] "[36mGET /static/js/firebase-init.js HTTP/1.1[0m" 304 -
+2025-07-30 16:11:52 - werkzeug - INFO - 127.0.0.1 - - [30/Jul/2025 16:11:52] "GET /view_reports HTTP/1.1" 200 -
+2025-07-30 16:11:52 - werkzeug - INFO - 127.0.0.1 - - [30/Jul/2025 16:11:52] "[36mGET /static/css/main.css HTTP/1.1[0m" 304 -
+2025-07-30 16:11:52 - werkzeug - INFO - 127.0.0.1 - - [30/Jul/2025 16:11:52] "[36mGET /static/js/firebase-init.js HTTP/1.1[0m" 304 -
+2025-07-30 16:11:52 - werkzeug - INFO - 127.0.0.1 - - [30/Jul/2025 16:11:52] "GET /manage_users HTTP/1.1" 200 -
+2025-07-30 16:11:52 - werkzeug - INFO - 127.0.0.1 - - [30/Jul/2025 16:11:52] "[36mGET /static/css/main.css HTTP/1.1[0m" 304 -
+2025-07-30 16:11:52 - werkzeug - INFO - 127.0.0.1 - - [30/Jul/2025 16:11:52] "[36mGET /static/js/firebase-init.js HTTP/1.1[0m" 304 -
+2025-07-30 16:12:57 - werkzeug - INFO - 127.0.0.1 - - [30/Jul/2025 16:12:57] "GET /manage_clients HTTP/1.1" 200 -
+2025-07-30 16:12:57 - werkzeug - INFO - 127.0.0.1 - - [30/Jul/2025 16:12:57] "[36mGET /static/css/main.css HTTP/1.1[0m" 304 -
+2025-07-30 16:12:57 - werkzeug - INFO - 127.0.0.1 - - [30/Jul/2025 16:12:57] "[36mGET /static/js/firebase-init.js HTTP/1.1[0m" 304 -
+2025-07-30 16:12:59 - werkzeug - INFO - 127.0.0.1 - - [30/Jul/2025 16:12:59] "GET /manage_users HTTP/1.1" 200 -
+2025-07-30 16:12:59 - werkzeug - INFO - 127.0.0.1 - - [30/Jul/2025 16:12:59] "[36mGET /static/css/main.css HTTP/1.1[0m" 304 -
+2025-07-30 16:12:59 - werkzeug - INFO - 127.0.0.1 - - [30/Jul/2025 16:12:59] "[36mGET /static/js/firebase-init.js HTTP/1.1[0m" 304 -
+2025-07-30 16:13:01 - werkzeug - INFO - 127.0.0.1 - - [30/Jul/2025 16:13:01] "GET /manage_clients HTTP/1.1" 200 -
+2025-07-30 16:13:01 - werkzeug - INFO - 127.0.0.1 - - [30/Jul/2025 16:13:01] "[36mGET /static/css/main.css HTTP/1.1[0m" 304 -
+2025-07-30 16:13:01 - werkzeug - INFO - 127.0.0.1 - - [30/Jul/2025 16:13:01] "[36mGET /static/js/firebase-init.js HTTP/1.1[0m" 304 -
+2025-07-30 16:13:04 - werkzeug - INFO - 127.0.0.1 - - [30/Jul/2025 16:13:04] "GET /manage_users HTTP/1.1" 200 -
+2025-07-30 16:13:04 - werkzeug - INFO - 127.0.0.1 - - [30/Jul/2025 16:13:04] "[36mGET /static/css/main.css HTTP/1.1[0m" 304 -
+2025-07-30 16:13:04 - werkzeug - INFO - 127.0.0.1 - - [30/Jul/2025 16:13:04] "[36mGET /static/js/firebase-init.js HTTP/1.1[0m" 304 -
+2025-07-30 16:13:31 - werkzeug - INFO - 127.0.0.1 - - [30/Jul/2025 16:13:31] "GET /manage_clients HTTP/1.1" 200 -
+2025-07-30 16:13:31 - werkzeug - INFO - 127.0.0.1 - - [30/Jul/2025 16:13:31] "[36mGET /static/css/main.css HTTP/1.1[0m" 304 -
+2025-07-30 16:13:31 - werkzeug - INFO - 127.0.0.1 - - [30/Jul/2025 16:13:31] "[36mGET /static/js/firebase-init.js HTTP/1.1[0m" 304 -
+2025-07-30 16:24:52 - werkzeug - INFO - 127.0.0.1 - - [30/Jul/2025 16:24:52] "GET /manage_users HTTP/1.1" 200 -
+2025-07-30 16:24:53 - werkzeug - INFO - 127.0.0.1 - - [30/Jul/2025 16:24:53] "[36mGET /static/js/firebase-init.js HTTP/1.1[0m" 304 -
+2025-07-30 16:24:53 - werkzeug - INFO - 127.0.0.1 - - [30/Jul/2025 16:24:53] "[36mGET /static/css/main.css HTTP/1.1[0m" 304 -
+2025-07-30 16:48:01 - routes.dashboard - INFO - User superadmin@example.com accessed dashboard (client_id: None).
+2025-07-30 16:48:01 - werkzeug - INFO - 127.0.0.1 - - [30/Jul/2025 16:48:01] "GET / HTTP/1.1" 200 -
+2025-07-30 16:48:01 - werkzeug - INFO - 127.0.0.1 - - [30/Jul/2025 16:48:01] "[36mGET /static/css/main.css HTTP/1.1[0m" 304 -
+2025-07-30 16:48:01 - werkzeug - INFO - 127.0.0.1 - - [30/Jul/2025 16:48:01] "[36mGET /static/js/dashboard.js HTTP/1.1[0m" 304 -
+2025-07-30 16:48:01 - werkzeug - INFO - 127.0.0.1 - - [30/Jul/2025 16:48:01] "[36mGET /static/js/firebase-init.js HTTP/1.1[0m" 304 -
+2025-07-30 16:48:04 - werkzeug - INFO - 127.0.0.1 - - [30/Jul/2025 16:48:04] "GET /manage_clients HTTP/1.1" 200 -
+2025-07-30 16:48:04 - werkzeug - INFO - 127.0.0.1 - - [30/Jul/2025 16:48:04] "[36mGET /static/css/main.css HTTP/1.1[0m" 304 -
+2025-07-30 16:48:04 - werkzeug - INFO - 127.0.0.1 - - [30/Jul/2025 16:48:04] "[36mGET /static/js/firebase-init.js HTTP/1.1[0m" 304 -
+2025-07-30 16:48:08 - werkzeug - INFO - 127.0.0.1 - - [30/Jul/2025 16:48:08] "GET /manage_faqs HTTP/1.1" 200 -
+2025-07-30 16:48:08 - werkzeug - INFO - 127.0.0.1 - - [30/Jul/2025 16:48:08] "[36mGET /static/css/main.css HTTP/1.1[0m" 304 -
+2025-07-30 16:48:08 - werkzeug - INFO - 127.0.0.1 - - [30/Jul/2025 16:48:08] "[36mGET /static/js/firebase-init.js HTTP/1.1[0m" 304 -
+2025-07-30 16:48:09 - werkzeug - INFO - 127.0.0.1 - - [30/Jul/2025 16:48:09] "GET /manage_users HTTP/1.1" 200 -
+2025-07-30 16:48:09 - werkzeug - INFO - 127.0.0.1 - - [30/Jul/2025 16:48:09] "[36mGET /static/css/main.css HTTP/1.1[0m" 304 -
+2025-07-30 16:48:09 - werkzeug - INFO - 127.0.0.1 - - [30/Jul/2025 16:48:09] "[36mGET /static/js/firebase-init.js HTTP/1.1[0m" 304 -
+2025-07-30 16:48:10 - werkzeug - INFO - 127.0.0.1 - - [30/Jul/2025 16:48:10] "GET /view_reports HTTP/1.1" 200 -
+2025-07-30 16:48:10 - werkzeug - INFO - 127.0.0.1 - - [30/Jul/2025 16:48:10] "[36mGET /static/css/main.css HTTP/1.1[0m" 304 -
+2025-07-30 16:48:10 - werkzeug - INFO - 127.0.0.1 - - [30/Jul/2025 16:48:10] "[36mGET /static/js/firebase-init.js HTTP/1.1[0m" 304 -
+2025-07-30 16:48:11 - werkzeug - INFO - 127.0.0.1 - - [30/Jul/2025 16:48:11] "GET /manage_clients HTTP/1.1" 200 -
+2025-07-30 16:48:11 - werkzeug - INFO - 127.0.0.1 - - [30/Jul/2025 16:48:11] "[36mGET /static/css/main.css HTTP/1.1[0m" 304 -
+2025-07-30 16:48:11 - werkzeug - INFO - 127.0.0.1 - - [30/Jul/2025 16:48:11] "[36mGET /static/js/firebase-init.js HTTP/1.1[0m" 304 -
+2025-07-30 17:04:59 - db.db_connection - INFO - Checked/Created 'clients' table.
+2025-07-30 17:04:59 - db.db_connection - INFO - Checked/Created 'users' table with role and password support.
+2025-07-30 17:04:59 - db.db_connection - INFO - Checked/Created 'conversations' table.
+2025-07-30 17:04:59 - db.db_connection - INFO - Checked/Created 'faqs' table.
+2025-07-30 17:04:59 - __main__ - INFO - Database initialization complete.
+2025-07-30 17:04:59 - __main__ - INFO - Firebase Admin SDK initialization skipped (FIREBASE_ENABLED is False).
+2025-07-30 17:04:59 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://192.168.100.19:5000
+2025-07-30 17:04:59 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2025-07-30 17:05:04 - werkzeug - INFO - 127.0.0.1 - - [30/Jul/2025 17:05:04] "[32mGET / HTTP/1.1[0m" 302 -
+2025-07-30 17:05:04 - werkzeug - INFO - 127.0.0.1 - - [30/Jul/2025 17:05:04] "GET /login?next=/ HTTP/1.1" 200 -
+2025-07-30 17:05:04 - werkzeug - INFO - 127.0.0.1 - - [30/Jul/2025 17:05:04] "GET /static/css/main.css HTTP/1.1" 200 -
+2025-07-30 17:05:04 - werkzeug - INFO - 127.0.0.1 - - [30/Jul/2025 17:05:04] "GET /static/js/firebase-init.js HTTP/1.1" 200 -
+2025-07-30 17:05:16 - auth - INFO - User 'superadmin@example.com' logged in with local auth.
+2025-07-30 17:05:16 - werkzeug - INFO - 127.0.0.1 - - [30/Jul/2025 17:05:16] "[32mPOST /login HTTP/1.1[0m" 302 -
+2025-07-30 17:05:16 - routes.dashboard - INFO - User superadmin@example.com accessed dashboard (client_id: None).
+2025-07-30 17:05:16 - werkzeug - INFO - 127.0.0.1 - - [30/Jul/2025 17:05:16] "GET / HTTP/1.1" 200 -
+2025-07-30 17:05:16 - werkzeug - INFO - 127.0.0.1 - - [30/Jul/2025 17:05:16] "[36mGET /static/css/main.css HTTP/1.1[0m" 304 -
+2025-07-30 17:05:16 - werkzeug - INFO - 127.0.0.1 - - [30/Jul/2025 17:05:16] "GET /static/js/dashboard.js HTTP/1.1" 200 -
+2025-07-30 17:05:16 - werkzeug - INFO - 127.0.0.1 - - [30/Jul/2025 17:05:16] "[36mGET /static/js/firebase-init.js HTTP/1.1[0m" 304 -
+2025-07-30 17:05:18 - werkzeug - INFO - 127.0.0.1 - - [30/Jul/2025 17:05:18] "GET /all-conversations HTTP/1.1" 200 -
+2025-07-30 17:05:18 - werkzeug - INFO - 127.0.0.1 - - [30/Jul/2025 17:05:18] "[36mGET /static/js/firebase-init.js HTTP/1.1[0m" 304 -
+2025-07-30 17:05:18 - werkzeug - INFO - 127.0.0.1 - - [30/Jul/2025 17:05:18] "[36mGET /static/css/main.css HTTP/1.1[0m" 304 -
+2025-07-30 17:05:19 - werkzeug - INFO - 127.0.0.1 - - [30/Jul/2025 17:05:19] "GET /view_reports HTTP/1.1" 200 -
+2025-07-30 17:05:19 - werkzeug - INFO - 127.0.0.1 - - [30/Jul/2025 17:05:19] "[36mGET /static/css/main.css HTTP/1.1[0m" 304 -
+2025-07-30 17:05:19 - werkzeug - INFO - 127.0.0.1 - - [30/Jul/2025 17:05:19] "[36mGET /static/js/firebase-init.js HTTP/1.1[0m" 304 -
+2025-07-30 17:05:21 - werkzeug - INFO - 127.0.0.1 - - [30/Jul/2025 17:05:21] "GET /manage_users HTTP/1.1" 200 -
+2025-07-30 17:05:21 - werkzeug - INFO - 127.0.0.1 - - [30/Jul/2025 17:05:21] "[36mGET /static/css/main.css HTTP/1.1[0m" 304 -
+2025-07-30 17:05:21 - werkzeug - INFO - 127.0.0.1 - - [30/Jul/2025 17:05:21] "[36mGET /static/js/firebase-init.js HTTP/1.1[0m" 304 -
+2025-07-30 17:05:22 - werkzeug - INFO - 127.0.0.1 - - [30/Jul/2025 17:05:22] "GET /manage_faqs HTTP/1.1" 200 -
+2025-07-30 17:05:22 - werkzeug - INFO - 127.0.0.1 - - [30/Jul/2025 17:05:22] "[36mGET /static/css/main.css HTTP/1.1[0m" 304 -
+2025-07-30 17:05:22 - werkzeug - INFO - 127.0.0.1 - - [30/Jul/2025 17:05:22] "[36mGET /static/js/firebase-init.js HTTP/1.1[0m" 304 -
+2025-07-30 17:05:23 - werkzeug - INFO - 127.0.0.1 - - [30/Jul/2025 17:05:23] "GET /manage_clients HTTP/1.1" 200 -
+2025-07-30 17:05:23 - werkzeug - INFO - 127.0.0.1 - - [30/Jul/2025 17:05:23] "[36mGET /static/css/main.css HTTP/1.1[0m" 304 -
+2025-07-30 17:05:23 - werkzeug - INFO - 127.0.0.1 - - [30/Jul/2025 17:05:23] "[36mGET /static/js/firebase-init.js HTTP/1.1[0m" 304 -
+2025-07-30 17:06:16 - db.clients_crud - INFO - Client 'client4' added successfully.
+2025-07-30 17:06:16 - werkzeug - INFO - 127.0.0.1 - - [30/Jul/2025 17:06:16] "[32mPOST /manage_clients HTTP/1.1[0m" 302 -
+2025-07-30 17:06:16 - werkzeug - INFO - 127.0.0.1 - - [30/Jul/2025 17:06:16] "GET /manage_clients HTTP/1.1" 200 -
+2025-07-30 17:06:16 - werkzeug - INFO - 127.0.0.1 - - [30/Jul/2025 17:06:16] "[36mGET /static/css/main.css HTTP/1.1[0m" 304 -
+2025-07-30 17:06:16 - werkzeug - INFO - 127.0.0.1 - - [30/Jul/2025 17:06:16] "[36mGET /static/js/firebase-init.js HTTP/1.1[0m" 304 -
+2025-07-30 17:07:09 - db.db_connection - INFO - Checked/Created 'clients' table.
+2025-07-30 17:07:09 - db.db_connection - INFO - Checked/Created 'users' table with role and password support.
+2025-07-30 17:07:09 - db.db_connection - INFO - Checked/Created 'conversations' table.
+2025-07-30 17:07:09 - db.db_connection - INFO - Checked/Created 'faqs' table.
+2025-07-30 17:07:09 - __main__ - INFO - Database initialization complete.
+2025-07-30 17:07:09 - __main__ - INFO - Firebase Admin SDK initialization skipped (FIREBASE_ENABLED is False).
+2025-07-30 17:07:09 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://192.168.100.19:5000
+2025-07-30 17:07:09 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2025-07-30 17:07:11 - werkzeug - INFO - 127.0.0.1 - - [30/Jul/2025 17:07:11] "GET /manage_clients HTTP/1.1" 200 -
+2025-07-30 17:07:11 - werkzeug - INFO - 127.0.0.1 - - [30/Jul/2025 17:07:11] "[36mGET /static/css/main.css HTTP/1.1[0m" 304 -
+2025-07-30 17:07:11 - werkzeug - INFO - 127.0.0.1 - - [30/Jul/2025 17:07:11] "[36mGET /static/js/firebase-init.js HTTP/1.1[0m" 304 -
+2025-07-30 17:07:18 - werkzeug - INFO - 127.0.0.1 - - [30/Jul/2025 17:07:18] "GET /manage_users HTTP/1.1" 200 -
+2025-07-30 17:07:18 - werkzeug - INFO - 127.0.0.1 - - [30/Jul/2025 17:07:18] "[36mGET /static/css/main.css HTTP/1.1[0m" 304 -
+2025-07-30 17:07:18 - werkzeug - INFO - 127.0.0.1 - - [30/Jul/2025 17:07:18] "[36mGET /static/js/firebase-init.js HTTP/1.1[0m" 304 -
+2025-07-30 17:07:40 - werkzeug - INFO - 127.0.0.1 - - [30/Jul/2025 17:07:40] "GET /manage_users HTTP/1.1" 200 -
+2025-07-30 17:07:40 - werkzeug - INFO - 127.0.0.1 - - [30/Jul/2025 17:07:40] "[36mGET /static/css/main.css HTTP/1.1[0m" 304 -
+2025-07-30 17:07:40 - werkzeug - INFO - 127.0.0.1 - - [30/Jul/2025 17:07:40] "[36mGET /static/js/firebase-init.js HTTP/1.1[0m" 304 -
+2025-07-30 17:11:52 - db.db_connection - INFO - Checked/Created 'clients' table.
+2025-07-30 17:11:52 - db.db_connection - INFO - Checked/Created 'users' table with role and password support.
+2025-07-30 17:11:52 - db.db_connection - INFO - Checked/Created 'conversations' table.
+2025-07-30 17:11:52 - db.db_connection - INFO - Checked/Created 'faqs' table.
+2025-07-30 17:11:52 - __main__ - INFO - Database initialization complete.
+2025-07-30 17:11:52 - __main__ - INFO - Firebase Admin SDK initialization skipped (FIREBASE_ENABLED is False).
+2025-07-30 17:11:52 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://192.168.100.19:5000
+2025-07-30 17:11:52 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2025-07-30 17:11:56 - werkzeug - INFO - 127.0.0.1 - - [30/Jul/2025 17:11:56] "GET /manage_users HTTP/1.1" 200 -
+2025-07-30 17:11:56 - werkzeug - INFO - 127.0.0.1 - - [30/Jul/2025 17:11:56] "[36mGET /static/css/main.css HTTP/1.1[0m" 304 -
+2025-07-30 17:11:56 - werkzeug - INFO - 127.0.0.1 - - [30/Jul/2025 17:11:56] "[36mGET /static/js/firebase-init.js HTTP/1.1[0m" 304 -
+2025-07-30 17:12:04 - werkzeug - INFO - 127.0.0.1 - - [30/Jul/2025 17:12:04] "GET /manage_clients HTTP/1.1" 200 -
+2025-07-30 17:12:04 - werkzeug - INFO - 127.0.0.1 - - [30/Jul/2025 17:12:04] "[36mGET /static/css/main.css HTTP/1.1[0m" 304 -
+2025-07-30 17:12:04 - werkzeug - INFO - 127.0.0.1 - - [30/Jul/2025 17:12:04] "[36mGET /static/js/firebase-init.js HTTP/1.1[0m" 304 -
+2025-07-30 17:14:40 - db.db_connection - INFO - Checked/Created 'clients' table.
+2025-07-30 17:14:40 - db.db_connection - INFO - Checked/Created 'users' table with role and password support.
+2025-07-30 17:14:40 - db.db_connection - INFO - Checked/Created 'conversations' table.
+2025-07-30 17:14:40 - db.db_connection - INFO - Checked/Created 'faqs' table.
+2025-07-30 17:14:40 - __main__ - INFO - Database initialization complete.
+2025-07-30 17:14:40 - __main__ - INFO - Firebase Admin SDK initialization skipped (FIREBASE_ENABLED is False).
+2025-07-30 17:14:40 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://192.168.100.19:5000
+2025-07-30 17:14:40 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2025-07-30 17:14:43 - werkzeug - INFO - 127.0.0.1 - - [30/Jul/2025 17:14:43] "GET /manage_users HTTP/1.1" 200 -
+2025-07-30 17:14:43 - werkzeug - INFO - 127.0.0.1 - - [30/Jul/2025 17:14:43] "[36mGET /static/css/main.css HTTP/1.1[0m" 304 -
+2025-07-30 17:14:43 - werkzeug - INFO - 127.0.0.1 - - [30/Jul/2025 17:14:43] "[36mGET /static/js/firebase-init.js HTTP/1.1[0m" 304 -
+2025-07-30 17:14:47 - werkzeug - INFO - 127.0.0.1 - - [30/Jul/2025 17:14:47] "GET /manage_clients HTTP/1.1" 200 -
+2025-07-30 17:14:47 - werkzeug - INFO - 127.0.0.1 - - [30/Jul/2025 17:14:47] "[36mGET /static/css/main.css HTTP/1.1[0m" 304 -
+2025-07-30 17:14:47 - werkzeug - INFO - 127.0.0.1 - - [30/Jul/2025 17:14:47] "[36mGET /static/js/firebase-init.js HTTP/1.1[0m" 304 -
+2025-07-30 17:19:09 - db.db_connection - INFO - Checked/Created 'clients' table.
+2025-07-30 17:19:09 - db.db_connection - INFO - Checked/Created 'users' table with role and password support.
+2025-07-30 17:19:09 - db.db_connection - INFO - Checked/Created 'conversations' table.
+2025-07-30 17:19:09 - db.db_connection - INFO - Checked/Created 'faqs' table.
+2025-07-30 17:19:09 - __main__ - INFO - Database initialization complete.
+2025-07-30 17:19:09 - __main__ - INFO - Firebase Admin SDK initialization skipped (FIREBASE_ENABLED is False).
+2025-07-30 17:19:10 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://192.168.100.19:5000
+2025-07-30 17:19:10 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2025-07-30 17:19:15 - werkzeug - INFO - 127.0.0.1 - - [30/Jul/2025 17:19:15] "[32mGET / HTTP/1.1[0m" 302 -
+2025-07-30 17:19:15 - werkzeug - INFO - 127.0.0.1 - - [30/Jul/2025 17:19:15] "GET /login?next=/ HTTP/1.1" 200 -
+2025-07-30 17:19:15 - werkzeug - INFO - 127.0.0.1 - - [30/Jul/2025 17:19:15] "GET /static/css/main.css HTTP/1.1" 200 -
+2025-07-30 17:19:15 - werkzeug - INFO - 127.0.0.1 - - [30/Jul/2025 17:19:15] "GET /static/js/firebase-init.js HTTP/1.1" 200 -
+2025-07-30 17:19:27 - auth - INFO - User 'superadmin@example.com' logged in with local auth.
+2025-07-30 17:19:27 - werkzeug - INFO - 127.0.0.1 - - [30/Jul/2025 17:19:27] "[32mPOST /login HTTP/1.1[0m" 302 -
+2025-07-30 17:19:27 - routes.dashboard - INFO - User superadmin@example.com accessed dashboard (client_id: None).
+2025-07-30 17:19:27 - werkzeug - INFO - 127.0.0.1 - - [30/Jul/2025 17:19:27] "GET / HTTP/1.1" 200 -
+2025-07-30 17:19:27 - werkzeug - INFO - 127.0.0.1 - - [30/Jul/2025 17:19:27] "[36mGET /static/css/main.css HTTP/1.1[0m" 304 -
+2025-07-30 17:19:27 - werkzeug - INFO - 127.0.0.1 - - [30/Jul/2025 17:19:27] "[36mGET /static/js/firebase-init.js HTTP/1.1[0m" 304 -
+2025-07-30 17:19:27 - werkzeug - INFO - 127.0.0.1 - - [30/Jul/2025 17:19:27] "GET /static/js/dashboard.js HTTP/1.1" 200 -
+2025-07-30 17:19:30 - werkzeug - INFO - 127.0.0.1 - - [30/Jul/2025 17:19:30] "GET /all-conversations HTTP/1.1" 200 -
+2025-07-30 17:19:30 - werkzeug - INFO - 127.0.0.1 - - [30/Jul/2025 17:19:30] "[36mGET /static/css/main.css HTTP/1.1[0m" 304 -
+2025-07-30 17:19:30 - werkzeug - INFO - 127.0.0.1 - - [30/Jul/2025 17:19:30] "[36mGET /static/js/firebase-init.js HTTP/1.1[0m" 304 -
+2025-07-30 17:19:31 - werkzeug - INFO - 127.0.0.1 - - [30/Jul/2025 17:19:31] "GET /view_reports HTTP/1.1" 200 -
+2025-07-30 17:19:31 - werkzeug - INFO - 127.0.0.1 - - [30/Jul/2025 17:19:31] "[36mGET /static/css/main.css HTTP/1.1[0m" 304 -
+2025-07-30 17:19:31 - werkzeug - INFO - 127.0.0.1 - - [30/Jul/2025 17:19:31] "[36mGET /static/js/firebase-init.js HTTP/1.1[0m" 304 -
+2025-07-30 17:19:32 - werkzeug - INFO - 127.0.0.1 - - [30/Jul/2025 17:19:32] "GET /manage_users HTTP/1.1" 200 -
+2025-07-30 17:19:32 - werkzeug - INFO - 127.0.0.1 - - [30/Jul/2025 17:19:32] "[36mGET /static/css/main.css HTTP/1.1[0m" 304 -
+2025-07-30 17:19:32 - werkzeug - INFO - 127.0.0.1 - - [30/Jul/2025 17:19:32] "[36mGET /static/js/firebase-init.js HTTP/1.1[0m" 304 -
+2025-07-30 17:19:33 - werkzeug - INFO - 127.0.0.1 - - [30/Jul/2025 17:19:33] "GET /manage_faqs HTTP/1.1" 200 -
+2025-07-30 17:19:33 - werkzeug - INFO - 127.0.0.1 - - [30/Jul/2025 17:19:33] "[36mGET /static/css/main.css HTTP/1.1[0m" 304 -
+2025-07-30 17:19:33 - werkzeug - INFO - 127.0.0.1 - - [30/Jul/2025 17:19:33] "[36mGET /static/js/firebase-init.js HTTP/1.1[0m" 304 -
+2025-07-30 17:19:34 - werkzeug - INFO - 127.0.0.1 - - [30/Jul/2025 17:19:34] "GET /manage_clients HTTP/1.1" 200 -
+2025-07-30 17:19:34 - werkzeug - INFO - 127.0.0.1 - - [30/Jul/2025 17:19:34] "[36mGET /static/css/main.css HTTP/1.1[0m" 304 -
+2025-07-30 17:19:34 - werkzeug - INFO - 127.0.0.1 - - [30/Jul/2025 17:19:34] "[36mGET /static/js/firebase-init.js HTTP/1.1[0m" 304 -
+2025-07-30 17:19:37 - werkzeug - INFO - 127.0.0.1 - - [30/Jul/2025 17:19:37] "GET /manage_users HTTP/1.1" 200 -
+2025-07-30 17:19:37 - werkzeug - INFO - 127.0.0.1 - - [30/Jul/2025 17:19:37] "[36mGET /static/css/main.css HTTP/1.1[0m" 304 -
+2025-07-30 17:19:37 - werkzeug - INFO - 127.0.0.1 - - [30/Jul/2025 17:19:37] "[36mGET /static/js/firebase-init.js HTTP/1.1[0m" 304 -
+2025-07-30 17:22:05 - db.db_connection - INFO - Checked/Created 'clients' table.
+2025-07-30 17:22:05 - db.db_connection - INFO - Checked/Created 'users' table with role and password support.
+2025-07-30 17:22:05 - db.db_connection - INFO - Checked/Created 'conversations' table.
+2025-07-30 17:22:05 - db.db_connection - INFO - Checked/Created 'faqs' table.
+2025-07-30 17:22:05 - __main__ - INFO - Database initialization complete.
+2025-07-30 17:22:05 - __main__ - INFO - Firebase Admin SDK initialization skipped (FIREBASE_ENABLED is False).
+2025-07-30 17:22:05 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://192.168.100.19:5000
+2025-07-30 17:22:05 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2025-07-30 17:22:11 - werkzeug - INFO - 127.0.0.1 - - [30/Jul/2025 17:22:11] "GET /manage_faqs HTTP/1.1" 200 -
+2025-07-30 17:22:11 - werkzeug - INFO - 127.0.0.1 - - [30/Jul/2025 17:22:11] "[36mGET /static/css/main.css HTTP/1.1[0m" 304 -
+2025-07-30 17:22:11 - werkzeug - INFO - 127.0.0.1 - - [30/Jul/2025 17:22:11] "[36mGET /static/js/firebase-init.js HTTP/1.1[0m" 304 -
+2025-07-30 17:22:12 - werkzeug - INFO - 127.0.0.1 - - [30/Jul/2025 17:22:12] "GET /manage_users HTTP/1.1" 200 -
+2025-07-30 17:22:12 - werkzeug - INFO - 127.0.0.1 - - [30/Jul/2025 17:22:12] "[36mGET /static/css/main.css HTTP/1.1[0m" 304 -
+2025-07-30 17:22:12 - werkzeug - INFO - 127.0.0.1 - - [30/Jul/2025 17:22:12] "[36mGET /static/js/firebase-init.js HTTP/1.1[0m" 304 -
+2025-07-30 17:22:13 - werkzeug - INFO - 127.0.0.1 - - [30/Jul/2025 17:22:13] "GET /all-conversations HTTP/1.1" 200 -
+2025-07-30 17:22:13 - werkzeug - INFO - 127.0.0.1 - - [30/Jul/2025 17:22:13] "[36mGET /static/css/main.css HTTP/1.1[0m" 304 -
+2025-07-30 17:22:13 - werkzeug - INFO - 127.0.0.1 - - [30/Jul/2025 17:22:13] "[36mGET /static/js/firebase-init.js HTTP/1.1[0m" 304 -
+2025-07-30 17:22:14 - werkzeug - INFO - 127.0.0.1 - - [30/Jul/2025 17:22:14] "GET /manage_users HTTP/1.1" 200 -
+2025-07-30 17:22:14 - werkzeug - INFO - 127.0.0.1 - - [30/Jul/2025 17:22:14] "[36mGET /static/css/main.css HTTP/1.1[0m" 304 -
+2025-07-30 17:22:14 - werkzeug - INFO - 127.0.0.1 - - [30/Jul/2025 17:22:14] "[36mGET /static/js/firebase-init.js HTTP/1.1[0m" 304 -
+2025-07-30 17:24:42 - db.db_connection - INFO - Checked/Created 'clients' table.
+2025-07-30 17:24:42 - db.db_connection - INFO - Checked/Created 'users' table with role and password support.
+2025-07-30 17:24:42 - db.db_connection - INFO - Checked/Created 'conversations' table.
+2025-07-30 17:24:42 - db.db_connection - INFO - Checked/Created 'faqs' table.
+2025-07-30 17:24:42 - __main__ - INFO - Database initialization complete.
+2025-07-30 17:24:42 - __main__ - INFO - Firebase Admin SDK initialization skipped (FIREBASE_ENABLED is False).
+2025-07-30 17:24:42 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://192.168.100.19:5000
+2025-07-30 17:24:42 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2025-07-30 17:24:47 - werkzeug - INFO - 127.0.0.1 - - [30/Jul/2025 17:24:47] "[35m[1mGET /manage_users HTTP/1.1[0m" 500 -
+2025-07-30 17:24:47 - werkzeug - INFO - 127.0.0.1 - - [30/Jul/2025 17:24:47] "GET /manage_users?__debugger__=yes&cmd=resource&f=style.css HTTP/1.1" 200 -
+2025-07-30 17:24:47 - werkzeug - INFO - 127.0.0.1 - - [30/Jul/2025 17:24:47] "GET /manage_users?__debugger__=yes&cmd=resource&f=debugger.js HTTP/1.1" 200 -
+2025-07-30 17:24:47 - werkzeug - INFO - 127.0.0.1 - - [30/Jul/2025 17:24:47] "GET /manage_users?__debugger__=yes&cmd=resource&f=console.png&s=FXGf9I7Ij6FCAcY4e6nP HTTP/1.1" 200 -
+2025-07-30 17:24:47 - werkzeug - INFO - 127.0.0.1 - - [30/Jul/2025 17:24:47] "GET /manage_users?__debugger__=yes&cmd=resource&f=console.png HTTP/1.1" 200 -
