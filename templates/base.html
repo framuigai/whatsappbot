@@ -45,13 +45,12 @@
             {% if current_user.is_authenticated %}
                 <a href="{{ url_for('dashboard_routes.dashboard') }}">Dashboard</a>
                 <a href="{{ url_for('conversations_routes.all_conversations') }}">Conversations</a>
-
                 <a href="{{ url_for('dashboard_routes.view_reports') }}">Reports</a>
                 {% if current_user.role == 'super_admin' %}
                     <a href="{{ url_for('users_routes.manage_users') }}">Manage Users</a>
-                    <a href="{{ url_for('faqs_routes.manage_faqs') }}">Manage FAQs</a>
                     <a href="{{ url_for('users_routes.manage_clients') }}">Manage Clients</a>
                 {% endif %}
+                <a href="{{ url_for('faqs_routes.manage_faqs') }}">Manage FAQs</a>
                 <a href="{{ url_for('auth.logout') }}" id="logout-button">Logout</a>
             {% else %}
                 <a href="{{ url_for('auth.login') }}">Login</a>

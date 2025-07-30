@@ -3,36 +3,42 @@
 {% block body_content %}
 <h2>Manage FAQs</h2>
 
-{% if messages %}
-<ul class="flashes">
-    {% for category, message in messages %}
+{# Show flashed messages if any #}
+{% with messages = get_flashed_messages(with_categories=true) %}
+  {% if messages %}
+    <ul class="flashes">
+      {% for category, message in messages %}
         <li class="{{ category }}">{{ message }}</li>
-    {% endfor %}
-</ul>
+      {% endfor %}
+    </ul>
+  {% endif %}
+{% endwith %}
+
+{# --- Add FAQ Form (clients only) --- #}
+{% if current_user.role == 'client' %}
+  <form method="POST" class="form-container">
+      <label for="question">Question:</label>
+      <input type="text" id="question" name="question" required>
+
+      <label for="answer">Answer:</label>
+      <textarea id="answer" name="answer" rows="4" required></textarea>
+
+      <input type="hidden" name="client_id" value="{{ client_id }}">
+      <button type="submit" class="button-primary">Add FAQ</button>
+  </form>
+{% elif current_user.role == 'super_admin' and clients %}
+  <form method="GET" class="form-container" style="margin-bottom: 1.5rem;">
+    <label for="client_id">Select Client:</label>
+    <select name="client_id" id="client_id" required onchange="this.form.submit()">
+        {% for client in clients %}
+            {% if client.active == 1 %}
+            <option value="{{ client.client_id }}" {% if client.client_id == client_id %}selected{% endif %}>{{ client.client_name }}</option>
+            {% endif %}
+        {% endfor %}
+    </select>
+    <noscript><button type="submit">View FAQs</button></noscript>
+  </form>
 {% endif %}
-
-<form method="POST" class="form-container">
-    <label for="question">Question:</label>
-    <input type="text" id="question" name="question" required>
-
-    <label for="answer">Answer:</label>
-    <textarea id="answer" name="answer" rows="4" required></textarea>
-
-    {% if current_user.role == 'super_admin' %}
-        <label for="client_id">Client:</label>
-        <select name="client_id" id="client_id" required>
-            {% for client in clients %}
-                {% if client.active == 1 %}
-                <option value="{{ client.client_id }}" {% if client.client_id == client_id %}selected{% endif %}>{{ client.client_name }}</option>
-                {% endif %}
-            {% endfor %}
-        </select>
-    {% else %}
-        <input type="hidden" name="client_id" value="{{ client_id }}">
-    {% endif %}
-
-    <button type="submit" class="button-primary">Add FAQ</button>
-</form>
 
 <h3>Existing FAQs</h3>
 {% if faqs %}

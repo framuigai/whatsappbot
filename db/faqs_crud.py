@@ -8,27 +8,19 @@ from config import LOGGING_LEVEL, log_level_map
 logger = logging.getLogger(__name__)
 logger.setLevel(log_level_map.get(LOGGING_LEVEL, logging.INFO))
 
-def add_faq(question, answer, embedding, client_id):
-    if not client_id:
-        logger.error("Cannot add FAQ without client_id. Operation aborted.")
-        return None
-    conn = get_db_connection()
-    cursor = conn.cursor()
+def add_faq(question, answer, embedding, client_id, active=1):
     try:
-        embedding_json = json.dumps(embedding)
-        cursor.execute(
-            "INSERT INTO faqs (question, answer, embedding, client_id, active) VALUES (?, ?, ?, ?, 1)",
-            (question, answer, embedding_json, client_id)
-        )
+        conn = get_db_connection()
+        cursor = conn.cursor()
+        cursor.execute("""
+            INSERT INTO faqs (question, answer, embedding, client_id, active)
+            VALUES (?, ?, ?, ?, ?)
+        """, (question, answer, embedding, client_id, active))
         conn.commit()
-        logger.info(f"FAQ added: Q='{question[:50]}...' for client '{client_id}'")
-        return cursor.lastrowid
-    except sqlite3.IntegrityError as e:
-        logger.warning(f"FAQ with question '{question[:50]}...' may already exist for client '{client_id}'. Error: {e}")
-        return None
-    except sqlite3.Error as e:
-        logger.error(f"Error adding FAQ: {e}", exc_info=True)
-        return None
+        return True
+    except Exception as e:
+        # your error handling...
+        return False
     finally:
         conn.close()
 
