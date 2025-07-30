@@ -4,7 +4,7 @@ import logging
 from flask import Blueprint, render_template, flash, request
 from flask_login import login_required, current_user
 from db.faqs_crud import add_faq, get_all_faqs
-from db.tenants_crud import get_all_tenants
+from db.clients_crud import get_all_clients  # Changed from tenants_crud
 
 faqs_bp = Blueprint('faqs_routes', __name__, template_folder='../templates')
 logger = logging.getLogger(__name__)
@@ -14,27 +14,34 @@ logger = logging.getLogger(__name__)
 def manage_faqs():
     messages = []
     if current_user.role == 'super_admin':
-        tenants = get_all_tenants()
-        tenant_id = request.args.get('tenant_id') or request.form.get('tenant_id')
-        if not tenant_id and tenants:
-            tenant_id = tenants[0]['tenant_id']
+        clients = get_all_clients()
+        client_id = request.args.get('client_id') or request.form.get('client_id')
+        if not client_id and clients:
+            client_id = clients[0]['client_id']
     else:
-        tenants = None
-        tenant_id = current_user.tenant_id
+        clients = None
+        client_id = getattr(current_user, 'client_id', None)
 
     if request.method == 'POST':
         question = request.form.get('question')
         answer = request.form.get('answer')
         if current_user.role == 'super_admin':
-            tenant_id = request.form.get('tenant_id')
+            client_id = request.form.get('client_id')
         else:
-            tenant_id = current_user.tenant_id
-        if not tenant_id:
-            logger.error("Admin attempted FAQ action without tenant_id.")
-            messages.append(('error', "Tenant selection is required for this action."))
+            client_id = getattr(current_user, 'client_id', None)
+        if not client_id:
+            logger.error("Super admin attempted FAQ action without client_id.")
+            messages.append(('error', "Client selection is required for this action."))
         else:
-            add_faq(question, answer, None, tenant_id)
+            add_faq(question, answer, None, client_id)
             messages.append(('success', "FAQ added."))
 
-    faqs = get_all_faqs(tenant_id) if tenant_id else []
-    return render_template('manage_faqs.html', faqs=faqs, tenants=tenants, tenant_id=tenant_id, current_user=current_user, messages=messages)
+    faqs = get_all_faqs(client_id) if client_id else []
+    return render_template(
+        'manage_faqs.html',
+        faqs=faqs,
+        clients=clients,
+        client_id=client_id,
+        current_user=current_user,
+        messages=messages
+    )

@@ -2,7 +2,7 @@
 
 import logging
 import json
-from flask import Blueprint, render_template, flash, redirect, url_for
+from flask import Blueprint, render_template, flash
 from flask_login import login_required, current_user
 from config import LOGGING_LEVEL, log_level_map, FIREBASE_CONFIG
 from db.conversations_crud import (
@@ -18,12 +18,12 @@ logger.setLevel(log_level_map.get(LOGGING_LEVEL, logging.INFO))
 @login_required
 def dashboard():
     try:
-        # Fix: super_admin sees all, admin only tenant, client only self
-        tenant_id = current_user.tenant_id if hasattr(current_user, 'tenant_id') else None
+        # Super admin sees all, client only their own data
+        client_id = getattr(current_user, 'client_id', None)
         if current_user.role == 'super_admin':
-            tenant_id = None  # See all
-        total_conversations = get_conversation_count(tenant_id)
-        logger.info(f"User {current_user.email} accessed dashboard.")
+            client_id = None  # See all
+        total_conversations = get_conversation_count(client_id)
+        logger.info(f"User {current_user.email} accessed dashboard (client_id: {client_id}).")
         return render_template(
             'dashboard.html',
             user_email=current_user.email,
@@ -46,11 +46,11 @@ def dashboard():
 @login_required
 def view_reports():
     try:
-        tenant_id = current_user.tenant_id if hasattr(current_user, 'tenant_id') else None
+        client_id = getattr(current_user, 'client_id', None)
         if current_user.role == 'super_admin':
-            tenant_id = None
-        monthly_counts = get_monthly_conversation_counts(tenant_id)
-        daily_counts = get_daily_conversation_counts(tenant_id)
+            client_id = None
+        monthly_counts = get_monthly_conversation_counts(client_id)
+        daily_counts = get_daily_conversation_counts(client_id)
         monthly_labels = [m['month'] for m in monthly_counts]
         monthly_data = [m['count'] for m in monthly_counts]
         daily_labels = [d['date'] for d in daily_counts]
@@ -70,8 +70,11 @@ def view_reports():
     except Exception as e:
         logger.error(f"Error fetching report data: {e}", exc_info=True)
         flash("Error loading reports.", "danger")
-        return render_template('view_reports.html', user_email=current_user.email,
-                               monthly_labels="[]", monthly_data="[]",
-                               daily_labels="[]", daily_data="[]",
-                               monthly_data_raw=[], daily_data_raw=[],
-                               user_role=current_user.role)
+        return render_template(
+            'view_reports.html',
+            user_email=current_user.email,
+            monthly_labels="[]", monthly_data="[]",
+            daily_labels="[]", daily_data="[]",
+            monthly_data_raw=[], daily_data_raw=[],
+            user_role=current_user.role
+        )
